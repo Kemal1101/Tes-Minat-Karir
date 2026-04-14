@@ -1,0 +1,37 @@
+[
+  {"id": 1, "text": "Apakah Anda suka memperbaiki barang yang rusak?", "category": "R"},
+  {"id": 2, "text": "Apakah Anda tertarik bekerja dengan alat atau mesin?", "category": "R"},
+  {"id": 3, "text": "Apakah Anda nyaman bekerja di luar ruangan dalam waktu lama?", "category": "R"},
+  {"id": 4, "text": "Apakah Anda menikmati aktivitas seperti merakit atau membangun sesuatu?", "category": "R"},
+  {"id": 5, "text": "Apakah Anda tertarik pada pekerjaan yang membutuhkan kekuatan fisik?", "category": "R"},
+
+  {"id": 6, "text": "Apakah Anda suka mencari tahu bagaimana sesuatu bekerja?", "category": "I"},
+  {"id": 7, "text": "Apakah Anda tertarik melakukan eksperimen atau penelitian?", "category": "I"},
+  {"id": 8, "text": "Apakah Anda menikmati memecahkan soal yang kompleks?", "category": "I"},
+  {"id": 9, "text": "Apakah Anda suka menganalisis data atau informasi?", "category": "I"},
+  {"id": 10, "text": "Apakah Anda tertarik pada ilmu pengetahuan seperti biologi atau fisika?", "category": "I"},
+
+  {"id": 11, "text": "Apakah Anda suka menggambar atau membuat karya seni?", "category": "A"},
+  {"id": 12, "text": "Apakah Anda menikmati menulis cerita atau puisi?", "category": "A"},
+  {"id": 13, "text": "Apakah Anda tertarik pada musik atau pertunjukan seni?", "category": "A"},
+  {"id": 14, "text": "Apakah Anda suka mengekspresikan ide secara kreatif?", "category": "A"},
+  {"id": 15, "text": "Apakah Anda merasa nyaman bekerja tanpa aturan yang terlalu ketat?", "category": "A"},
+
+  {"id": 16, "text": "Apakah Anda suka membantu orang lain menyelesaikan masalah?", "category": "S"},
+  {"id": 17, "text": "Apakah Anda menikmati bekerja dalam tim atau kelompok?", "category": "S"},
+  {"id": 18, "text": "Apakah Anda tertarik menjadi guru, konselor, atau pekerja sosial?", "category": "S"},
+  {"id": 19, "text": "Apakah Anda suka mendengarkan dan memahami perasaan orang lain?", "category": "S"},
+  {"id": 20, "text": "Apakah Anda merasa puas saat bisa membantu orang lain?", "category": "S"},
+
+  {"id": 21, "text": "Apakah Anda suka memimpin atau mengarahkan orang lain?", "category": "E"},
+  {"id": 22, "text": "Apakah Anda tertarik pada dunia bisnis atau penjualan?", "category": "E"},
+  {"id": 23, "text": "Apakah Anda nyaman berbicara di depan umum?", "category": "E"},
+  {"id": 24, "text": "Apakah Anda suka mengambil risiko dalam mencapai tujuan?", "category": "E"},
+  {"id": 25, "text": "Apakah Anda tertarik membangun usaha sendiri?", "category": "E"},
+
+  {"id": 26, "text": "Apakah Anda menikmati pekerjaan yang teratur dan terstruktur?", "category": "C"},
+  {"id": 27, "text": "Apakah Anda suka bekerja dengan data atau angka?", "category": "C"},
+  {"id": 28, "text": "Apakah Anda teliti dalam mengerjakan sesuatu?", "category": "C"},
+  {"id": 29, "text": "Apakah Anda nyaman mengikuti prosedur yang jelas?", "category": "C"},
+  {"id": 30, "text": "Apakah Anda menikmati pekerjaan yang rutin dan terorganisir?", "category": "C"}
+]
