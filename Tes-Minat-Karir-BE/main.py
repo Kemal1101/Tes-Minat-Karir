@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -18,30 +19,33 @@ OCCUPATIONS = []
 # ==========================================
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # --- PROSES STARTUP ---
     global QUESTIONS, OCCUPATIONS
+    
+    # Dapatkan lokasi folder (direktori) tempat main.py berada
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    
+    # Gabungkan lokasi folder dengan nama file
+    path_questions = os.path.join(BASE_DIR, "data", "questions.json")
+    path_occupations = os.path.join(BASE_DIR, "data", "occupations.csv")
     
     print("[INFO] Memuat data statis ke dalam memori...")
     
-    # Membaca data pertanyaan (JSON)
     try:
-        with open("data/questions.json", "r", encoding="utf-8") as f:
+        with open(path_questions, "r", encoding="utf-8") as f:
             QUESTIONS = json.load(f)
-        print(f"[OK] Berhasil memuat {len(QUESTIONS)} pertanyaan.")
     except Exception as e:
         print(f"[ERROR] Gagal memuat questions.json: {e}")
 
-    # Membaca data profesi (CSV)
     try:
-        with open("data/occupations.csv", "r", encoding="utf-8") as f:
-            reader = csv.DictReader(f, delimiter=';')
+        with open(path_occupations, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f, delimiter=';') 
             OCCUPATIONS = [row for row in reader]
-        print(f"[OK] Berhasil memuat {len(OCCUPATIONS)} profesi O*NET.")
     except Exception as e:
         print(f"[ERROR] Gagal memuat occupations.csv: {e}")
 
-    # Server siap menerima request
     yield 
+    QUESTIONS.clear()
+    OCCUPATIONS.clear()
     
     # --- PROSES SHUTDOWN ---
     # (Opsional: Bersihkan memori jika server dimatikan)
