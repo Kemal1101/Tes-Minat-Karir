@@ -163,3 +163,21 @@ async def calculate_result(data: SubmitAnswers):
         "total_rekomendasi_ditemukan": len(hasil_akhir_profesi),
         "rekomendasi_profesi": hasil_akhir_profesi
     }
+
+# ==========================================
+# ENDPOINT UNTUK MENGAMBIL SOAL
+# ==========================================
+@app.get("/api/questions")
+async def get_questions():
+    """
+    Endpoint ini akan dipanggil oleh frontend saat halaman pertama kali dimuat
+    untuk menampilkan daftar 30 soal kuesioner kepada pengguna.
+    """
+    if not QUESTIONS:
+        return {"error": "Data pertanyaan belum dimuat ke memori."}
+        
+    return {
+        "status": "success",
+        "total_soal": len(QUESTIONS),
+        "data": QUESTIONS
+    }
