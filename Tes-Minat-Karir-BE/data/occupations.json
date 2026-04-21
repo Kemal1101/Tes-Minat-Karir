@@ -1,0 +1,4352 @@
+[
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "1-2",
+        "Code": "51-9081.00",
+        "Occupation": "Dental Laboratory Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "1-2",
+        "Code": "17-3029.01",
+        "Occupation": "Non-Destructive Testing Specialists"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "1-2",
+        "Code": "31-9096.00",
+        "Occupation": "Veterinary Assistants and Laboratory Animal Caretakers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "45-2011.00",
+        "Occupation": "Agricultural Inspectors"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "45-2021.00",
+        "Occupation": "Animal Breeders"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "33-9011.00",
+        "Occupation": "Animal Control Workers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "51-8099.01",
+        "Occupation": "Biofuels Processing Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "51-9011.00",
+        "Occupation": "Chemical Equipment Operators and Tenders"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "51-8091.00",
+        "Occupation": "Chemical Plant and System Operators"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "47-5023.00",
+        "Occupation": "Earth Drillers, Except Oil and Gas"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "51-2022.00",
+        "Occupation": "Electrical and Electronic Equipment Assemblers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "51-2023.00",
+        "Occupation": "Electromechanical Equipment Assemblers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "31-9099.02",
+        "Occupation": "Endoscopy Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "47-5032.00",
+        "Occupation": "Explosives Workers, Ordnance Handling Experts, and Blasters"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "49-9099.01",
+        "Occupation": "Geothermal Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "51-9061.00",
+        "Occupation": "Inspectors, Testers, Sorters, Samplers, and Weighers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "53-4011.00",
+        "Occupation": "Locomotive Engineers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "31-9093.00",
+        "Occupation": "Medical Equipment Preparers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "47-2073.00",
+        "Occupation": "Operating Engineers and Other Construction Equipment Operators"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "1-2",
+        "Code": "53-6051.07",
+        "Occupation": "Transportation Vehicle, Equipment and Systems Inspectors, Except Aviation"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "1-2",
+        "Code": "51-9162.00",
+        "Occupation": "Computer Numerically Controlled Tool Programmers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "19-4012.00",
+        "Occupation": "Agricultural Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "17-3027.01",
+        "Occupation": "Automotive Engineering Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "29-2031.00",
+        "Occupation": "Cardiovascular Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "17-3022.00",
+        "Occupation": "Civil Engineering Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "49-9092.00",
+        "Occupation": "Commercial Divers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "17-3023.00",
+        "Occupation": "Electrical and Electronic Engineering Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "29-2012.01",
+        "Occupation": "Histology Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "17-3027.00",
+        "Occupation": "Mechanical Engineering Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "29-2012.00",
+        "Occupation": "Medical and Clinical Laboratory Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "51-9082.00",
+        "Occupation": "Medical Appliance Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "29-2033.00",
+        "Occupation": "Nuclear Medicine Technologists"
+    },
+    {
+        "Interest Code": "RIS",
+        "Job Zone": "3",
+        "Code": "29-2057.00",
+        "Occupation": "Ophthalmic Medical Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "19-4012.01",
+        "Occupation": "Precision Agriculture Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "3",
+        "Code": "29-2056.00",
+        "Occupation": "Veterinary Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "17-3021.00",
+        "Occupation": "Aerospace Engineering and Operations Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-3011.00",
+        "Occupation": "Aircraft Mechanics and Service Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-3023.00",
+        "Occupation": "Automotive Service Technicians and Mechanics"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-2091.00",
+        "Occupation": "Avionics Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-3031.00",
+        "Occupation": "Bus and Truck Mechanics and Diesel Engine Specialists"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "17-3028.00",
+        "Occupation": "Calibration Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "47-4011.00",
+        "Occupation": "Construction and Building Inspectors"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "29-2032.00",
+        "Occupation": "Diagnostic Medical Sonographers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-2093.00",
+        "Occupation": "Electrical and Electronics Installers and Repairers, Transportation Equipment"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-2094.00",
+        "Occupation": "Electrical and Electronics Repairers, Commercial and Industrial Equipment"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-2095.00",
+        "Occupation": "Electrical and Electronics Repairers, Powerhouse, Substation, and Relay"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "17-3024.00",
+        "Occupation": "Electro-Mechanical and Mechatronics Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-2096.00",
+        "Occupation": "Electronic Equipment Installers and Repairers, Motor Vehicles"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-3041.00",
+        "Occupation": "Farm Equipment Mechanics and Service Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "33-2021.00",
+        "Occupation": "Fire Inspectors and Investigators"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "19-4013.00",
+        "Occupation": "Food Science Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "19-4071.00",
+        "Occupation": "Forest and Conservation Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "51-8013.04",
+        "Occupation": "Hydroelectric Plant Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "19-4044.00",
+        "Occupation": "Hydrologic Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "17-3026.00",
+        "Occupation": "Industrial Engineering Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-9041.00",
+        "Occupation": "Industrial Machinery Mechanics"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "51-4041.00",
+        "Occupation": "Machinists"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "29-2035.00",
+        "Occupation": "Magnetic Resonance Imaging Technologists"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "17-3013.00",
+        "Occupation": "Mechanical Drafters"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-9062.00",
+        "Occupation": "Medical Equipment Repairers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-3042.00",
+        "Occupation": "Mobile Heavy Equipment Mechanics, Except Engines"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-3052.00",
+        "Occupation": "Motorcycle Mechanics"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "19-4051.02",
+        "Occupation": "Nuclear Monitoring Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "19-4051.00",
+        "Occupation": "Nuclear Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "29-2099.05",
+        "Occupation": "Ophthalmic Medical Technologists"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "31-9097.00",
+        "Occupation": "Phlebotomists"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "17-3029.08",
+        "Occupation": "Photonics Technicians"
+    },
+    {
+        "Interest Code": "RSI",
+        "Job Zone": "3",
+        "Code": "29-1124.00",
+        "Occupation": "Radiation Therapists"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-2021.00",
+        "Occupation": "Radio, Cellular, and Tower Equipment Installers and Repairers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "29-2034.00",
+        "Occupation": "Radiologic Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RSI",
+        "Job Zone": "3",
+        "Code": "29-1126.00",
+        "Occupation": "Respiratory Therapists"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "17-3024.01",
+        "Occupation": "Robotics Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-2098.00",
+        "Occupation": "Security and Fire Alarm Systems Installers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "51-8021.00",
+        "Occupation": "Stationary Engineers and Boiler Operators"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "17-3031.00",
+        "Occupation": "Surveying and Mapping Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "53-6041.00",
+        "Occupation": "Traffic Technicians"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "3",
+        "Code": "49-9081.00",
+        "Occupation": "Wind Turbine Service Technicians"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "3",
+        "Code": "19-4031.00",
+        "Occupation": "Chemical Technicians"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "3",
+        "Code": "19-4092.00",
+        "Occupation": "Forensic Science Technicians"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "3",
+        "Code": "29-2099.01",
+        "Occupation": "Neurodiagnostic Technologists"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "3",
+        "Code": "53-6051.01",
+        "Occupation": "Aviation Inspectors"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "3",
+        "Code": "15-1232.00",
+        "Occupation": "Computer User Support Specialists"
+    },
+    {
+        "Interest Code": "SRI",
+        "Job Zone": "3",
+        "Code": "29-1292.00",
+        "Occupation": "Dental Hygienists"
+    },
+    {
+        "Interest Code": "SRI",
+        "Job Zone": "3",
+        "Code": "29-2042.00",
+        "Occupation": "Emergency Medical Technicians"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "3",
+        "Code": "47-4011.01",
+        "Occupation": "Energy Auditors"
+    },
+    {
+        "Interest Code": "SRI",
+        "Job Zone": "3",
+        "Code": "31-9011.00",
+        "Occupation": "Massage Therapists"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "3",
+        "Code": "19-5012.00",
+        "Occupation": "Occupational Health and Safety Technicians"
+    },
+    {
+        "Interest Code": "SRI",
+        "Job Zone": "3",
+        "Code": "29-2043.00",
+        "Occupation": "Paramedics"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "3",
+        "Code": "33-3021.02",
+        "Occupation": "Police Identification and Records Officers"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "3",
+        "Code": "15-1241.01",
+        "Occupation": "Telecommunications Engineering Specialists"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "3",
+        "Code": "33-3021.00",
+        "Occupation": "Detectives and Criminal Investigators"
+    },
+    {
+        "Interest Code": "CIR",
+        "Job Zone": "3",
+        "Code": "15-1299.08",
+        "Occupation": "Computer Systems Engineers/Architects"
+    },
+    {
+        "Interest Code": "CIR",
+        "Job Zone": "3",
+        "Code": "15-1299.02",
+        "Occupation": "Geographic Information Systems Technologists and Technicians"
+    },
+    {
+        "Interest Code": "CIR",
+        "Job Zone": "3",
+        "Code": "19-4099.01",
+        "Occupation": "Quality Control Analysts"
+    },
+    {
+        "Interest Code": "RI",
+        "Job Zone": "4",
+        "Code": "17-2021.00",
+        "Occupation": "Agricultural Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2141.02",
+        "Occupation": "Automotive Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2041.00",
+        "Occupation": "Chemical Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2051.00",
+        "Occupation": "Civil Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2061.00",
+        "Occupation": "Computer Hardware Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2071.00",
+        "Occupation": "Electrical Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2072.00",
+        "Occupation": "Electronics Engineers, Except Computer"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2199.03",
+        "Occupation": "Energy Engineers, Except Wind and Solar"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-3025.00",
+        "Occupation": "Environmental Engineering Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "19-4042.00",
+        "Occupation": "Environmental Science and Protection Technicians, Including Health"
+    },
+    {
+        "Interest Code": "RIS",
+        "Job Zone": "4",
+        "Code": "29-1128.00",
+        "Occupation": "Exercise Physiologists"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2111.02",
+        "Occupation": "Fire-Prevention and Protection Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "19-1032.00",
+        "Occupation": "Foresters"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2141.01",
+        "Occupation": "Fuel Cell Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-1022.01",
+        "Occupation": "Geodetic Surveyors"
+    },
+    {
+        "Interest Code": "RIA",
+        "Job Zone": "4",
+        "Code": "17-1012.00",
+        "Occupation": "Landscape Architects"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2112.03",
+        "Occupation": "Manufacturing Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2121.00",
+        "Occupation": "Marine Engineers and Naval Architects"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2131.00",
+        "Occupation": "Materials Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2141.00",
+        "Occupation": "Mechanical Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2199.05",
+        "Occupation": "Mechatronics Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2151.00",
+        "Occupation": "Mining and Geological Engineers, Including Mining Safety Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-3026.01",
+        "Occupation": "Nanotechnology Engineering Technologists and Technicians"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2171.00",
+        "Occupation": "Petroleum Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2199.07",
+        "Occupation": "Photonics Engineers"
+    },
+    {
+        "Interest Code": "RIE",
+        "Job Zone": "4",
+        "Code": "19-1031.02",
+        "Occupation": "Range Managers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2199.08",
+        "Occupation": "Robotics Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2199.11",
+        "Occupation": "Solar Energy Systems Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2051.01",
+        "Occupation": "Transportation Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2051.02",
+        "Occupation": "Water/Wastewater Engineers"
+    },
+    {
+        "Interest Code": "RIC",
+        "Job Zone": "4",
+        "Code": "17-2199.10",
+        "Occupation": "Wind Energy Engineers"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "4",
+        "Code": "33-3031.00",
+        "Occupation": "Fish and Game Wardens"
+    },
+    {
+        "Interest Code": "RCI",
+        "Job Zone": "4",
+        "Code": "19-4043.00",
+        "Occupation": "Geological Technicians, Except Hydrologic Technicians"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "17-2011.00",
+        "Occupation": "Aerospace Engineers"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "19-2021.00",
+        "Occupation": "Atmospheric and Space Scientists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "17-2031.00",
+        "Occupation": "Bioengineers and Biomedical Engineers"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "19-2031.00",
+        "Occupation": "Chemists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "19-1031.00",
+        "Occupation": "Conservation Scientists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "29-2011.01",
+        "Occupation": "Cytogenetic Technologists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "17-2081.00",
+        "Occupation": "Environmental Engineers"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "19-2041.00",
+        "Occupation": "Environmental Scientists and Specialists, Including Health"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "19-1012.00",
+        "Occupation": "Food Scientists and Technologists"
+    },
+    {
+        "Interest Code": "IR",
+        "Job Zone": "4",
+        "Code": "19-3092.00",
+        "Occupation": "Geographers"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "17-2111.00",
+        "Occupation": "Health and Safety Engineers, Except Mining Safety Engineers and Inspectors"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "29-2011.04",
+        "Occupation": "Histotechnologists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "19-2032.00",
+        "Occupation": "Materials Scientists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "29-2011.00",
+        "Occupation": "Medical and Clinical Laboratory Technologists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "19-1022.00",
+        "Occupation": "Microbiologists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "17-2161.00",
+        "Occupation": "Nuclear Engineers"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "19-2099.01",
+        "Occupation": "Remote Sensing Scientists and Technologists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "4",
+        "Code": "11-9121.02",
+        "Occupation": "Water Resource Specialists"
+    },
+    {
+        "Interest Code": "IR",
+        "Job Zone": "4",
+        "Code": "19-1023.00",
+        "Occupation": "Zoologists and Wildlife Biologists"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "4",
+        "Code": "19-4021.00",
+        "Occupation": "Biological Technicians"
+    },
+    {
+        "Interest Code": "ARI",
+        "Job Zone": "4",
+        "Code": "27-1021.00",
+        "Occupation": "Commercial and Industrial Designers"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "4",
+        "Code": "15-1244.00",
+        "Occupation": "Network and Computer Systems Administrators"
+    },
+    {
+        "Interest Code": "SRI",
+        "Job Zone": "4",
+        "Code": "19-1031.03",
+        "Occupation": "Park Naturalists"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "4",
+        "Code": "17-2072.01",
+        "Occupation": "Radio Frequency Identification Device Specialists"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "4",
+        "Code": "19-4099.03",
+        "Occupation": "Remote Sensing Technicians"
+    },
+    {
+        "Interest Code": "CRI",
+        "Job Zone": "4",
+        "Code": "17-1022.00",
+        "Occupation": "Surveyors"
+    },
+    {
+        "Interest Code": "IER",
+        "Job Zone": "4",
+        "Code": "11-9041.01",
+        "Occupation": "Biofuels/Biodiesel Technology and Product Development Managers"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "4",
+        "Code": "15-2099.01",
+        "Occupation": "Bioinformatics Technicians"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "4",
+        "Code": "15-1241.00",
+        "Occupation": "Computer Network Architects"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "4",
+        "Code": "29-2036.00",
+        "Occupation": "Medical Dosimetrists"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "4",
+        "Code": "19-5011.00",
+        "Occupation": "Occupational Health and Safety Specialists"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "4",
+        "Code": "15-1299.04",
+        "Occupation": "Penetration Testers"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "4",
+        "Code": "15-1253.00",
+        "Occupation": "Software Quality Assurance Analysts and Testers"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "4",
+        "Code": "19-3099.01",
+        "Occupation": "Transportation Planners"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "4",
+        "Code": "17-2112.02",
+        "Occupation": "Validation Engineers"
+    },
+    {
+        "Interest Code": "CIR",
+        "Job Zone": "4",
+        "Code": "17-1021.00",
+        "Occupation": "Cartographers and Photogrammetrists"
+    },
+    {
+        "Interest Code": "CIR",
+        "Job Zone": "4",
+        "Code": "15-1231.00",
+        "Occupation": "Computer Network Support Specialists"
+    },
+    {
+        "Interest Code": "CIR",
+        "Job Zone": "4",
+        "Code": "13-1041.01",
+        "Occupation": "Environmental Compliance Inspectors"
+    },
+    {
+        "Interest Code": "CIR",
+        "Job Zone": "4",
+        "Code": "17-2112.00",
+        "Occupation": "Industrial Engineers"
+    },
+    {
+        "Interest Code": "CIR",
+        "Job Zone": "4",
+        "Code": "15-1299.05",
+        "Occupation": "Information Security Engineers"
+    },
+    {
+        "Interest Code": "CIR",
+        "Job Zone": "4",
+        "Code": "13-1081.01",
+        "Occupation": "Logistics Engineers"
+    },
+    {
+        "Interest Code": "CIR",
+        "Job Zone": "4",
+        "Code": "13-1199.07",
+        "Occupation": "Security Management Specialists"
+    },
+    {
+        "Interest Code": "RIS",
+        "Job Zone": "5",
+        "Code": "29-2091.00",
+        "Occupation": "Orthotists and Prosthetists"
+    },
+    {
+        "Interest Code": "RIS",
+        "Job Zone": "5",
+        "Code": "29-1024.00",
+        "Occupation": "Prosthodontists"
+    },
+    {
+        "Interest Code": "IR",
+        "Job Zone": "5",
+        "Code": "19-1011.00",
+        "Occupation": "Animal Scientists"
+    },
+    {
+        "Interest Code": "IR",
+        "Job Zone": "5",
+        "Code": "19-2011.00",
+        "Occupation": "Astronomers"
+    },
+    {
+        "Interest Code": "IR",
+        "Job Zone": "5",
+        "Code": "19-1021.00",
+        "Occupation": "Biochemists and Biophysicists"
+    },
+    {
+        "Interest Code": "IRS",
+        "Job Zone": "5",
+        "Code": "29-1212.00",
+        "Occupation": "Cardiologists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "29-2011.02",
+        "Occupation": "Cytotechnologists"
+    },
+    {
+        "Interest Code": "IRS",
+        "Job Zone": "5",
+        "Code": "29-1021.00",
+        "Occupation": "Dentists, General"
+    },
+    {
+        "Interest Code": "IRS",
+        "Job Zone": "5",
+        "Code": "29-1213.00",
+        "Occupation": "Dermatologists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "19-2041.02",
+        "Occupation": "Environmental Restoration Planners"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "19-2042.00",
+        "Occupation": "Geoscientists, Except Hydrologists and Geographers"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "17-2112.01",
+        "Occupation": "Human Factors Engineers and Ergonomists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "19-2043.00",
+        "Occupation": "Hydrologists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "19-2041.03",
+        "Occupation": "Industrial Ecologists"
+    },
+    {
+        "Interest Code": "IR",
+        "Job Zone": "5",
+        "Code": "19-1042.00",
+        "Occupation": "Medical Scientists, Except Epidemiologists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "17-2199.06",
+        "Occupation": "Microsystems Engineers"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "17-2199.09",
+        "Occupation": "Nanosystems Engineers"
+    },
+    {
+        "Interest Code": "IRS",
+        "Job Zone": "5",
+        "Code": "29-1022.00",
+        "Occupation": "Oral and Maxillofacial Surgeons"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "29-1023.00",
+        "Occupation": "Orthodontists"
+    },
+    {
+        "Interest Code": "IRS",
+        "Job Zone": "5",
+        "Code": "29-1242.00",
+        "Occupation": "Orthopedic Surgeons, Except Pediatric"
+    },
+    {
+        "Interest Code": "IRS",
+        "Job Zone": "5",
+        "Code": "29-1299.02",
+        "Occupation": "Orthoptists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "29-1222.00",
+        "Occupation": "Physicians, Pathologists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "19-2012.00",
+        "Occupation": "Physicists"
+    },
+    {
+        "Interest Code": "IRS",
+        "Job Zone": "5",
+        "Code": "29-1081.00",
+        "Occupation": "Podiatrists"
+    },
+    {
+        "Interest Code": "IRC",
+        "Job Zone": "5",
+        "Code": "29-1224.00",
+        "Occupation": "Radiologists"
+    },
+    {
+        "Interest Code": "IR",
+        "Job Zone": "5",
+        "Code": "19-1013.00",
+        "Occupation": "Soil and Plant Scientists"
+    },
+    {
+        "Interest Code": "IR",
+        "Job Zone": "5",
+        "Code": "29-1131.00",
+        "Occupation": "Veterinarians"
+    },
+    {
+        "Interest Code": "SRI",
+        "Job Zone": "5",
+        "Code": "29-9091.00",
+        "Occupation": "Athletic Trainers"
+    },
+    {
+        "Interest Code": "SRI",
+        "Job Zone": "5",
+        "Code": "29-1011.00",
+        "Occupation": "Chiropractors"
+    },
+    {
+        "Interest Code": "SRI",
+        "Job Zone": "5",
+        "Code": "29-1122.01",
+        "Occupation": "Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists"
+    },
+    {
+        "Interest Code": "ISR",
+        "Job Zone": "5",
+        "Code": "29-1211.00",
+        "Occupation": "Anesthesiologists"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "5",
+        "Code": "19-1029.01",
+        "Occupation": "Bioinformatics Scientists"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "5",
+        "Code": "19-1029.04",
+        "Occupation": "Biologists"
+    },
+    {
+        "Interest Code": "ISR",
+        "Job Zone": "5",
+        "Code": "29-1216.00",
+        "Occupation": "General Internal Medicine Physicians"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "5",
+        "Code": "19-1029.03",
+        "Occupation": "Geneticists"
+    },
+    {
+        "Interest Code": "ICR",
+        "Job Zone": "5",
+        "Code": "19-1029.02",
+        "Occupation": "Molecular and Cellular Biologists"
+    },
+    {
+        "Interest Code": "ISR",
+        "Job Zone": "5",
+        "Code": "29-1299.01",
+        "Occupation": "Naturopathic Physicians"
+    },
+    {
+        "Interest Code": "ISR",
+        "Job Zone": "5",
+        "Code": "29-1218.00",
+        "Occupation": "Obstetricians and Gynecologists"
+    },
+    {
+        "Interest Code": "ISR",
+        "Job Zone": "5",
+        "Code": "29-1241.00",
+        "Occupation": "Ophthalmologists, Except Pediatric"
+    },
+    {
+        "Interest Code": "ISR",
+        "Job Zone": "5",
+        "Code": "29-1041.00",
+        "Occupation": "Optometrists"
+    },
+    {
+        "Interest Code": "ISR",
+        "Job Zone": "5",
+        "Code": "29-1243.00",
+        "Occupation": "Pediatric Surgeons"
+    },
+    {
+        "Interest Code": "ISR",
+        "Job Zone": "5",
+        "Code": "29-1229.04",
+        "Occupation": "Physical Medicine and Rehabilitation Physicians"
+    },
+    {
+        "Interest Code": "ISR",
+        "Job Zone": "5",
+        "Code": "29-1229.06",
+        "Occupation": "Sports Medicine Physicians"
+    },
+    {
+        "Interest Code": "ISR",
+        "Job Zone": "5",
+        "Code": "29-1229.03",
+        "Occupation": "Urologists"
+    },
+    {
+        "Interest Code": "SIR",
+        "Job Zone": "5",
+        "Code": "29-1291.00",
+        "Occupation": "Acupuncturists"
+    },
+    {
+        "Interest Code": "SIR",
+        "Job Zone": "5",
+        "Code": "25-1032.00",
+        "Occupation": "Engineering Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SIR",
+        "Job Zone": "5",
+        "Code": "25-9021.00",
+        "Occupation": "Farm and Home Management Educators"
+    },
+    {
+        "Interest Code": "SIR",
+        "Job Zone": "5",
+        "Code": "29-1151.00",
+        "Occupation": "Nurse Anesthetists"
+    },
+    {
+        "Interest Code": "SIR",
+        "Job Zone": "5",
+        "Code": "29-1123.00",
+        "Occupation": "Physical Therapists"
+    },
+    {
+        "Interest Code": "RAC",
+        "Job Zone": "1-2",
+        "Code": "51-9194.00",
+        "Occupation": "Etchers and Engravers"
+    },
+    {
+        "Interest Code": "RAC",
+        "Job Zone": "1-2",
+        "Code": "27-1023.00",
+        "Occupation": "Floral Designers"
+    },
+    {
+        "Interest Code": "RAC",
+        "Job Zone": "1-2",
+        "Code": "51-7021.00",
+        "Occupation": "Furniture Finishers"
+    },
+    {
+        "Interest Code": "RAC",
+        "Job Zone": "1-2",
+        "Code": "51-9123.00",
+        "Occupation": "Painting, Coating, and Decorating Workers"
+    },
+    {
+        "Interest Code": "RAC",
+        "Job Zone": "1-2",
+        "Code": "51-9195.03",
+        "Occupation": "Stone Cutters and Carvers, Manufacturing"
+    },
+    {
+        "Interest Code": "RA",
+        "Job Zone": "1-2",
+        "Code": "51-6052.00",
+        "Occupation": "Tailors, Dressmakers, and Custom Sewers"
+    },
+    {
+        "Interest Code": "RAC",
+        "Job Zone": "1-2",
+        "Code": "51-6093.00",
+        "Occupation": "Upholsterers"
+    },
+    {
+        "Interest Code": "RCA",
+        "Job Zone": "1-2",
+        "Code": "47-2142.00",
+        "Occupation": "Paperhangers"
+    },
+    {
+        "Interest Code": "RCA",
+        "Job Zone": "1-2",
+        "Code": "51-6041.00",
+        "Occupation": "Shoe and Leather Workers and Repairers"
+    },
+    {
+        "Interest Code": "ARE",
+        "Job Zone": "1-2",
+        "Code": "41-9012.00",
+        "Occupation": "Models"
+    },
+    {
+        "Interest Code": "ACR",
+        "Job Zone": "1-2",
+        "Code": "39-3092.00",
+        "Occupation": "Costume Attendants"
+    },
+    {
+        "Interest Code": "RAC",
+        "Job Zone": "3",
+        "Code": "51-6092.00",
+        "Occupation": "Fabric and Apparel Patternmakers"
+    },
+    {
+        "Interest Code": "RAC",
+        "Job Zone": "3",
+        "Code": "51-9071.00",
+        "Occupation": "Jewelers and Precious Stone and Metal Workers"
+    },
+    {
+        "Interest Code": "RAC",
+        "Job Zone": "3",
+        "Code": "51-7032.00",
+        "Occupation": "Patternmakers, Wood"
+    },
+    {
+        "Interest Code": "RA",
+        "Job Zone": "3",
+        "Code": "27-4021.00",
+        "Occupation": "Photographers"
+    },
+    {
+        "Interest Code": "RAC",
+        "Job Zone": "3",
+        "Code": "27-4014.00",
+        "Occupation": "Sound Engineering Technicians"
+    },
+    {
+        "Interest Code": "RCA",
+        "Job Zone": "3",
+        "Code": "17-3011.00",
+        "Occupation": "Architectural and Civil Drafters"
+    },
+    {
+        "Interest Code": "RSA",
+        "Job Zone": "3",
+        "Code": "35-2013.00",
+        "Occupation": "Cooks, Private Household"
+    },
+    {
+        "Interest Code": "RCA",
+        "Job Zone": "3",
+        "Code": "51-7031.00",
+        "Occupation": "Model Makers, Wood"
+    },
+    {
+        "Interest Code": "RCA",
+        "Job Zone": "3",
+        "Code": "49-9063.00",
+        "Occupation": "Musical Instrument Repairers and Tuners"
+    },
+    {
+        "Interest Code": "RCA",
+        "Job Zone": "3",
+        "Code": "51-4062.00",
+        "Occupation": "Patternmakers, Metal and Plastic"
+    },
+    {
+        "Interest Code": "ARC",
+        "Job Zone": "3",
+        "Code": "27-4031.00",
+        "Occupation": "Camera Operators, Television, Video, and Film"
+    },
+    {
+        "Interest Code": "AR",
+        "Job Zone": "3",
+        "Code": "27-1012.00",
+        "Occupation": "Craft Artists"
+    },
+    {
+        "Interest Code": "ARS",
+        "Job Zone": "3",
+        "Code": "27-2031.00",
+        "Occupation": "Dancers"
+    },
+    {
+        "Interest Code": "ARE",
+        "Job Zone": "3",
+        "Code": "27-1022.00",
+        "Occupation": "Fashion Designers"
+    },
+    {
+        "Interest Code": "AR",
+        "Job Zone": "3",
+        "Code": "27-1013.00",
+        "Occupation": "Fine Artists, Including Painters, Sculptors, and Illustrators"
+    },
+    {
+        "Interest Code": "AR",
+        "Job Zone": "3",
+        "Code": "39-5091.00",
+        "Occupation": "Makeup Artists, Theatrical and Performance"
+    },
+    {
+        "Interest Code": "ARE",
+        "Job Zone": "3",
+        "Code": "27-1026.00",
+        "Occupation": "Merchandise Displayers and Window Trimmers"
+    },
+    {
+        "Interest Code": "CAR",
+        "Job Zone": "3",
+        "Code": "43-9031.00",
+        "Occupation": "Desktop Publishers"
+    },
+    {
+        "Interest Code": "AR",
+        "Job Zone": "4",
+        "Code": "27-1025.00",
+        "Occupation": "Interior Designers"
+    },
+    {
+        "Interest Code": "AR",
+        "Job Zone": "4",
+        "Code": "27-1014.00",
+        "Occupation": "Special Effects Artists and Animators"
+    },
+    {
+        "Interest Code": "RCA",
+        "Job Zone": "5",
+        "Code": "17-1011.00",
+        "Occupation": "Architects, Except Landscape and Naval"
+    },
+    {
+        "Interest Code": "RSC",
+        "Job Zone": "1-2",
+        "Code": "53-3011.00",
+        "Occupation": "Ambulance Drivers and Attendants, Except Emergency Medical Technicians"
+    },
+    {
+        "Interest Code": "RSC",
+        "Job Zone": "1-2",
+        "Code": "39-2021.00",
+        "Occupation": "Animal Caretakers"
+    },
+    {
+        "Interest Code": "RS",
+        "Job Zone": "1-2",
+        "Code": "39-2011.00",
+        "Occupation": "Animal Trainers"
+    },
+    {
+        "Interest Code": "RSC",
+        "Job Zone": "1-2",
+        "Code": "35-3023.01",
+        "Occupation": "Baristas"
+    },
+    {
+        "Interest Code": "RSC",
+        "Job Zone": "1-2",
+        "Code": "35-3041.00",
+        "Occupation": "Food Servers, Nonrestaurant"
+    },
+    {
+        "Interest Code": "RSC",
+        "Job Zone": "1-2",
+        "Code": "33-9092.00",
+        "Occupation": "Lifeguards, Ski Patrol, and Other Recreational Protective Service Workers"
+    },
+    {
+        "Interest Code": "RSC",
+        "Job Zone": "1-2",
+        "Code": "39-5093.00",
+        "Occupation": "Shampooers"
+    },
+    {
+        "Interest Code": "RES",
+        "Job Zone": "1-2",
+        "Code": "27-2021.00",
+        "Occupation": "Athletes and Sports Competitors"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "1-2",
+        "Code": "39-6011.00",
+        "Occupation": "Baggage Porters and Bellhops"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "1-2",
+        "Code": "53-3051.00",
+        "Occupation": "Bus Drivers, School"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "1-2",
+        "Code": "53-3052.00",
+        "Occupation": "Bus Drivers, Transit and Intercity"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "1-2",
+        "Code": "33-3012.00",
+        "Occupation": "Correctional Officers and Jailers"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "1-2",
+        "Code": "35-9011.00",
+        "Occupation": "Dining Room and Cafeteria Attendants and Bartender Helpers"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "1-2",
+        "Code": "39-4021.00",
+        "Occupation": "Funeral Attendants"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "1-2",
+        "Code": "31-1132.00",
+        "Occupation": "Orderlies"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "1-2",
+        "Code": "53-3053.00",
+        "Occupation": "Shuttle Drivers and Chauffeurs"
+    },
+    {
+        "Interest Code": "SRC",
+        "Job Zone": "1-2",
+        "Code": "31-1121.00",
+        "Occupation": "Home Health Aides"
+    },
+    {
+        "Interest Code": "SRC",
+        "Job Zone": "1-2",
+        "Code": "31-2022.00",
+        "Occupation": "Physical Therapist Aides"
+    },
+    {
+        "Interest Code": "CRS",
+        "Job Zone": "1-2",
+        "Code": "35-3023.00",
+        "Occupation": "Fast Food and Counter Workers"
+    },
+    {
+        "Interest Code": "CRS",
+        "Job Zone": "1-2",
+        "Code": "39-3093.00",
+        "Occupation": "Locker Room, Coatroom, and Dressing Room Attendants"
+    },
+    {
+        "Interest Code": "CRS",
+        "Job Zone": "1-2",
+        "Code": "43-5031.00",
+        "Occupation": "Public Safety Telecommunicators"
+    },
+    {
+        "Interest Code": "SCR",
+        "Job Zone": "1-2",
+        "Code": "31-1122.00",
+        "Occupation": "Personal Care Aides"
+    },
+    {
+        "Interest Code": "SCR",
+        "Job Zone": "1-2",
+        "Code": "33-9094.00",
+        "Occupation": "School Bus Monitors"
+    },
+    {
+        "Interest Code": "CSR",
+        "Job Zone": "1-2",
+        "Code": "39-3091.00",
+        "Occupation": "Amusement and Recreation Attendants"
+    },
+    {
+        "Interest Code": "CSR",
+        "Job Zone": "1-2",
+        "Code": "53-2031.00",
+        "Occupation": "Flight Attendants"
+    },
+    {
+        "Interest Code": "CSR",
+        "Job Zone": "1-2",
+        "Code": "53-6061.00",
+        "Occupation": "Passenger Attendants"
+    },
+    {
+        "Interest Code": "CSR",
+        "Job Zone": "1-2",
+        "Code": "35-3031.00",
+        "Occupation": "Waiters and Waitresses"
+    },
+    {
+        "Interest Code": "RS",
+        "Job Zone": "3",
+        "Code": "39-5094.00",
+        "Occupation": "Skincare Specialists"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "3",
+        "Code": "39-5011.00",
+        "Occupation": "Barbers"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "3",
+        "Code": "39-4011.00",
+        "Occupation": "Embalmers"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "3",
+        "Code": "39-5012.00",
+        "Occupation": "Hairdressers, Hairstylists, and Cosmetologists"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "3",
+        "Code": "29-9093.00",
+        "Occupation": "Surgical Assistants"
+    },
+    {
+        "Interest Code": "RCS",
+        "Job Zone": "3",
+        "Code": "29-2055.00",
+        "Occupation": "Surgical Technologists"
+    },
+    {
+        "Interest Code": "SR",
+        "Job Zone": "3",
+        "Code": "39-9031.00",
+        "Occupation": "Exercise Trainers and Group Fitness Instructors"
+    },
+    {
+        "Interest Code": "SRC",
+        "Job Zone": "3",
+        "Code": "31-1131.00",
+        "Occupation": "Nursing Assistants"
+    },
+    {
+        "Interest Code": "SRC",
+        "Job Zone": "3",
+        "Code": "31-2012.00",
+        "Occupation": "Occupational Therapy Aides"
+    },
+    {
+        "Interest Code": "SRC",
+        "Job Zone": "3",
+        "Code": "31-2021.00",
+        "Occupation": "Physical Therapist Assistants"
+    },
+    {
+        "Interest Code": "CRS",
+        "Job Zone": "3",
+        "Code": "31-9091.00",
+        "Occupation": "Dental Assistants"
+    },
+    {
+        "Interest Code": "SCR",
+        "Job Zone": "3",
+        "Code": "29-2051.00",
+        "Occupation": "Dietetic Technicians"
+    },
+    {
+        "Interest Code": "SCR",
+        "Job Zone": "3",
+        "Code": "29-2061.00",
+        "Occupation": "Licensed Practical and Licensed Vocational Nurses"
+    },
+    {
+        "Interest Code": "SCR",
+        "Job Zone": "3",
+        "Code": "31-2011.00",
+        "Occupation": "Occupational Therapy Assistants"
+    },
+    {
+        "Interest Code": "CSR",
+        "Job Zone": "3",
+        "Code": "31-9092.00",
+        "Occupation": "Medical Assistants"
+    },
+    {
+        "Interest Code": "SER",
+        "Job Zone": "4",
+        "Code": "27-2022.00",
+        "Occupation": "Coaches and Scouts"
+    },
+    {
+        "Interest Code": "SER",
+        "Job Zone": "4",
+        "Code": "39-9032.00",
+        "Occupation": "Recreation Workers"
+    },
+    {
+        "Interest Code": "SR",
+        "Job Zone": "5",
+        "Code": "29-9099.01",
+        "Occupation": "Midwives"
+    },
+    {
+        "Interest Code": "SCR",
+        "Job Zone": "5",
+        "Code": "25-2059.01",
+        "Occupation": "Adapted Physical Education Specialists"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "1-2",
+        "Code": "35-3011.00",
+        "Occupation": "Bartenders"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "1-2",
+        "Code": "35-2011.00",
+        "Occupation": "Cooks, Fast Food"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "1-2",
+        "Code": "35-2014.00",
+        "Occupation": "Cooks, Restaurant"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "1-2",
+        "Code": "35-2015.00",
+        "Occupation": "Cooks, Short Order"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "1-2",
+        "Code": "53-3031.00",
+        "Occupation": "Driver/Sales Workers"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "1-2",
+        "Code": "53-5022.00",
+        "Occupation": "Motorboat Operators"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "1-2",
+        "Code": "41-2022.00",
+        "Occupation": "Parts Salespersons"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "1-2",
+        "Code": "53-4031.00",
+        "Occupation": "Railroad Conductors and Yardmasters"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "1-2",
+        "Code": "51-2092.00",
+        "Occupation": "Team Assemblers"
+    },
+    {
+        "Interest Code": "ERC",
+        "Job Zone": "1-2",
+        "Code": "13-1074.00",
+        "Occupation": "Farm Labor Contractors"
+    },
+    {
+        "Interest Code": "CRE",
+        "Job Zone": "1-2",
+        "Code": "43-5071.00",
+        "Occupation": "Shipping, Receiving, and Inventory Clerks"
+    },
+    {
+        "Interest Code": "CRE",
+        "Job Zone": "1-2",
+        "Code": "53-7065.00",
+        "Occupation": "Stockers and Order Fillers"
+    },
+    {
+        "Interest Code": "CRE",
+        "Job Zone": "1-2",
+        "Code": "43-2011.00",
+        "Occupation": "Switchboard Operators, Including Answering Service"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "1-2",
+        "Code": "53-1041.00",
+        "Occupation": "Aircraft Cargo Handling Supervisors"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "1-2",
+        "Code": "41-9091.00",
+        "Occupation": "Door-to-Door Sales Workers, News and Street Vendors, and Related Workers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "1-2",
+        "Code": "35-1012.00",
+        "Occupation": "First-Line Supervisors of Food Preparation and Serving Workers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "1-2",
+        "Code": "39-1013.00",
+        "Occupation": "First-Line Supervisors of Gambling Services Workers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "1-2",
+        "Code": "37-1011.00",
+        "Occupation": "First-Line Supervisors of Housekeeping and Janitorial Workers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "1-2",
+        "Code": "33-1091.00",
+        "Occupation": "First-Line Supervisors of Security Workers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "1-2",
+        "Code": "11-9051.00",
+        "Occupation": "Food Service Managers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "1-2",
+        "Code": "53-1042.01",
+        "Occupation": "Recycling Coordinators"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "1-2",
+        "Code": "27-2023.00",
+        "Occupation": "Umpires, Referees, and Other Sports Officials"
+    },
+    {
+        "Interest Code": "CER",
+        "Job Zone": "1-2",
+        "Code": "43-5011.01",
+        "Occupation": "Freight Forwarders"
+    },
+    {
+        "Interest Code": "CER",
+        "Job Zone": "1-2",
+        "Code": "39-3011.00",
+        "Occupation": "Gambling Dealers"
+    },
+    {
+        "Interest Code": "CER",
+        "Job Zone": "1-2",
+        "Code": "33-9031.00",
+        "Occupation": "Gambling Surveillance Officers and Gambling Investigators"
+    },
+    {
+        "Interest Code": "CER",
+        "Job Zone": "1-2",
+        "Code": "31-9095.00",
+        "Occupation": "Pharmacy Aides"
+    },
+    {
+        "Interest Code": "CER",
+        "Job Zone": "1-2",
+        "Code": "43-3061.00",
+        "Occupation": "Procurement Clerks"
+    },
+    {
+        "Interest Code": "CER",
+        "Job Zone": "1-2",
+        "Code": "33-9099.02",
+        "Occupation": "Retail Loss Prevention Specialists"
+    },
+    {
+        "Interest Code": "REC",
+        "Job Zone": "3",
+        "Code": "47-1011.03",
+        "Occupation": "Solar Energy Installation Managers"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "3",
+        "Code": "33-3011.00",
+        "Occupation": "Bailiffs"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "3",
+        "Code": "53-5021.00",
+        "Occupation": "Captains, Mates, and Pilots of Water Vessels"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "3",
+        "Code": "11-3051.02",
+        "Occupation": "Geothermal Production Managers"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "3",
+        "Code": "11-3051.06",
+        "Occupation": "Hydroelectric Production Managers"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "3",
+        "Code": "33-3051.00",
+        "Occupation": "Police and Sheriff's Patrol Officers"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "3",
+        "Code": "53-5031.00",
+        "Occupation": "Ship Engineers"
+    },
+    {
+        "Interest Code": "ERC",
+        "Job Zone": "3",
+        "Code": "35-1011.00",
+        "Occupation": "Chefs and Head Cooks"
+    },
+    {
+        "Interest Code": "ERC",
+        "Job Zone": "3",
+        "Code": "45-1011.00",
+        "Occupation": "First-Line Supervisors of Farming, Fishing, and Forestry Workers"
+    },
+    {
+        "Interest Code": "ERC",
+        "Job Zone": "3",
+        "Code": "33-1021.00",
+        "Occupation": "First-Line Supervisors of Firefighting and Prevention Workers"
+    },
+    {
+        "Interest Code": "CRE",
+        "Job Zone": "3",
+        "Code": "53-2021.00",
+        "Occupation": "Air Traffic Controllers"
+    },
+    {
+        "Interest Code": "CRE",
+        "Job Zone": "3",
+        "Code": "53-2022.00",
+        "Occupation": "Airfield Operations Specialists"
+    },
+    {
+        "Interest Code": "CRE",
+        "Job Zone": "3",
+        "Code": "53-2012.00",
+        "Occupation": "Commercial Pilots"
+    },
+    {
+        "Interest Code": "CRE",
+        "Job Zone": "3",
+        "Code": "13-1032.00",
+        "Occupation": "Insurance Appraisers, Auto Damage"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "3",
+        "Code": "11-3013.00",
+        "Occupation": "Facilities Managers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "3",
+        "Code": "47-1011.00",
+        "Occupation": "First-Line Supervisors of Construction Trades and Extraction Workers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "3",
+        "Code": "37-1012.00",
+        "Occupation": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "3",
+        "Code": "53-1043.00",
+        "Occupation": "First-Line Supervisors of Material-Moving Machine and Vehicle Operators"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "3",
+        "Code": "49-1011.00",
+        "Occupation": "First-Line Supervisors of Mechanics, Installers, and Repairers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "3",
+        "Code": "51-1011.00",
+        "Occupation": "First-Line Supervisors of Production and Operating Workers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "3",
+        "Code": "41-4011.07",
+        "Occupation": "Solar Sales Representatives and Assessors"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "3",
+        "Code": "13-1022.00",
+        "Occupation": "Wholesale and Retail Buyers, Except Farm Products"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "3",
+        "Code": "11-9199.09",
+        "Occupation": "Wind Energy Operations Managers"
+    },
+    {
+        "Interest Code": "CER",
+        "Job Zone": "3",
+        "Code": "33-3051.04",
+        "Occupation": "Customs and Border Protection Officers"
+    },
+    {
+        "Interest Code": "RCE",
+        "Job Zone": "4",
+        "Code": "53-2011.00",
+        "Occupation": "Airline Pilots, Copilots, and Flight Engineers"
+    },
+    {
+        "Interest Code": "ERC",
+        "Job Zone": "4",
+        "Code": "11-9013.00",
+        "Occupation": "Farmers, Ranchers, and Other Agricultural Managers"
+    },
+    {
+        "Interest Code": "CRE",
+        "Job Zone": "4",
+        "Code": "11-3051.04",
+        "Occupation": "Biomass Power Plant Managers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "4",
+        "Code": "11-3051.03",
+        "Occupation": "Biofuels Production Managers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "4",
+        "Code": "13-1021.00",
+        "Occupation": "Buyers and Purchasing Agents, Farm Products"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "4",
+        "Code": "11-9021.00",
+        "Occupation": "Construction Managers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "4",
+        "Code": "11-3051.00",
+        "Occupation": "Industrial Production Managers"
+    },
+    {
+        "Interest Code": "ECR",
+        "Job Zone": "4",
+        "Code": "27-2012.05",
+        "Occupation": "Media Technical Directors/Managers"
+    },
+    {
+        "Interest Code": "CER",
+        "Job Zone": "4",
+        "Code": "13-2022.00",
+        "Occupation": "Appraisers of Personal and Business Property"
+    },
+    {
+        "Interest Code": "CER",
+        "Job Zone": "4",
+        "Code": "11-9199.11",
+        "Occupation": "Brownfield Redevelopment Specialists and Site Managers"
+    },
+    {
+        "Interest Code": "CER",
+        "Job Zone": "4",
+        "Code": "13-1023.00",
+        "Occupation": "Purchasing Agents, Except Wholesale, Retail, and Farm Products"
+    },
+    {
+        "Interest Code": "IAC",
+        "Job Zone": "4",
+        "Code": "15-1255.00",
+        "Occupation": "Web and Digital Interface Designers"
+    },
+    {
+        "Interest Code": "AIE",
+        "Job Zone": "4",
+        "Code": "27-3023.00",
+        "Occupation": "News Analysts, Reporters, and Journalists"
+    },
+    {
+        "Interest Code": "AI",
+        "Job Zone": "4",
+        "Code": "27-3043.05",
+        "Occupation": "Poets, Lyricists and Creative Writers"
+    },
+    {
+        "Interest Code": "AI",
+        "Job Zone": "4",
+        "Code": "15-1255.01",
+        "Occupation": "Video Game Designers"
+    },
+    {
+        "Interest Code": "RIA",
+        "Job Zone": "4",
+        "Code": "17-1012.00",
+        "Occupation": "Landscape Architects"
+    },
+    {
+        "Interest Code": "ARI",
+        "Job Zone": "4",
+        "Code": "27-1021.00",
+        "Occupation": "Commercial and Industrial Designers"
+    },
+    {
+        "Interest Code": "SAI",
+        "Job Zone": "4",
+        "Code": "29-1129.02",
+        "Occupation": "Music Therapists"
+    },
+    {
+        "Interest Code": "SAI",
+        "Job Zone": "4",
+        "Code": "25-2057.00",
+        "Occupation": "Special Education Teachers, Middle School"
+    },
+    {
+        "Interest Code": "CAI",
+        "Job Zone": "4",
+        "Code": "27-3042.00",
+        "Occupation": "Technical Writers"
+    },
+    {
+        "Interest Code": "IA",
+        "Job Zone": "5",
+        "Code": "19-3091.00",
+        "Occupation": "Anthropologists and Archeologists"
+    },
+    {
+        "Interest Code": "IA",
+        "Job Zone": "5",
+        "Code": "19-3094.00",
+        "Occupation": "Political Scientists"
+    },
+    {
+        "Interest Code": "ISA",
+        "Job Zone": "5",
+        "Code": "19-3041.00",
+        "Occupation": "Sociologists"
+    },
+    {
+        "Interest Code": "SIA",
+        "Job Zone": "5",
+        "Code": "25-1031.00",
+        "Occupation": "Architecture Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SIA",
+        "Job Zone": "5",
+        "Code": "25-1123.00",
+        "Occupation": "English Language and Literature Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SIA",
+        "Job Zone": "5",
+        "Code": "25-1124.00",
+        "Occupation": "Foreign Language and Literature Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SIC",
+        "Job Zone": "1-2",
+        "Code": "31-1133.00",
+        "Occupation": "Psychiatric Aides"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "3",
+        "Code": "25-1194.00",
+        "Occupation": "Career/Technical Education Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SIC",
+        "Job Zone": "3",
+        "Code": "29-2099.08",
+        "Occupation": "Patient Representatives"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "3",
+        "Code": "29-2053.00",
+        "Occupation": "Psychiatric Technicians"
+    },
+    {
+        "Interest Code": "CIS",
+        "Job Zone": "3",
+        "Code": "29-9021.00",
+        "Occupation": "Health Information Technologists and Medical Registrars"
+    },
+    {
+        "Interest Code": "SCI",
+        "Job Zone": "3",
+        "Code": "29-2092.00",
+        "Occupation": "Hearing Aid Specialists"
+    },
+    {
+        "Interest Code": "SCI",
+        "Job Zone": "3",
+        "Code": "31-9099.01",
+        "Occupation": "Speech-Language Pathology Assistants"
+    },
+    {
+        "Interest Code": "CSI",
+        "Job Zone": "3",
+        "Code": "31-9094.00",
+        "Occupation": "Medical Transcriptionists"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "4",
+        "Code": "29-1141.01",
+        "Occupation": "Acute Care Nurses"
+    },
+    {
+        "Interest Code": "SIC",
+        "Job Zone": "4",
+        "Code": "29-1141.03",
+        "Occupation": "Critical Care Nurses"
+    },
+    {
+        "Interest Code": "SIC",
+        "Job Zone": "4",
+        "Code": "21-1091.00",
+        "Occupation": "Health Education Specialists"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "4",
+        "Code": "29-1125.00",
+        "Occupation": "Recreational Therapists"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "4",
+        "Code": "25-2056.00",
+        "Occupation": "Special Education Teachers, Elementary School"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "4",
+        "Code": "25-2058.00",
+        "Occupation": "Special Education Teachers, Secondary School"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "4",
+        "Code": "13-1151.00",
+        "Occupation": "Training and Development Specialists"
+    },
+    {
+        "Interest Code": "SAI",
+        "Job Zone": "4",
+        "Code": "29-1129.02",
+        "Occupation": "Music Therapists"
+    },
+    {
+        "Interest Code": "SCI",
+        "Job Zone": "4",
+        "Code": "29-1141.00",
+        "Occupation": "Registered Nurses"
+    },
+    {
+        "Interest Code": "SAI",
+        "Job Zone": "4",
+        "Code": "25-2057.00",
+        "Occupation": "Special Education Teachers, Middle School"
+    },
+    {
+        "Interest Code": "IS",
+        "Job Zone": "5",
+        "Code": "29-1229.01",
+        "Occupation": "Allergists and Immunologists"
+    },
+    {
+        "Interest Code": "IS",
+        "Job Zone": "5",
+        "Code": "29-1181.00",
+        "Occupation": "Audiologists"
+    },
+    {
+        "Interest Code": "IS",
+        "Job Zone": "5",
+        "Code": "25-1052.00",
+        "Occupation": "Chemistry Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "IS",
+        "Job Zone": "5",
+        "Code": "19-3039.03",
+        "Occupation": "Clinical Neuropsychologists"
+    },
+    {
+        "Interest Code": "ISC",
+        "Job Zone": "5",
+        "Code": "29-1214.00",
+        "Occupation": "Emergency Medicine Physicians"
+    },
+    {
+        "Interest Code": "IS",
+        "Job Zone": "5",
+        "Code": "25-1053.00",
+        "Occupation": "Environmental Science Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "IS",
+        "Job Zone": "5",
+        "Code": "19-1041.00",
+        "Occupation": "Epidemiologists"
+    },
+    {
+        "Interest Code": "ISC",
+        "Job Zone": "5",
+        "Code": "29-9092.00",
+        "Occupation": "Genetic Counselors"
+    },
+    {
+        "Interest Code": "IS",
+        "Job Zone": "5",
+        "Code": "29-1217.00",
+        "Occupation": "Neurologists"
+    },
+    {
+        "Interest Code": "IS",
+        "Job Zone": "5",
+        "Code": "19-3039.02",
+        "Occupation": "Neuropsychologists"
+    },
+    {
+        "Interest Code": "ISC",
+        "Job Zone": "5",
+        "Code": "29-1171.00",
+        "Occupation": "Nurse Practitioners"
+    },
+    {
+        "Interest Code": "ISC",
+        "Job Zone": "5",
+        "Code": "29-1051.00",
+        "Occupation": "Pharmacists"
+    },
+    {
+        "Interest Code": "IS",
+        "Job Zone": "5",
+        "Code": "29-1229.05",
+        "Occupation": "Preventive Medicine Physicians"
+    },
+    {
+        "Interest Code": "IS",
+        "Job Zone": "5",
+        "Code": "29-1223.00",
+        "Occupation": "Psychiatrists"
+    },
+    {
+        "Interest Code": "ISA",
+        "Job Zone": "5",
+        "Code": "19-3041.00",
+        "Occupation": "Sociologists"
+    },
+    {
+        "Interest Code": "ICS",
+        "Job Zone": "5",
+        "Code": "15-1211.01",
+        "Occupation": "Health Informatics Specialists"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "29-1141.02",
+        "Occupation": "Advanced Practice Psychiatric Nurses"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1041.00",
+        "Occupation": "Agricultural Sciences Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1061.00",
+        "Occupation": "Anthropology and Archeology Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SIA",
+        "Job Zone": "5",
+        "Code": "25-1031.00",
+        "Occupation": "Architecture Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1062.00",
+        "Occupation": "Area, Ethnic, and Cultural Studies Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1051.00",
+        "Occupation": "Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1042.00",
+        "Occupation": "Biological Science Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1011.00",
+        "Occupation": "Business Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "19-3033.00",
+        "Occupation": "Clinical and Counseling Psychologists"
+    },
+    {
+        "Interest Code": "SIC",
+        "Job Zone": "5",
+        "Code": "29-1141.04",
+        "Occupation": "Clinical Nurse Specialists"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1122.00",
+        "Occupation": "Communications Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1021.00",
+        "Occupation": "Computer Science Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1111.00",
+        "Occupation": "Criminal Justice and Law Enforcement Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "29-1031.00",
+        "Occupation": "Dietitians and Nutritionists"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1063.00",
+        "Occupation": "Economics Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1081.00",
+        "Occupation": "Education Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SIA",
+        "Job Zone": "5",
+        "Code": "25-1123.00",
+        "Occupation": "English Language and Literature Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1192.00",
+        "Occupation": "Family and Consumer Sciences Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "29-1215.00",
+        "Occupation": "Family Medicine Physicians"
+    },
+    {
+        "Interest Code": "SIA",
+        "Job Zone": "5",
+        "Code": "25-1124.00",
+        "Occupation": "Foreign Language and Literature Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1043.00",
+        "Occupation": "Forestry and Conservation Science Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1064.00",
+        "Occupation": "Geography Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1071.00",
+        "Occupation": "Health Specialties Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "21-1022.00",
+        "Occupation": "Healthcare Social Workers"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1125.00",
+        "Occupation": "History Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "29-1229.02",
+        "Occupation": "Hospitalists"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1112.00",
+        "Occupation": "Law Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SIC",
+        "Job Zone": "5",
+        "Code": "25-1082.00",
+        "Occupation": "Library Science Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "21-1013.00",
+        "Occupation": "Marriage and Family Therapists"
+    },
+    {
+        "Interest Code": "SIC",
+        "Job Zone": "5",
+        "Code": "25-1022.00",
+        "Occupation": "Mathematical Science Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "21-1023.00",
+        "Occupation": "Mental Health and Substance Abuse Social Workers"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "21-1014.00",
+        "Occupation": "Mental Health Counselors"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "29-1161.00",
+        "Occupation": "Nurse Midwives"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1072.00",
+        "Occupation": "Nursing Instructors and Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "29-1122.00",
+        "Occupation": "Occupational Therapists"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "29-1221.00",
+        "Occupation": "Pediatricians, General"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1126.00",
+        "Occupation": "Philosophy and Religion Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SIC",
+        "Job Zone": "5",
+        "Code": "29-1071.00",
+        "Occupation": "Physician Assistants"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1054.00",
+        "Occupation": "Physics Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1065.00",
+        "Occupation": "Political Science Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1066.00",
+        "Occupation": "Psychology Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1193.00",
+        "Occupation": "Recreation and Fitness Studies Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SIC",
+        "Job Zone": "5",
+        "Code": "19-3034.00",
+        "Occupation": "School Psychologists"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1113.00",
+        "Occupation": "Social Work Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "25-1067.00",
+        "Occupation": "Sociology Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SIC",
+        "Job Zone": "5",
+        "Code": "29-1127.00",
+        "Occupation": "Speech-Language Pathologists"
+    },
+    {
+        "Interest Code": "SI",
+        "Job Zone": "5",
+        "Code": "21-1011.00",
+        "Occupation": "Substance Abuse and Behavioral Disorder Counselors"
+    },
+    {
+        "Interest Code": "SEI",
+        "Job Zone": "5",
+        "Code": "25-9031.00",
+        "Occupation": "Instructional Coordinators"
+    },
+    {
+        "Interest Code": "CSI",
+        "Job Zone": "5",
+        "Code": "29-1071.01",
+        "Occupation": "Anesthesiologist Assistants"
+    },
+    {
+        "Interest Code": "CSI",
+        "Job Zone": "5",
+        "Code": "25-4022.00",
+        "Occupation": "Librarians and Media Collections Specialists"
+    },
+    {
+        "Interest Code": "ICE",
+        "Job Zone": "3",
+        "Code": "13-1041.06",
+        "Occupation": "Coroners"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "3",
+        "Code": "23-2011.00",
+        "Occupation": "Paralegals and Legal Assistants"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "3",
+        "Code": "33-9021.00",
+        "Occupation": "Private Detectives and Investigators"
+    },
+    {
+        "Interest Code": "IER",
+        "Job Zone": "4",
+        "Code": "11-9041.01",
+        "Occupation": "Biofuels/Biodiesel Technology and Product Development Managers"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "4",
+        "Code": "13-1199.05",
+        "Occupation": "Sustainability Specialists"
+    },
+    {
+        "Interest Code": "ICE",
+        "Job Zone": "4",
+        "Code": "11-9121.01",
+        "Occupation": "Clinical Research Coordinators"
+    },
+    {
+        "Interest Code": "ICE",
+        "Job Zone": "4",
+        "Code": "33-3021.06",
+        "Occupation": "Intelligence Analysts"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "15-2011.00",
+        "Occupation": "Actuaries"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "15-2051.01",
+        "Occupation": "Business Intelligence Analysts"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "13-2054.00",
+        "Occupation": "Financial Risk Specialists"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "13-2099.04",
+        "Occupation": "Fraud Examiners, Investigators and Analysts"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "13-1111.00",
+        "Occupation": "Management Analysts"
+    },
+    {
+        "Interest Code": "RIE",
+        "Job Zone": "4",
+        "Code": "19-1031.02",
+        "Occupation": "Range Managers"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "15-1299.01",
+        "Occupation": "Web Administrators"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "4",
+        "Code": "13-1199.04",
+        "Occupation": "Business Continuity Planners"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "4",
+        "Code": "11-9161.00",
+        "Occupation": "Emergency Management Directors"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "4",
+        "Code": "15-1299.09",
+        "Occupation": "Information Technology Project Managers"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "4",
+        "Code": "13-1161.00",
+        "Occupation": "Market Research Analysts and Marketing Specialists"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "4",
+        "Code": "13-1161.01",
+        "Occupation": "Search Marketing Strategists"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2011.00",
+        "Occupation": "Accountants and Auditors"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2031.00",
+        "Occupation": "Budget Analysts"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-1031.00",
+        "Occupation": "Claims Adjusters, Examiners, and Investigators"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "11-3021.00",
+        "Occupation": "Computer and Information Systems Managers"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2041.00",
+        "Occupation": "Credit Analysts"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2051.00",
+        "Occupation": "Financial and Investment Analysts"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2061.00",
+        "Occupation": "Financial Examiners"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2053.00",
+        "Occupation": "Insurance Underwriters"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-1081.00",
+        "Occupation": "Logisticians"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-1081.02",
+        "Occupation": "Logistics Analysts"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "11-3051.01",
+        "Occupation": "Quality Control Systems Managers"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-1041.07",
+        "Occupation": "Regulatory Affairs Specialists"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "5",
+        "Code": "19-2041.01",
+        "Occupation": "Climate Change Policy Analysts"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "5",
+        "Code": "19-3011.01",
+        "Occupation": "Environmental Economists"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "5",
+        "Code": "19-3032.00",
+        "Occupation": "Industrial-Organizational Psychologists"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "5",
+        "Code": "11-9121.00",
+        "Occupation": "Natural Sciences Managers"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "5",
+        "Code": "19-3051.00",
+        "Occupation": "Urban and Regional Planners"
+    },
+    {
+        "Interest Code": "ICE",
+        "Job Zone": "5",
+        "Code": "19-3011.00",
+        "Occupation": "Economists"
+    },
+    {
+        "Interest Code": "EIC",
+        "Job Zone": "5",
+        "Code": "11-9041.00",
+        "Occupation": "Architectural and Engineering Managers"
+    },
+    {
+        "Interest Code": "EIC",
+        "Job Zone": "5",
+        "Code": "11-1011.03",
+        "Occupation": "Chief Sustainability Officers"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "5",
+        "Code": "11-3031.03",
+        "Occupation": "Investment Fund Managers"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "5",
+        "Code": "23-1011.00",
+        "Occupation": "Lawyers"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "5",
+        "Code": "23-1021.00",
+        "Occupation": "Administrative Law Judges, Adjudicators, and Hearing Officers"
+    },
+    {
+        "Interest Code": "SEI",
+        "Job Zone": "5",
+        "Code": "25-9031.00",
+        "Occupation": "Instructional Coordinators"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "5",
+        "Code": "23-1012.00",
+        "Occupation": "Judicial Law Clerks"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "3",
+        "Code": "15-1211.00",
+        "Occupation": "Computer Systems Analysts"
+    },
+    {
+        "Interest Code": "ICE",
+        "Job Zone": "3",
+        "Code": "13-1041.06",
+        "Occupation": "Coroners"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "3",
+        "Code": "29-2072.00",
+        "Occupation": "Medical Records Specialists"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "3",
+        "Code": "23-2011.00",
+        "Occupation": "Paralegals and Legal Assistants"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "3",
+        "Code": "15-1254.00",
+        "Occupation": "Web Developers"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "3",
+        "Code": "33-9021.00",
+        "Occupation": "Private Detectives and Investigators"
+    },
+    {
+        "Interest Code": "ICE",
+        "Job Zone": "4",
+        "Code": "11-9121.01",
+        "Occupation": "Clinical Research Coordinators"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "4",
+        "Code": "15-2051.00",
+        "Occupation": "Data Scientists"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "4",
+        "Code": "15-1299.06",
+        "Occupation": "Digital Forensics Analysts"
+    },
+    {
+        "Interest Code": "ICE",
+        "Job Zone": "4",
+        "Code": "33-3021.06",
+        "Occupation": "Intelligence Analysts"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "4",
+        "Code": "19-4061.00",
+        "Occupation": "Social Science Research Assistants"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "4",
+        "Code": "15-1252.00",
+        "Occupation": "Software Developers"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "4",
+        "Code": "13-1199.05",
+        "Occupation": "Sustainability Specialists"
+    },
+    {
+        "Interest Code": "IAC",
+        "Job Zone": "4",
+        "Code": "15-1255.00",
+        "Occupation": "Web and Digital Interface Designers"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "15-2011.00",
+        "Occupation": "Actuaries"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "4",
+        "Code": "15-1299.07",
+        "Occupation": "Blockchain Engineers"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "15-2051.01",
+        "Occupation": "Business Intelligence Analysts"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "4",
+        "Code": "15-2051.02",
+        "Occupation": "Clinical Data Managers"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "4",
+        "Code": "15-1251.00",
+        "Occupation": "Computer Programmers"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "4",
+        "Code": "15-1243.01",
+        "Occupation": "Data Warehousing Specialists"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "4",
+        "Code": "15-1242.00",
+        "Occupation": "Database Administrators"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "4",
+        "Code": "15-1243.00",
+        "Occupation": "Database Architects"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "4",
+        "Code": "15-1299.03",
+        "Occupation": "Document Management Specialists"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "13-2054.00",
+        "Occupation": "Financial Risk Specialists"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "13-2099.04",
+        "Occupation": "Fraud Examiners, Investigators and Analysts"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "4",
+        "Code": "15-1212.00",
+        "Occupation": "Information Security Analysts"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "13-1111.00",
+        "Occupation": "Management Analysts"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "4",
+        "Code": "43-9111.00",
+        "Occupation": "Statistical Assistants"
+    },
+    {
+        "Interest Code": "CIE",
+        "Job Zone": "4",
+        "Code": "15-1299.01",
+        "Occupation": "Web Administrators"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2011.00",
+        "Occupation": "Accountants and Auditors"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2031.00",
+        "Occupation": "Budget Analysts"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-1031.00",
+        "Occupation": "Claims Adjusters, Examiners, and Investigators"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "11-3021.00",
+        "Occupation": "Computer and Information Systems Managers"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2041.00",
+        "Occupation": "Credit Analysts"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2051.00",
+        "Occupation": "Financial and Investment Analysts"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2061.00",
+        "Occupation": "Financial Examiners"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-2053.00",
+        "Occupation": "Insurance Underwriters"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-1081.00",
+        "Occupation": "Logisticians"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-1081.02",
+        "Occupation": "Logistics Analysts"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "11-3051.01",
+        "Occupation": "Quality Control Systems Managers"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "4",
+        "Code": "13-1041.07",
+        "Occupation": "Regulatory Affairs Specialists"
+    },
+    {
+        "Interest Code": "CAI",
+        "Job Zone": "4",
+        "Code": "27-3042.00",
+        "Occupation": "Technical Writers"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "4",
+        "Code": "13-1199.04",
+        "Occupation": "Business Continuity Planners"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "4",
+        "Code": "11-9161.00",
+        "Occupation": "Emergency Management Directors"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "4",
+        "Code": "15-1299.09",
+        "Occupation": "Information Technology Project Managers"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "4",
+        "Code": "13-1161.00",
+        "Occupation": "Market Research Analysts and Marketing Specialists"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "4",
+        "Code": "13-1161.01",
+        "Occupation": "Search Marketing Strategists"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "5",
+        "Code": "15-2041.01",
+        "Occupation": "Biostatisticians"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "5",
+        "Code": "15-1221.00",
+        "Occupation": "Computer and Information Research Scientists"
+    },
+    {
+        "Interest Code": "ICE",
+        "Job Zone": "5",
+        "Code": "19-3011.00",
+        "Occupation": "Economists"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "5",
+        "Code": "13-2099.01",
+        "Occupation": "Financial Quantitative Analysts"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "5",
+        "Code": "19-3093.00",
+        "Occupation": "Historians"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "5",
+        "Code": "15-2021.00",
+        "Occupation": "Mathematicians"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "5",
+        "Code": "15-2031.00",
+        "Occupation": "Operations Research Analysts"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "5",
+        "Code": "15-2041.00",
+        "Occupation": "Statisticians"
+    },
+    {
+        "Interest Code": "IC",
+        "Job Zone": "5",
+        "Code": "19-3022.00",
+        "Occupation": "Survey Researchers"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "5",
+        "Code": "19-2041.01",
+        "Occupation": "Climate Change Policy Analysts"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "5",
+        "Code": "19-3011.01",
+        "Occupation": "Environmental Economists"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "5",
+        "Code": "19-3032.00",
+        "Occupation": "Industrial-Organizational Psychologists"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "5",
+        "Code": "11-9121.00",
+        "Occupation": "Natural Sciences Managers"
+    },
+    {
+        "Interest Code": "IEC",
+        "Job Zone": "5",
+        "Code": "19-3051.00",
+        "Occupation": "Urban and Regional Planners"
+    },
+    {
+        "Interest Code": "CI",
+        "Job Zone": "5",
+        "Code": "25-4011.00",
+        "Occupation": "Archivists"
+    },
+    {
+        "Interest Code": "EIC",
+        "Job Zone": "5",
+        "Code": "11-9041.00",
+        "Occupation": "Architectural and Engineering Managers"
+    },
+    {
+        "Interest Code": "EIC",
+        "Job Zone": "5",
+        "Code": "11-1011.03",
+        "Occupation": "Chief Sustainability Officers"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "5",
+        "Code": "23-1021.00",
+        "Occupation": "Administrative Law Judges, Adjudicators, and Hearing Officers"
+    },
+    {
+        "Interest Code": "CEI",
+        "Job Zone": "5",
+        "Code": "23-1012.00",
+        "Occupation": "Judicial Law Clerks"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "5",
+        "Code": "11-3031.03",
+        "Occupation": "Investment Fund Managers"
+    },
+    {
+        "Interest Code": "ECI",
+        "Job Zone": "5",
+        "Code": "23-1011.00",
+        "Occupation": "Lawyers"
+    },
+    {
+        "Interest Code": "ASE",
+        "Job Zone": "1-2",
+        "Code": "27-2011.00",
+        "Occupation": "Actors"
+    },
+    {
+        "Interest Code": "SA",
+        "Job Zone": "1-2",
+        "Code": "39-9011.00",
+        "Occupation": "Childcare Workers"
+    },
+    {
+        "Interest Code": "AS",
+        "Job Zone": "3",
+        "Code": "27-2032.00",
+        "Occupation": "Choreographers"
+    },
+    {
+        "Interest Code": "SA",
+        "Job Zone": "3",
+        "Code": "25-2011.00",
+        "Occupation": "Preschool Teachers, Except Special Education"
+    },
+    {
+        "Interest Code": "SA",
+        "Job Zone": "3",
+        "Code": "25-3021.00",
+        "Occupation": "Self-Enrichment Teachers"
+    },
+    {
+        "Interest Code": "AES",
+        "Job Zone": "4",
+        "Code": "27-3011.00",
+        "Occupation": "Broadcast Announcers and Radio Disc Jockeys"
+    },
+    {
+        "Interest Code": "SA",
+        "Job Zone": "4",
+        "Code": "25-3011.00",
+        "Occupation": "Adult Basic Education, Adult Secondary Education, and English as a Second Language Instructors"
+    },
+    {
+        "Interest Code": "SA",
+        "Job Zone": "4",
+        "Code": "25-2012.00",
+        "Occupation": "Kindergarten Teachers, Except Special Education"
+    },
+    {
+        "Interest Code": "SA",
+        "Job Zone": "4",
+        "Code": "25-2022.00",
+        "Occupation": "Middle School Teachers, Except Special and Career/Technical Education"
+    },
+    {
+        "Interest Code": "CAS",
+        "Job Zone": "4",
+        "Code": "27-3091.00",
+        "Occupation": "Interpreters and Translators"
+    },
+    {
+        "Interest Code": "EAS",
+        "Job Zone": "4",
+        "Code": "27-3031.00",
+        "Occupation": "Public Relations Specialists"
+    },
+    {
+        "Interest Code": "EAS",
+        "Job Zone": "4",
+        "Code": "27-2012.04",
+        "Occupation": "Talent Directors"
+    },
+    {
+        "Interest Code": "SA",
+        "Job Zone": "5",
+        "Code": "29-1129.01",
+        "Occupation": "Art Therapists"
+    },
+    {
+        "Interest Code": "SA",
+        "Job Zone": "5",
+        "Code": "25-1121.00",
+        "Occupation": "Art, Drama, and Music Teachers, Postsecondary"
+    },
+    {
+        "Interest Code": "SA",
+        "Job Zone": "5",
+        "Code": "25-2051.00",
+        "Occupation": "Special Education Teachers, Preschool"
+    },
+    {
+        "Interest Code": "AEC",
+        "Job Zone": "1-2",
+        "Code": "27-2091.00",
+        "Occupation": "Disc Jockeys, Except Radio"
+    },
+    {
+        "Interest Code": "AE",
+        "Job Zone": "4",
+        "Code": "27-1011.00",
+        "Occupation": "Art Directors"
+    },
+    {
+        "Interest Code": "AE",
+        "Job Zone": "4",
+        "Code": "27-2041.00",
+        "Occupation": "Music Directors and Composers"
+    },
+    {
+        "Interest Code": "AE",
+        "Job Zone": "4",
+        "Code": "27-2042.00",
+        "Occupation": "Musicians and Singers"
+    },
+    {
+        "Interest Code": "AE",
+        "Job Zone": "4",
+        "Code": "27-2012.00",
+        "Occupation": "Producers and Directors"
+    },
+    {
+        "Interest Code": "AE",
+        "Job Zone": "4",
+        "Code": "27-3043.00",
+        "Occupation": "Writers and Authors"
+    },
+    {
+        "Interest Code": "ACE",
+        "Job Zone": "4",
+        "Code": "27-3041.00",
+        "Occupation": "Editors"
+    },
+    {
+        "Interest Code": "AIE",
+        "Job Zone": "4",
+        "Code": "27-3023.00",
+        "Occupation": "News Analysts, Reporters, and Journalists"
+    },
+    {
+        "Interest Code": "ECA",
+        "Job Zone": "4",
+        "Code": "11-2011.00",
+        "Occupation": "Advertising and Promotions Managers"
+    },
+    {
+        "Interest Code": "ECA",
+        "Job Zone": "4",
+        "Code": "41-3011.00",
+        "Occupation": "Advertising Sales Agents"
+    },
+    {
+        "Interest Code": "ECA",
+        "Job Zone": "4",
+        "Code": "27-2012.03",
+        "Occupation": "Media Programming Directors"
+    },
+    {
+        "Interest Code": "AC",
+        "Job Zone": "4",
+        "Code": "27-4032.00",
+        "Occupation": "Film and Video Editors"
+    },
+    {
+        "Interest Code": "AC",
+        "Job Zone": "4",
+        "Code": "27-1024.00",
+        "Occupation": "Graphic Designers"
+    },
+    {
+        "Interest Code": "CA",
+        "Job Zone": "4",
+        "Code": "43-9081.00",
+        "Occupation": "Proofreaders and Copy Markers"
+    },
+    {
+        "Interest Code": "SEC",
+        "Job Zone": "1-2",
+        "Code": "39-6012.00",
+        "Occupation": "Concierges"
+    },
+    {
+        "Interest Code": "SEC",
+        "Job Zone": "1-2",
+        "Code": "35-9031.00",
+        "Occupation": "Hosts and Hostesses, Restaurant, Lounge, and Coffee Shop"
+    },
+    {
+        "Interest Code": "SEC",
+        "Job Zone": "1-2",
+        "Code": "39-7012.00",
+        "Occupation": "Travel Guides"
+    },
+    {
+        "Interest Code": "CSE",
+        "Job Zone": "1-2",
+        "Code": "43-4081.00",
+        "Occupation": "Hotel, Motel, and Resort Desk Clerks"
+    },
+    {
+        "Interest Code": "CSE",
+        "Job Zone": "1-2",
+        "Code": "43-4181.00",
+        "Occupation": "Reservation and Transportation Ticket Agents and Travel Clerks"
+    },
+    {
+        "Interest Code": "CSE",
+        "Job Zone": "1-2",
+        "Code": "43-2021.00",
+        "Occupation": "Telephone Operators"
+    },
+    {
+        "Interest Code": "CSE",
+        "Job Zone": "1-2",
+        "Code": "39-3031.00",
+        "Occupation": "Ushers, Lobby Attendants, and Ticket Takers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "1-2",
+        "Code": "39-1014.00",
+        "Occupation": "First-Line Supervisors of Entertainment and Recreation Workers, Except Gambling Services"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "1-2",
+        "Code": "53-1042.00",
+        "Occupation": "First-Line Supervisors of Helpers, Laborers, and Material Movers, Hand"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "1-2",
+        "Code": "41-1011.00",
+        "Occupation": "First-Line Supervisors of Retail Sales Workers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "1-2",
+        "Code": "11-9131.00",
+        "Occupation": "Postmasters and Mail Superintendents"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "1-2",
+        "Code": "41-3091.00",
+        "Occupation": "Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "1-2",
+        "Code": "41-9041.00",
+        "Occupation": "Telemarketers"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "1-2",
+        "Code": "43-3011.00",
+        "Occupation": "Bill and Account Collectors"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "1-2",
+        "Code": "41-2021.00",
+        "Occupation": "Counter and Rental Clerks"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "1-2",
+        "Code": "43-4031.00",
+        "Occupation": "Court, Municipal, and License Clerks"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "1-2",
+        "Code": "43-4041.00",
+        "Occupation": "Credit Authorizers, Checkers, and Clerks"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "1-2",
+        "Code": "43-4051.00",
+        "Occupation": "Customer Service Representatives"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "1-2",
+        "Code": "43-4171.00",
+        "Occupation": "Receptionists and Information Clerks"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "1-2",
+        "Code": "43-6014.00",
+        "Occupation": "Secretaries and Administrative Assistants, Except Legal, Medical, and Executive"
+    },
+    {
+        "Interest Code": "SE",
+        "Job Zone": "3",
+        "Code": "39-7011.00",
+        "Occupation": "Tour Guides and Escorts"
+    },
+    {
+        "Interest Code": "SCE",
+        "Job Zone": "3",
+        "Code": "39-9041.00",
+        "Occupation": "Residential Advisors"
+    },
+    {
+        "Interest Code": "CSE",
+        "Job Zone": "3",
+        "Code": "43-4061.00",
+        "Occupation": "Eligibility Interviewers, Government Programs"
+    },
+    {
+        "Interest Code": "CSE",
+        "Job Zone": "3",
+        "Code": "43-4111.00",
+        "Occupation": "Interviewers, Except Eligibility and Loan"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "3",
+        "Code": "11-3012.00",
+        "Occupation": "Administrative Services Managers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "3",
+        "Code": "33-1011.00",
+        "Occupation": "First-Line Supervisors of Correctional Officers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "3",
+        "Code": "43-1011.00",
+        "Occupation": "First-Line Supervisors of Office and Administrative Support Workers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "3",
+        "Code": "53-1044.00",
+        "Occupation": "First-Line Supervisors of Passenger Attendants"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "3",
+        "Code": "39-1022.00",
+        "Occupation": "First-Line Supervisors of Personal Service Workers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "3",
+        "Code": "11-9171.00",
+        "Occupation": "Funeral Home Managers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "3",
+        "Code": "41-9022.00",
+        "Occupation": "Real Estate Sales Agents"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "3",
+        "Code": "11-9179.02",
+        "Occupation": "Spa Managers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "3",
+        "Code": "41-3041.00",
+        "Occupation": "Travel Agents"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "3",
+        "Code": "43-6011.00",
+        "Occupation": "Executive Secretaries and Executive Administrative Assistants"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "3",
+        "Code": "43-4161.00",
+        "Occupation": "Human Resources Assistants, Except Payroll and Timekeeping"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "3",
+        "Code": "43-4131.00",
+        "Occupation": "Loan Interviewers and Clerks"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "3",
+        "Code": "39-4031.00",
+        "Occupation": "Morticians, Undertakers, and Funeral Arrangers"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "3",
+        "Code": "43-4141.00",
+        "Occupation": "New Accounts Clerks"
+    },
+    {
+        "Interest Code": "SE",
+        "Job Zone": "4",
+        "Code": "21-2021.00",
+        "Occupation": "Directors, Religious Activities and Education"
+    },
+    {
+        "Interest Code": "SEC",
+        "Job Zone": "4",
+        "Code": "11-9031.00",
+        "Occupation": "Education and Childcare Administrators, Preschool and Daycare"
+    },
+    {
+        "Interest Code": "SE",
+        "Job Zone": "4",
+        "Code": "11-9179.01",
+        "Occupation": "Fitness and Wellness Coordinators"
+    },
+    {
+        "Interest Code": "SCE",
+        "Job Zone": "4",
+        "Code": "21-1092.00",
+        "Occupation": "Probation Officers and Correctional Treatment Specialists"
+    },
+    {
+        "Interest Code": "SCE",
+        "Job Zone": "4",
+        "Code": "21-1093.00",
+        "Occupation": "Social and Human Service Assistants"
+    },
+    {
+        "Interest Code": "ESC",
+        "Job Zone": "4",
+        "Code": "13-1011.00",
+        "Occupation": "Agents and Business Managers of Artists, Performers, and Athletes"
+    },
+    {
+        "Interest Code": "ESC",
+        "Job Zone": "4",
+        "Code": "13-1131.00",
+        "Occupation": "Fundraisers"
+    },
+    {
+        "Interest Code": "ESC",
+        "Job Zone": "4",
+        "Code": "11-1031.00",
+        "Occupation": "Legislators"
+    },
+    {
+        "Interest Code": "ESC",
+        "Job Zone": "4",
+        "Code": "11-9151.00",
+        "Occupation": "Social and Community Service Managers"
+    },
+    {
+        "Interest Code": "ESC",
+        "Job Zone": "4",
+        "Code": "11-3131.00",
+        "Occupation": "Training and Development Managers"
+    },
+    {
+        "Interest Code": "CSE",
+        "Job Zone": "4",
+        "Code": "13-2071.00",
+        "Occupation": "Credit Counselors"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "11-3111.00",
+        "Occupation": "Compensation and Benefits Managers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "11-9072.00",
+        "Occupation": "Entertainment and Recreation Managers, Except Gambling"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "13-1041.03",
+        "Occupation": "Equal Opportunity Representatives and Officers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "41-1012.00",
+        "Occupation": "First-Line Supervisors of Non-Retail Sales Workers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "11-2033.00",
+        "Occupation": "Fundraising Managers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "11-3121.00",
+        "Occupation": "Human Resources Managers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "13-1071.00",
+        "Occupation": "Human Resources Specialists"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "41-3021.00",
+        "Occupation": "Insurance Sales Agents"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "13-1075.00",
+        "Occupation": "Labor Relations Specialists"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "11-9081.00",
+        "Occupation": "Lodging Managers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "11-9111.00",
+        "Occupation": "Medical and Health Services Managers"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "13-1121.00",
+        "Occupation": "Meeting, Convention, and Event Planners"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "13-2052.00",
+        "Occupation": "Personal Financial Advisors"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "4",
+        "Code": "11-2032.00",
+        "Occupation": "Public Relations Managers"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "4",
+        "Code": "13-1141.00",
+        "Occupation": "Compensation, Benefits, and Job Analysis Specialists"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "4",
+        "Code": "13-2072.00",
+        "Occupation": "Loan Officers"
+    },
+    {
+        "Interest Code": "SE",
+        "Job Zone": "5",
+        "Code": "21-2011.00",
+        "Occupation": "Clergy"
+    },
+    {
+        "Interest Code": "SEC",
+        "Job Zone": "5",
+        "Code": "11-9032.00",
+        "Occupation": "Education Administrators, Kindergarten through Secondary"
+    },
+    {
+        "Interest Code": "SEC",
+        "Job Zone": "5",
+        "Code": "11-9033.00",
+        "Occupation": "Education Administrators, Postsecondary"
+    },
+    {
+        "Interest Code": "SCE",
+        "Job Zone": "5",
+        "Code": "21-1012.00",
+        "Occupation": "Educational, Guidance, and Career Counselors and Advisors"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "5",
+        "Code": "23-1022.00",
+        "Occupation": "Arbitrators, Mediators, and Conciliators"
+    },
+    {
+        "Interest Code": "ECS",
+        "Job Zone": "5",
+        "Code": "23-1023.00",
+        "Occupation": "Judges, Magistrate Judges, and Magistrates"
+    },
+    {
+        "Interest Code": "CES",
+        "Job Zone": "5",
+        "Code": "25-4012.00",
+        "Occupation": "Curators"
+    },
+    {
+        "Interest Code": "CS",
+        "Job Zone": "1-2",
+        "Code": "43-4121.00",
+        "Occupation": "Library Assistants, Clerical"
+    },
+    {
+        "Interest Code": "CS",
+        "Job Zone": "1-2",
+        "Code": "43-6013.00",
+        "Occupation": "Medical Secretaries and Administrative Assistants"
+    },
+    {
+        "Interest Code": "SC",
+        "Job Zone": "3",
+        "Code": "25-9042.00",
+        "Occupation": "Teaching Assistants, Preschool, Elementary, Middle, and Secondary School, Except Special Education"
+    },
+    {
+        "Interest Code": "CS",
+        "Job Zone": "3",
+        "Code": "25-4031.00",
+        "Occupation": "Library Technicians"
+    },
+    {
+        "Interest Code": "SC",
+        "Job Zone": "4",
+        "Code": "25-3031.00",
+        "Occupation": "Substitute Teachers, Short-Term"
+    },
+    {
+        "Interest Code": "SC",
+        "Job Zone": "5",
+        "Code": "25-9044.00",
+        "Occupation": "Teaching Assistants, Postsecondary"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "1-2",
+        "Code": "41-9011.00",
+        "Occupation": "Demonstrators and Product Promoters"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "1-2",
+        "Code": "33-1012.00",
+        "Occupation": "First-Line Supervisors of Police and Detectives"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "1-2",
+        "Code": "11-9071.00",
+        "Occupation": "Gambling Managers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "1-2",
+        "Code": "41-2031.00",
+        "Occupation": "Retail Salespersons"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "1-2",
+        "Code": "43-5011.00",
+        "Occupation": "Cargo and Freight Agents"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "1-2",
+        "Code": "41-2011.00",
+        "Occupation": "Cashiers"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "1-2",
+        "Code": "43-4021.00",
+        "Occupation": "Correspondence Clerks"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "1-2",
+        "Code": "39-3012.00",
+        "Occupation": "Gambling and Sports Book Writers and Runners"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "1-2",
+        "Code": "43-3041.00",
+        "Occupation": "Gambling Cage Workers"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "1-2",
+        "Code": "41-2012.00",
+        "Occupation": "Gambling Change Persons and Booth Cashiers"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "1-2",
+        "Code": "43-9041.00",
+        "Occupation": "Insurance Claims and Policy Processing Clerks"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "1-2",
+        "Code": "43-4151.00",
+        "Occupation": "Order Clerks"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "1-2",
+        "Code": "43-5061.00",
+        "Occupation": "Production, Planning, and Expediting Clerks"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "1-2",
+        "Code": "43-3071.00",
+        "Occupation": "Tellers"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "1-2",
+        "Code": "23-2093.00",
+        "Occupation": "Title Examiners, Abstractors, and Searchers"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "3",
+        "Code": "43-3031.00",
+        "Occupation": "Bookkeeping, Accounting, and Auditing Clerks"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "3",
+        "Code": "43-4011.00",
+        "Occupation": "Brokerage Clerks"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "3",
+        "Code": "13-1041.08",
+        "Occupation": "Customs Brokers"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "3",
+        "Code": "13-1041.04",
+        "Occupation": "Government Property Inspectors and Investigators"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "3",
+        "Code": "43-6012.00",
+        "Occupation": "Legal Secretaries and Administrative Assistants"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "3",
+        "Code": "43-3051.00",
+        "Occupation": "Payroll and Timekeeping Clerks"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "3",
+        "Code": "13-2081.00",
+        "Occupation": "Tax Examiners and Collectors, and Revenue Agents"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "3",
+        "Code": "13-2082.00",
+        "Occupation": "Tax Preparers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "11-3031.00",
+        "Occupation": "Financial Managers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "11-1021.00",
+        "Occupation": "General and Operations Managers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "11-2021.00",
+        "Occupation": "Marketing Managers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "13-1082.00",
+        "Occupation": "Project Management Specialists"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "11-9141.00",
+        "Occupation": "Property, Real Estate, and Community Association Managers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "11-3061.00",
+        "Occupation": "Purchasing Managers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "41-9021.00",
+        "Occupation": "Real Estate Brokers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "11-9199.01",
+        "Occupation": "Regulatory Affairs Managers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "41-9031.00",
+        "Occupation": "Sales Engineers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "11-2022.00",
+        "Occupation": "Sales Managers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "41-4012.00",
+        "Occupation": "Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "41-4011.00",
+        "Occupation": "Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "41-3031.00",
+        "Occupation": "Securities, Commodities, and Financial Services Sales Agents"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "11-3013.01",
+        "Occupation": "Security Managers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "11-3071.04",
+        "Occupation": "Supply Chain Managers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "11-3071.00",
+        "Occupation": "Transportation, Storage, and Distribution Managers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "4",
+        "Code": "11-9199.10",
+        "Occupation": "Wind Energy Development Managers"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "4",
+        "Code": "13-2023.00",
+        "Occupation": "Appraisers and Assessors of Real Estate"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "4",
+        "Code": "11-9199.02",
+        "Occupation": "Compliance Managers"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "4",
+        "Code": "13-1041.00",
+        "Occupation": "Compliance Officers"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "4",
+        "Code": "13-1051.00",
+        "Occupation": "Cost Estimators"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "4",
+        "Code": "11-9199.08",
+        "Occupation": "Loss Prevention Managers"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "4",
+        "Code": "13-1199.06",
+        "Occupation": "Online Merchants"
+    },
+    {
+        "Interest Code": "CE",
+        "Job Zone": "4",
+        "Code": "11-3031.01",
+        "Occupation": "Treasurers and Controllers"
+    },
+    {
+        "Interest Code": "EC",
+        "Job Zone": "5",
+        "Code": "11-1011.00",
+        "Occupation": "Chief Executives"
+    }
+]
