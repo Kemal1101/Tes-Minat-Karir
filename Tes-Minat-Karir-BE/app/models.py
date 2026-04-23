@@ -33,3 +33,13 @@ class OccupationRiasec(Base):
     job_zone = Column("Job Zone", String, nullable=True)
     code = Column("Code", String, nullable=True)
     occupation = Column("Occupation", String, nullable=True)
+
+
+class TokenBlacklist(Base):
+    __tablename__ = "token_blacklist"
+
+    id = Column(Integer, primary_key=True, index=True)
+    token_hash = Column(String, unique=True, index=True, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    expires_at = Column(DateTime(timezone=True), nullable=False)
+    revoked_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)

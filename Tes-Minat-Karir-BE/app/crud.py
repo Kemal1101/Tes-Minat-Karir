@@ -1,13 +1,59 @@
 import random
+import hashlib
+from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 
-from app.models import User, Question, OccupationRiasec
+from app.models import User, Question, OccupationRiasec, TokenBlacklist
 from app.schemas import (
     UserCreate, UserUpdate,
     QuestionCreate, QuestionUpdate,
     OccupationCreate, OccupationUpdate
 )
 from app.auth import get_password_hash
+
+
+def _normalize_utc(dt: datetime | None) -> datetime | None:
+    if dt is None:
+        return None
+    if dt.tzinfo is None:
+        return dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
+
+
+def hash_token(token: str) -> str:
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def blacklist_token(db: Session, token: str, user_id: int | None, expires_at: datetime):
+    token_hash = hash_token(token)
+    existing = db.query(TokenBlacklist).filter(TokenBlacklist.token_hash == token_hash).first()
+    if existing:
+        return existing
+
+    entry = TokenBlacklist(
+        token_hash=token_hash,
+        user_id=user_id,
+        expires_at=expires_at,
+    )
+    db.add(entry)
+    db.commit()
+    db.refresh(entry)
+    return entry
+
+
+def is_token_blacklisted(db: Session, token: str) -> bool:
+    token_hash = hash_token(token)
+    item = db.query(TokenBlacklist).filter(TokenBlacklist.token_hash == token_hash).first()
+    if not item:
+        return False
+
+    now_utc = datetime.now(timezone.utc)
+    expires_utc = _normalize_utc(item.expires_at)
+
+    # Token blacklist dianggap valid selama token aslinya belum melewati expiry.
+    if expires_utc and expires_utc > now_utc:
+        return True
+    return False
 
 # --- User CRUD ---
 def get_user(db: Session, user_id: int):

@@ -63,3 +63,13 @@ class OccupationResponse(OccupationBase):
 
     class Config:
         from_attributes = True
+
+# --- Token Schemas ---
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+    role: Optional[str] = None
+

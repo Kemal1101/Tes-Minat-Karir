@@ -1,11 +1,68 @@
+from app.auth import (
+    create_access_token,
+    get_current_user,
+    verify_password,
+    ACCESS_TOKEN_EXPIRE_MINUTES,
+    oauth2_scheme_optional,
+    revoke_access_token,
+)
+from datetime import timedelta
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import APIRouter, Depends, HTTPException
+from jose import JWTError
 from sqlalchemy.orm import Session
 from typing import List
 
 from app.database import get_db
-from app import schemas, crud
+from app import models, schemas, crud
 
 router = APIRouter()
+
+# --- Auth / Login ---
+@router.post("/login", response_model=schemas.Token, tags=["Auth"])
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    # Cari user berdasarkan username
+    user = crud.get_user_by_username(db, username=form_data.username)
+    
+    # Verifikasi keberadaan user dan kecocokan password
+    if not user or not verify_password(form_data.password, user.password_hash):
+        raise HTTPException(
+            status_code=401,
+            detail="Username atau password salah",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    # Buat token akses
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user.username, "role": user.role}, 
+        expires_delta=access_token_expires
+    )
+    
+    return {"access_token": access_token, "token_type": "bearer"}
+
+@router.post("/logout", tags=["Auth"])
+async def logout(token: str | None = Depends(oauth2_scheme_optional), db: Session = Depends(get_db)):
+    if not token:
+        raise HTTPException(
+            status_code=401,
+            detail="Bearer token wajib dikirim untuk logout",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    try:
+        username = revoke_access_token(db=db, token=token)
+    except JWTError:
+        raise HTTPException(
+            status_code=401,
+            detail="Token tidak valid atau sudah kedaluwarsa",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    return {
+        "message": "Logout berhasil. Token telah dinonaktifkan.",
+        "username": username,
+    }
 
 # --- Users ---
 @router.post("/users/", response_model=schemas.UserResponse, tags=["Users"])
@@ -89,7 +146,6 @@ def delete_question(question_id: int, db: Session = Depends(get_db)):
     if db_question is None:
         raise HTTPException(status_code=404, detail="Question not found")
     return db_question
-
 
 # --- Occupations ---
 @router.post("/occupations/", response_model=schemas.OccupationResponse, tags=["Occupations"])
