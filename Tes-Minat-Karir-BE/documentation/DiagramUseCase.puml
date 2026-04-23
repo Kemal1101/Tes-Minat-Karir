@@ -1,0 +1,56 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam shadowing false
+skinparam nodesep 70
+skinparam ranksep 60
+skinparam defaultTextAlignment center
+skinparam usecase {
+  BackgroundColor LightBlue
+  BorderColor DarkBlue
+  ArrowColor Black
+}
+
+actor "User\n(Peserta)" as user
+actor "Admin" as admin
+
+rectangle "Sistem Pakar Tes Minat Karir RIASEC" {
+
+  package "Akses" {
+    usecase "Registrasi Akun" as UC1
+    usecase "Login" as UC2
+  }
+
+  package "Admin Panel" {
+    usecase "Mengelola Soal\n& Keywords" as UC3
+    usecase "Mengatur Bobot\nPakar (CF)" as UC4
+  }
+
+  package "Tes & Hasil" {
+    usecase "Mengerjakan\nTes RIASEC" as UC5
+    usecase "Menghitung Rekomendasi\n(CF + SAW)" as UC6
+    usecase "Melihat Hasil\n& Rekomendasi" as UC7
+    usecase "Melihat Riwayat\nTes" as UC8
+  }
+}
+
+user --> UC1
+user --> UC2
+user --> UC5
+user --> UC7
+user --> UC8
+
+admin --> UC2
+admin --> UC3
+admin --> UC4
+
+UC3 ..> UC2 : <<include>>
+UC4 ..> UC2 : <<include>>
+UC5 ..> UC2 : <<include>>
+UC7 ..> UC2 : <<include>>
+UC8 ..> UC2 : <<include>>
+
+UC5 ..> UC6 : <<include>>
+UC6 ..> UC7 : <<include>>
+@enduml

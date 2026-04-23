@@ -1,0 +1,59 @@
+@startuml
+' Konfigurasi Tampilan
+hide circle
+skinparam linetype ortho
+skinparam entity {
+    BackgroundColor LightCyan
+    BorderColor DarkBlue
+    ArrowColor Black
+}
+
+' Mendefinisikan Tabel Users
+entity "Users" as users {
+  * id : integer <<PK>>
+  --
+  username : varchar
+  password_hash : text
+  role : varchar
+}
+
+' Mendefinisikan Tabel Test_History
+entity "Test_History" as test_history {
+  * id : integer <<PK>>
+  --
+  ~ user_id : integer <<FK>>
+  holland_code : varchar
+  result_json : jsonb
+  created_at : timestamp
+}
+
+' Mendefinisikan Tabel Questions
+entity "Questions" as questions {
+  * id : integer <<PK>>
+  --
+  text : text
+  category : varchar
+  cf_pakar : float
+  keywords : text
+}
+
+' Mendefinisikan Tabel Occupations
+entity "Occupations" as occupations {
+  * id : integer <<PK>>
+  --
+  interest_code : varchar
+  job_zone : varchar
+  code : varchar
+  title : varchar
+}
+
+' Mendefinisikan Relasi
+users ||..o{ test_history : " Memiliki riwayat "
+
+' Catatan Penjelas (Opsional untuk memperjelas konteks SPK)
+note top of users : Data Pengguna\n(Admin & Peserta)
+note bottom of test_history : Menyimpan hasil akhir\n(CF + SAW)
+note bottom of questions : Basis Pengetahuan Pakar\n(Dikelola Admin)
+note bottom of occupations : Dataset O*NET\n(Referensi Ranking SAW)
+
+@enduml

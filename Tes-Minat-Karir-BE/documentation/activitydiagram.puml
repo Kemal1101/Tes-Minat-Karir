@@ -1,0 +1,41 @@
+@startuml
+|User / Peserta|
+start
+:Memilih menu "Mulai Tes";
+
+|Sistem (Backend API)|
+:Melakukan query 30 Soal dari Database;
+
+|User / Peserta|
+:Menampilkan form kuesioner;
+:Mengisi jawaban skala 1-5\npada seluruh pertanyaan;
+:Menekan tombol "Kirim Jawaban";
+
+|Sistem (Backend API)|
+:Menerima Array 30 Jawaban;
+partition "**FASE 1: DIAGNOSA (Certainty Factor)**" {
+  :Menghitung CF_User berdasarkan jawaban Likert;
+  :Mengalikan CF_User * CF_Pakar;
+  :Menggabungkan CF (CF_Combine) tiap dimensi RIASEC;
+  :Mengurutkan dan mengambil 3 Kode Holland tertinggi;
+}
+
+partition "**FASE 2: FILTERING (Forward Chaining)**" {
+  :Melakukan pencarian profesi di tabel Occupations\nberdasarkan 3 Kode Holland (Level 1 & Level 2);
+  :Mengumpulkan kandidat pekerjaan;
+}
+
+partition "**FASE 3: RANKING (SAW + Keywords)**" {
+  :Ekstrak 'keywords' dari soal\nyang dijawab dengan nilai >= 3;
+  :Hitung Kriteria C1 (Total CF Profesi)\ndan C2 (Kecocokan Keywords);
+  :Normalisasi Matriks Keputusan;
+  :Kalikan dengan Bobot (W1=60%, W2=40%);
+  :Menghitung Nilai Akhir (Vi) dan Mengurutkan Peringkat;
+}
+
+:Menyimpan (Insert) data hasil akhir\nke tabel test_history;
+
+|User / Peserta|
+:Melihat Hasil:\n1. Diagram Kepribadian RIASEC\n2. Top 10 Rekomendasi Pekerjaan;
+stop
+@enduml
