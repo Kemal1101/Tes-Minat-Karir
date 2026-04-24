@@ -4,6 +4,7 @@ from typing import Optional, List
 # --- User Schemas ---
 class UserBase(BaseModel):
     username: str
+    nama_lengkap: Optional[str] = None
     role: str = "user"
 
 class UserCreate(UserBase):
@@ -11,6 +12,7 @@ class UserCreate(UserBase):
 
 class UserUpdate(BaseModel):
     username: Optional[str] = None
+    nama_lengkap: Optional[str] = None
     role: Optional[str] = None
     password: Optional[str] = None
 

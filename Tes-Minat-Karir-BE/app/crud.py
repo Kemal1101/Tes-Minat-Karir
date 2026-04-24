@@ -3,7 +3,7 @@ import hashlib
 from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 
-from app.models import User, Question, OccupationRiasec, TokenBlacklist
+from app.models import User, Question, OccupationRiasec, TokenBlacklist, TestHistory
 from app.schemas import (
     UserCreate, UserUpdate,
     QuestionCreate, QuestionUpdate,
@@ -71,7 +71,12 @@ def get_all_users(db: Session):
 
 def create_user(db: Session, user: UserCreate):
     hashed_password = get_password_hash(user.password)
-    db_user = User(username=user.username, password_hash=hashed_password, role=user.role)
+    db_user = User(
+        username=user.username,
+        nama_lengkap=user.nama_lengkap,
+        password_hash=hashed_password,
+        role=user.role,
+    )
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -96,6 +101,9 @@ def update_user(db: Session, user_id: int, user: UserUpdate):
 def delete_user(db: Session, user_id: int):
     db_user = get_user(db, user_id)
     if db_user:
+        # Hapus relasi turunan agar tidak melanggar foreign key saat user dihapus.
+        db.query(TokenBlacklist).filter(TokenBlacklist.user_id == user_id).delete(synchronize_session=False)
+        db.query(TestHistory).filter(TestHistory.user_id == user_id).delete(synchronize_session=False)
         db.delete(db_user)
         db.commit()
     return db_user
