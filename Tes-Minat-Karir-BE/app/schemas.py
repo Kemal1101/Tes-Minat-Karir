@@ -10,6 +10,11 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str
 
+class UserRegister(BaseModel):
+    username: str
+    password: str
+    nama_lengkap: Optional[str] = None
+
 class UserUpdate(BaseModel):
     username: Optional[str] = None
     nama_lengkap: Optional[str] = None

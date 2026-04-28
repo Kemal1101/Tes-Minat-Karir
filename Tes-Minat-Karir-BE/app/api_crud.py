@@ -1,5 +1,6 @@
 from app.auth import (
     create_access_token,
+    get_admin_user,
     get_current_user,
     verify_password,
     ACCESS_TOKEN_EXPIRE_MINUTES,
@@ -16,10 +17,11 @@ from typing import List
 from app.database import get_db
 from app import models, schemas, crud
 
-router = APIRouter()
+auth_router = APIRouter()
+router = APIRouter(dependencies=[Depends(get_admin_user)])
 
 # --- Auth / Login ---
-@router.post("/login", response_model=schemas.Token, tags=["Auth"])
+@auth_router.post("/login", response_model=schemas.Token, tags=["Auth"])
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # Cari user berdasarkan username
     user = crud.get_user_by_username(db, username=form_data.username)
@@ -41,7 +43,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.post("/logout", tags=["Auth"])
+@auth_router.post("/logout", tags=["Auth"])
 async def logout(token: str | None = Depends(oauth2_scheme_optional), db: Session = Depends(get_db)):
     if not token:
         raise HTTPException(
@@ -63,6 +65,25 @@ async def logout(token: str | None = Depends(oauth2_scheme_optional), db: Sessio
         "message": "Logout berhasil. Token telah dinonaktifkan.",
         "username": username,
     }
+
+@auth_router.post("/register", response_model=schemas.UserResponse, tags=["Auth"])
+def register(user_reg: schemas.UserRegister, db: Session = Depends(get_db)):
+    """
+    Endpoint publik untuk registrasi user baru.
+    User akan dibuat dengan role default 'user'.
+    """
+    db_user = crud.get_user_by_username(db, username=user_reg.username)
+    if db_user:
+        raise HTTPException(status_code=400, detail="Username already registered")
+    
+    # Buat user baru dengan role 'user'
+    user_create = schemas.UserCreate(
+        username=user_reg.username,
+        password=user_reg.password,
+        nama_lengkap=user_reg.nama_lengkap,
+        role="user"
+    )
+    return crud.create_user(db=db, user=user_create)
 
 # --- Users ---
 @router.post("/users/", response_model=schemas.UserResponse, tags=["Users"])
