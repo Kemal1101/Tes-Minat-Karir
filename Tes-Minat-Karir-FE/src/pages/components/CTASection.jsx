@@ -51,29 +51,18 @@ export default function CTASection() {
       <section className="py-16 md:py-24 px-4 md:px-8">
         <div className="max-w-4xl mx-auto bg-white/60 backdrop-blur-xl border border-white/50 rounded-[2rem] p-8 md:p-16 text-center shadow-[0_20px_40px_rgba(0,0,0,0.05)]">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 text-black">
-            Tetap Terhubung
+            Siap Menemukan Arah Karir?
           </h2>
           <p className="text-base md:text-lg text-gray-600 font-medium mb-8 md:mb-10">
-            Dapatkan pembaruan sistem dan wawasan karir terbaru.
+            Mulai tes sekarang dan dapatkan rekomendasi karir yang sesuai dengan minatmu.
           </p>
 
-          <form
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-xl mx-auto"
-            onSubmit={(e) => e.preventDefault()}
+          <button
+            type="button"
+            className="bg-appAccent text-white px-8 py-3.5 md:py-4 rounded-full text-sm md:text-base font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(133,72,54,0.6)] whitespace-nowrap"
           >
-            <input
-              type="email"
-              placeholder="Masukkan alamat email Anda"
-              className="w-full sm:flex-1 bg-white/50 backdrop-blur-sm border border-gray-300 focus:border-appAccent focus:ring-2 focus:ring-appAccent/20 rounded-full px-6 py-4 outline-none transition-all text-black placeholder:text-gray-500 font-medium"
-              required
-            />
-            <button
-              type="submit"
-              className="w-full sm:w-auto bg-appAccent text-white px-8 py-3.5 md:py-4 rounded-full text-sm md:text-base font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(133,72,54,0.6)] whitespace-nowrap"
-            >
-              Berlangganan
-            </button>
-          </form>
+            Mulai Tes Sekarang
+          </button>
         </div>
       </section>
     </>
