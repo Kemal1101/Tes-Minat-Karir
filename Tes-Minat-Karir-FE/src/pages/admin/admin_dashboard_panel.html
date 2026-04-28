@@ -1,0 +1,1151 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --app-accent: #854F0B;
+    --app-accent-light: #FAEEDA;
+    --app-blob: #FAC775;
+    --bg-main: #F7F7F7;
+    --bg-card: rgba(255,255,255,0.7);
+    --bg-sidebar: rgba(255,255,255,0.85);
+    --border: rgba(0,0,0,0.08);
+    --text-primary: #111;
+    --text-muted: #6b7280;
+    --text-xs: #9ca3af;
+    --danger: #E24B4A;
+    --danger-light: #FCEBEB;
+    --success: #3B6D11;
+    --success-light: #EAF3DE;
+    --info: #185FA5;
+    --info-light: #E6F1FB;
+    --amber: #854F0B;
+    --amber-light: #FAEEDA;
+    --sidebar-w: 240px;
+    --font: 'Plus Jakarta Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  body { font-family: var(--font); background: var(--bg-main); color: var(--text-primary); min-height: 100vh; display: flex; overflow: hidden; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-height: 100vh;
+    background: var(--bg-sidebar);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-logo {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-mark {
+    width: 32px; height: 32px;
+    background: var(--app-accent);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 800; font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .logo-text { font-weight: 800; font-size: 14px; color: var(--text-primary); line-height: 1.2; }
+  .logo-sub { font-size: 10px; color: var(--text-muted); font-weight: 500; font-family: var(--mono); }
+
+  .sidebar-section { padding: 12px 12px 4px; }
+  .sidebar-label { font-size: 10px; font-weight: 700; color: var(--text-xs); letter-spacing: 0.08em; text-transform: uppercase; padding: 0 8px; margin-bottom: 4px; }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.15s ease;
+    margin-bottom: 2px;
+    border: none; background: none; width: 100%; text-align: left;
+  }
+
+  .nav-item:hover { background: rgba(133,79,11,0.06); color: var(--text-primary); }
+  .nav-item.active { background: var(--amber-light); color: var(--app-accent); font-weight: 700; }
+
+  .nav-icon {
+    width: 18px; height: 18px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--app-accent);
+    color: white;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 999px;
+    font-family: var(--mono);
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 16px 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .admin-card {
+    background: var(--amber-light);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .admin-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--app-accent);
+    color: white; font-weight: 800; font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .admin-name { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+  .admin-role { font-size: 10px; color: var(--app-accent); font-weight: 600; }
+
+  /* MAIN */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 50;
+  }
+
+  .page-title { font-size: 16px; font-weight: 800; color: var(--text-primary); }
+  .page-subtitle { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-top: 1px; }
+
+  .topbar-actions { display: flex; align-items: center; gap: 8px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 12px; font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s ease;
+    font-family: var(--font);
+  }
+
+  .btn-primary { background: var(--app-accent); color: white; }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+  .btn-ghost:hover { background: rgba(0,0,0,0.04); color: var(--text-primary); }
+
+  .btn-sm { padding: 5px 10px; font-size: 11px; }
+  .btn-danger { background: var(--danger-light); color: var(--danger); }
+  .btn-danger:hover { background: var(--danger); color: white; }
+  .btn-success { background: var(--success-light); color: var(--success); }
+
+  /* CONTENT */
+  .content { padding: 24px; overflow-y: auto; height: calc(100vh - 56px); }
+
+  /* STATS ROW */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+
+  .stat-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 18px;
+    transition: all 0.2s ease;
+  }
+
+  .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(133,79,11,0.1); }
+
+  .stat-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .stat-value { font-size: 28px; font-weight: 800; color: var(--text-primary); line-height: 1; }
+  .stat-sub { font-size: 11px; color: var(--text-muted); margin-top: 6px; font-weight: 500; }
+
+  .stat-badge {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 10px; font-weight: 700;
+    padding: 3px 7px; border-radius: 999px;
+    margin-top: 6px;
+  }
+
+  .badge-up { background: var(--success-light); color: var(--success); }
+  .badge-neutral { background: var(--info-light); color: var(--info); }
+
+  /* TABLE CARD */
+  .table-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .table-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+  }
+
+  .table-title { font-size: 14px; font-weight: 800; color: var(--text-primary); }
+
+  .search-input {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(0,0,0,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-family: var(--font);
+    outline: none;
+    width: 200px;
+    color: var(--text-primary);
+    transition: all 0.15s;
+  }
+
+  .search-input:focus { border-color: var(--app-accent); background: white; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  td { padding: 12px 16px; font-size: 13px; color: var(--text-primary); border-bottom: 1px solid rgba(0,0,0,0.04); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(133,79,11,0.02); }
+
+  .avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--amber-light); color: var(--app-accent); font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  .user-cell { display: flex; align-items: center; gap: 10px; }
+  .user-name { font-weight: 600; font-size: 13px; }
+  .user-email { font-size: 11px; color: var(--text-muted); font-weight: 400; }
+
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 11px; font-weight: 700;
+  }
+
+  .badge-active { background: var(--success-light); color: var(--success); }
+  .badge-inactive { background: #F1EFE8; color: #5F5E5A; }
+  .badge-admin { background: var(--amber-light); color: var(--amber); }
+  .badge-user { background: var(--info-light); color: var(--info); }
+  .badge-blocked { background: var(--danger-light); color: var(--danger); }
+
+  .action-btns { display: flex; gap: 5px; }
+
+  /* PAGINATION */
+  .table-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .page-info { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+
+  .page-btns { display: flex; gap: 4px; }
+  .page-btn { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--border); background: transparent; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .page-btn:hover { background: var(--amber-light); color: var(--app-accent); border-color: var(--app-accent); }
+  .page-btn.active { background: var(--app-accent); color: white; border-color: var(--app-accent); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    align-items: center; justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    width: 480px;
+    max-width: 90vw;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: modalIn 0.25s ease;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+
+  @keyframes modalIn { from { transform: scale(0.95) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+
+  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .modal-title { font-size: 16px; font-weight: 800; color: var(--text-primary); }
+
+  .modal-close { width: 28px; height: 28px; border-radius: 8px; border: none; background: #F1EFE8; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all 0.15s; }
+  .modal-close:hover { background: var(--danger-light); color: var(--danger); }
+
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; display: block; }
+
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 13px; font-family: var(--font);
+    color: var(--text-primary);
+    background: #F7F7F7;
+    outline: none;
+    transition: all 0.15s;
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--app-accent); background: white; box-shadow: 0 0 0 3px rgba(133,79,11,0.08); }
+  .form-textarea { resize: vertical; min-height: 80px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+
+  /* DELETE CONFIRM */
+  .delete-modal { text-align: center; }
+  .delete-icon { width: 52px; height: 52px; background: var(--danger-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 22px; }
+  .delete-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+  .delete-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--text-primary);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 13px; font-weight: 600;
+    z-index: 999;
+    transform: translateY(100px);
+    transition: transform 0.3s ease;
+    display: flex; align-items: center; gap: 8px;
+    max-width: 320px;
+  }
+
+  .toast.show { transform: translateY(0); }
+  .toast.success { background: var(--success); }
+  .toast.danger { background: var(--danger); }
+
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); }
+  .empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.4; }
+  .empty-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .empty-desc { font-size: 12px; }
+
+  /* SECTION TITLES */
+  .section-header { margin-bottom: 16px; }
+  .section-title { font-size: 18px; font-weight: 800; color: var(--text-primary); }
+  .section-desc { font-size: 13px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
+
+  /* RESPONSIVE GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* BLOBS */
+  .bg-blobs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.4; }
+  .blob-1 { width: 400px; height: 400px; background: #FAC77540; top: -100px; right: -50px; }
+  .blob-2 { width: 300px; height: 300px; background: #FAEEDA50; bottom: -50px; left: 200px; }
+
+  /* VIEWS */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* TOKEN TABLE */
+  .mono-text { font-family: var(--mono); font-size: 11px; background: #F1EFE8; padding: 3px 7px; border-radius: 6px; color: #5F5E5A; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; }
+
+  /* QUESTION RIASEC */
+  .riasec-badge { display: inline-flex; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+  .r-R { background: #FCEBEB; color: #A32D2D; }
+  .r-I { background: #E6F1FB; color: #185FA5; }
+  .r-A { background: #FBEAF0; color: #993556; }
+  .r-S { background: #EAF3DE; color: #3B6D11; }
+  .r-E { background: #FAEEDA; color: #854F0B; }
+  .r-C { background: #EEEDFE; color: #534AB7; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 99px; }
+</style>
+</head>
+<body>
+
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">K</div>
+    <div>
+      <div class="logo-text">KarirPakar</div>
+      <div class="logo-sub">Admin Console</div>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Manajemen</div>
+    <button class="nav-item active" onclick="switchView('users', this)">
+      <span class="nav-icon">👥</span>
+      Daftar Pengguna
+      <span class="nav-badge" id="badge-users">24</span>
+    </button>
+    <button class="nav-item" onclick="switchView('test_history', this)">
+      <span class="nav-icon">📋</span>
+      Test History
+    </button>
+    <button class="nav-item" onclick="switchView('questions', this)">
+      <span class="nav-icon">❓</span>
+      Pertanyaan
+    </button>
+    <button class="nav-item" onclick="switchView('occupations', this)">
+      <span class="nav-icon">💼</span>
+      Pekerjaan
+    </button>
+    <button class="nav-item" onclick="switchView('token_blacklist', this)">
+      <span class="nav-icon">🔒</span>
+      Token Blacklist
+      <span class="nav-badge" id="badge-tokens" style="background:#E24B4A">3</span>
+    </button>
+  </div>
+
+  <div class="sidebar-section" style="margin-top: 8px;">
+    <div class="sidebar-label">Sistem</div>
+    <button class="nav-item" onclick="showToast('Fitur dalam pengembangan', 'info')">
+      <span class="nav-icon">⚙️</span>
+      Pengaturan
+    </button>
+    <button class="nav-item" onclick="showToast('Berhasil keluar dari sistem', 'success')" style="color: #E24B4A;">
+      <span class="nav-icon">🚪</span>
+      Keluar
+    </button>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="admin-card">
+      <div class="admin-avatar">SA</div>
+      <div>
+        <div class="admin-name">Super Admin</div>
+        <div class="admin-role">Administrator</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title" id="topbar-title">Daftar Pengguna</div>
+      <div class="page-subtitle" id="topbar-sub">Kelola semua pengguna sistem</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost btn-sm" onclick="showToast('Memuat ulang data...', 'info')">↻ Refresh</button>
+      <button class="btn btn-primary btn-sm" id="topbar-add-btn" onclick="openAddModal()">+ Tambah Pengguna</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ===== VIEW: USERS ===== -->
+    <div class="view active" id="view-users">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Pengguna</div>
+          <div class="stat-value">24</div>
+          <span class="stat-badge badge-up">↑ 4 bulan ini</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Aktif</div>
+          <div class="stat-value">19</div>
+          <span class="stat-badge badge-up">79%</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Admin</div>
+          <div class="stat-value">2</div>
+          <span class="stat-badge badge-neutral">dari total</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Nonaktif</div>
+          <div class="stat-value">3</div>
+          <span class="stat-badge" style="background:#FCEBEB;color:#A32D2D;">perlu tindak</span>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Semua Pengguna</div>
+          <input class="search-input" placeholder="🔍  Cari nama atau email..." oninput="filterUsers(this.value)" id="search-users">
+        </div>
+        <table id="users-table">
+          <thead>
+            <tr>
+              <th>Pengguna</th>
+              <th>Peran</th>
+              <th>Status</th>
+              <th>Bergabung</th>
+              <th>Tes</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="users-tbody"></tbody>
+        </table>
+        <div class="table-footer">
+          <div class="page-info" id="users-page-info">Menampilkan 1-8 dari 24 pengguna</div>
+          <div class="page-btns">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: TEST HISTORY ===== -->
+    <div class="view" id="view-test_history">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Tes</div>
+          <div class="stat-value">142</div>
+          <span class="stat-badge badge-up">↑ 12 minggu ini</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Rata-rata Skor CF</div>
+          <div class="stat-value">0.78</div>
+          <span class="stat-badge badge-neutral">keyakinan tinggi</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Tipe Dominan</div>
+          <div class="stat-value" style="font-size:20px;">Social</div>
+          <span class="stat-badge badge-up">38%</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Tes Hari Ini</div>
+          <div class="stat-value">7</div>
+          <span class="stat-badge badge-neutral">aktif</span>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Riwayat Tes</div>
+          <input class="search-input" placeholder="🔍  Cari pengguna...">
+        </div>
+        <table>
+          <thead><tr><th>Pengguna</th><th>Tipe Holland</th><th>Skor SAW</th><th>Skor CF</th><th>Rekomendasi Karir</th><th>Tanggal</th><th>Aksi</th></tr></thead>
+          <tbody id="history-tbody"></tbody>
+        </table>
+        <div class="table-footer">
+          <div class="page-info">Menampilkan 1-8 dari 142 tes</div>
+          <div class="page-btns">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: QUESTIONS ===== -->
+    <div class="view" id="view-questions">
+      <div class="stats-grid" style="grid-template-columns: repeat(3,1fr)">
+        <div class="stat-card"><div class="stat-label">Total Soal</div><div class="stat-value">90</div><span class="stat-badge badge-neutral">6 tipe RIASEC</span></div>
+        <div class="stat-card"><div class="stat-label">Per Tipe</div><div class="stat-value">15</div><span class="stat-badge badge-up">seimbang</span></div>
+        <div class="stat-card"><div class="stat-label">Bobot Rata-rata</div><div class="stat-value">0.17</div><span class="stat-badge badge-neutral">SAW</span></div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Bank Soal</div>
+          <div style="display:flex;gap:8px;">
+            <select class="form-select" style="width:140px;padding:7px 10px;font-size:12px;" onchange="filterQuestions(this.value)">
+              <option value="">Semua Tipe</option>
+              <option value="R">Realistic (R)</option>
+              <option value="I">Investigative (I)</option>
+              <option value="A">Artistic (A)</option>
+              <option value="S">Social (S)</option>
+              <option value="E">Enterprising (E)</option>
+              <option value="C">Conventional (C)</option>
+            </select>
+            <input class="search-input" style="width:160px;" placeholder="🔍  Cari soal...">
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>#</th><th>Pertanyaan</th><th>Tipe RIASEC</th><th>Bobot SAW</th><th>CF Prior</th><th>Aksi</th></tr></thead>
+          <tbody id="questions-tbody"></tbody>
+        </table>
+        <div class="table-footer">
+          <div class="page-info">Menampilkan 1-8 dari 90 soal</div>
+          <div class="page-btns">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: OCCUPATIONS ===== -->
+    <div class="view" id="view-occupations">
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card"><div class="stat-label">Total Pekerjaan</div><div class="stat-value">186</div><span class="stat-badge badge-neutral">O*NET basis</span></div>
+        <div class="stat-card"><div class="stat-label">Sektor Industri</div><div class="stat-value">14</div><span class="stat-badge badge-up">beragam</span></div>
+        <div class="stat-card"><div class="stat-label">Direkomendasikan</div><div class="stat-value">12.4k</div><span class="stat-badge badge-up">total kali</span></div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Daftar Pekerjaan</div>
+          <input class="search-input" placeholder="🔍  Cari pekerjaan...">
+        </div>
+        <table>
+          <thead><tr><th>Nama Pekerjaan</th><th>Kode O*NET</th><th>Tipe Holland</th><th>Sektor</th><th>Bobot SAW</th><th>Aksi</th></tr></thead>
+          <tbody id="occupations-tbody"></tbody>
+        </table>
+        <div class="table-footer">
+          <div class="page-info">Menampilkan 1-8 dari 186 pekerjaan</div>
+          <div class="page-btns">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: TOKEN BLACKLIST ===== -->
+    <div class="view" id="view-token_blacklist">
+      <div style="background:#FCEBEB;border:1px solid #F7C1C1;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+        <span style="font-size:16px;">⚠️</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#A32D2D;">3 token aktif di-blacklist</div>
+          <div style="font-size:12px;color:#793333;">Token ini tidak dapat digunakan untuk autentikasi lebih lanjut.</div>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Token Blacklist</div>
+          <input class="search-input" placeholder="🔍  Cari token atau pengguna...">
+        </div>
+        <table>
+          <thead><tr><th>Token (JTI)</th><th>Pengguna</th><th>Alasan</th><th>Diblokir Oleh</th><th>Tanggal Blokir</th><th>Kedaluwarsa</th><th>Aksi</th></tr></thead>
+          <tbody id="tokens-tbody"></tbody>
+        </table>
+        <div class="table-footer">
+          <div class="page-info">Menampilkan 1-3 dari 3 token</div>
+          <div class="page-btns"><button class="page-btn active">1</button></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- MODALS -->
+
+<!-- ADD/EDIT USER MODAL -->
+<div class="modal-overlay" id="modal-user">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-user-title">Tambah Pengguna</div>
+      <button class="modal-close" onclick="closeModal('modal-user')">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Nama Depan</label>
+        <input class="form-input" placeholder="Budi" id="field-fname">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nama Belakang</label>
+        <input class="form-input" placeholder="Santoso" id="field-lname">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input class="form-input" type="email" placeholder="budi@email.com" id="field-email">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password Baru <span style="color:var(--text-muted);font-weight:400;">(kosongkan jika tidak diubah)</span></label>
+      <input class="form-input" type="password" placeholder="••••••••" id="field-pass">
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Peran</label>
+        <select class="form-select" id="field-role">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Status</label>
+        <select class="form-select" id="field-status">
+          <option value="active">Aktif</option>
+          <option value="inactive">Nonaktif</option>
+          <option value="blocked">Diblokir</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-user')">Batal</button>
+      <button class="btn btn-primary" onclick="saveUser()">Simpan Pengguna</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW USER DETAIL MODAL -->
+<div class="modal-overlay" id="modal-user-detail">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Detail Pengguna</div>
+      <button class="modal-close" onclick="closeModal('modal-user-detail')">✕</button>
+    </div>
+    <div id="user-detail-content"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-user-detail')">Tutup</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-user-detail');openAddModal()">Edit Pengguna</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal-overlay" id="modal-delete">
+  <div class="modal" style="max-width:380px;">
+    <div class="delete-modal">
+      <div class="delete-icon">🗑️</div>
+      <div class="delete-title" id="delete-title">Hapus Pengguna?</div>
+      <div class="delete-desc" id="delete-desc">Tindakan ini tidak dapat dibatalkan. Data akan dihapus permanen dari sistem.</div>
+      <div class="modal-footer" style="justify-content:center;">
+        <button class="btn btn-ghost" onclick="closeModal('modal-delete')">Batal</button>
+        <button class="btn btn-danger" id="confirm-delete-btn">Ya, Hapus</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD/EDIT OCCUPATION MODAL -->
+<div class="modal-overlay" id="modal-occupation">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-occupation-title">Tambah Pekerjaan</div>
+      <button class="modal-close" onclick="closeModal('modal-occupation')">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nama Pekerjaan</label>
+      <input class="form-input" placeholder="Software Engineer">
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Kode O*NET</label>
+        <input class="form-input" placeholder="15-1252.00" style="font-family:var(--mono);font-size:12px;">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sektor</label>
+        <select class="form-select">
+          <option>Teknologi Informasi</option>
+          <option>Kesehatan</option>
+          <option>Pendidikan</option>
+          <option>Keuangan</option>
+          <option>Seni & Desain</option>
+          <option>Teknik</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Tipe Holland Primer</label>
+        <select class="form-select">
+          <option value="R">Realistic (R)</option>
+          <option value="I">Investigative (I)</option>
+          <option value="A">Artistic (A)</option>
+          <option value="S">Social (S)</option>
+          <option value="E">Enterprising (E)</option>
+          <option value="C">Conventional (C)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bobot SAW</label>
+        <input class="form-input" type="number" min="0" max="1" step="0.01" placeholder="0.85">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Deskripsi Pekerjaan</label>
+      <textarea class="form-textarea" placeholder="Deskripsi singkat tentang pekerjaan ini..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-occupation')">Batal</button>
+      <button class="btn btn-primary" onclick="showToast('Pekerjaan berhasil disimpan!','success');closeModal('modal-occupation')">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD QUESTION MODAL -->
+<div class="modal-overlay" id="modal-question">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Tambah Pertanyaan</div>
+      <button class="modal-close" onclick="closeModal('modal-question')">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Teks Pertanyaan</label>
+      <textarea class="form-textarea" placeholder="Saya suka melakukan pekerjaan dengan tangan atau menggunakan alat mekanik..."></textarea>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Tipe RIASEC</label>
+        <select class="form-select">
+          <option value="R">Realistic (R)</option>
+          <option value="I">Investigative (I)</option>
+          <option value="A">Artistic (A)</option>
+          <option value="S">Social (S)</option>
+          <option value="E">Enterprising (E)</option>
+          <option value="C">Conventional (C)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bobot SAW</label>
+        <input class="form-input" type="number" min="0" max="1" step="0.001" placeholder="0.167">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">CF Prior</label>
+      <input class="form-input" type="number" min="0" max="1" step="0.01" placeholder="0.5">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-question')">Batal</button>
+      <button class="btn btn-primary" onclick="showToast('Pertanyaan berhasil ditambahkan!','success');closeModal('modal-question')">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Berhasil disimpan</div>
+
+<script>
+const USERS = [
+  { id:1, fname:'Andi', lname:'Prasetyo', email:'andi@email.com', role:'user', status:'active', joined:'12 Jan 2025', tests:3 },
+  { id:2, fname:'Siti', lname:'Rahayu', email:'siti@email.com', role:'user', status:'active', joined:'18 Jan 2025', tests:1 },
+  { id:3, fname:'Budi', lname:'Santoso', email:'budi@email.com', role:'admin', status:'active', joined:'5 Feb 2025', tests:0 },
+  { id:4, fname:'Dewi', lname:'Kurniawan', email:'dewi@email.com', role:'user', status:'inactive', joined:'20 Feb 2025', tests:2 },
+  { id:5, fname:'Fajar', lname:'Nugroho', email:'fajar@email.com', role:'user', status:'active', joined:'3 Mar 2025', tests:4 },
+  { id:6, fname:'Laila', lname:'Hasanah', email:'laila@email.com', role:'user', status:'active', joined:'15 Mar 2025', tests:1 },
+  { id:7, fname:'Rizki', lname:'Pratama', email:'rizki@email.com', role:'user', status:'blocked', joined:'22 Mar 2025', tests:0 },
+  { id:8, fname:'Maya', lname:'Indrawati', email:'maya@email.com', role:'user', status:'active', joined:'1 Apr 2025', tests:2 },
+];
+
+const HISTORY = [
+  { user:'Andi Prasetyo', type:'SAI', saw:0.87, cf:0.82, career:'Software Engineer', date:'15 Apr 2025' },
+  { user:'Maya Indrawati', type:'AES', saw:0.79, cf:0.75, career:'UI/UX Designer', date:'16 Apr 2025' },
+  { user:'Fajar Nugroho', type:'RIC', saw:0.91, cf:0.88, career:'Civil Engineer', date:'17 Apr 2025' },
+  { user:'Siti Rahayu', type:'SCE', saw:0.73, cf:0.71, career:'HR Manager', date:'18 Apr 2025' },
+  { user:'Dewi Kurniawan', type:'IAS', saw:0.84, cf:0.80, career:'Data Scientist', date:'19 Apr 2025' },
+  { user:'Laila Hasanah', type:'SEA', saw:0.76, cf:0.72, career:'Marketing Manager', date:'20 Apr 2025' },
+  { user:'Ahmad Fauzi', type:'ECS', saw:0.68, cf:0.65, career:'Business Analyst', date:'21 Apr 2025' },
+  { user:'Rina Marlina', type:'CIS', saw:0.82, cf:0.79, career:'Accountant', date:'22 Apr 2025' },
+];
+
+const QUESTIONS = [
+  { id:1, text:'Saya suka memperbaiki atau membangun sesuatu dengan tangan saya.', type:'R', saw:0.167, cf:0.5 },
+  { id:2, text:'Saya menikmati memecahkan masalah ilmiah atau matematis yang kompleks.', type:'I', saw:0.167, cf:0.5 },
+  { id:3, text:'Saya suka menciptakan karya seni, musik, atau tulisan kreatif.', type:'A', saw:0.167, cf:0.5 },
+  { id:4, text:'Saya senang membantu dan mengajar orang lain.', type:'S', saw:0.167, cf:0.5 },
+  { id:5, text:'Saya menikmati memimpin tim dan mengambil keputusan bisnis.', type:'E', saw:0.167, cf:0.5 },
+  { id:6, text:'Saya lebih suka pekerjaan yang terstruktur dengan prosedur yang jelas.', type:'C', saw:0.167, cf:0.5 },
+  { id:7, text:'Saya tertarik bekerja dengan mesin, peralatan, atau teknologi fisik.', type:'R', saw:0.167, cf:0.5 },
+  { id:8, text:'Saya suka menganalisis data dan menemukan pola tersembunyi.', type:'I', saw:0.167, cf:0.5 },
+];
+
+const OCCUPATIONS = [
+  { name:'Software Engineer', onet:'15-1252.00', holland:'I', sector:'Teknologi Informasi', saw:0.88 },
+  { name:'UX/UI Designer', onet:'27-1021.00', holland:'A', sector:'Seni & Desain', saw:0.82 },
+  { name:'Data Scientist', onet:'15-2051.00', holland:'I', sector:'Teknologi Informasi', saw:0.91 },
+  { name:'HR Manager', onet:'11-3121.00', holland:'S', sector:'Manajemen SDM', saw:0.76 },
+  { name:'Civil Engineer', onet:'17-2051.00', holland:'R', sector:'Teknik', saw:0.85 },
+  { name:'Business Analyst', onet:'13-1111.00', holland:'E', sector:'Keuangan', saw:0.79 },
+  { name:'Accountant', onet:'13-2011.00', holland:'C', sector:'Keuangan', saw:0.83 },
+  { name:'Graphic Designer', onet:'27-1024.00', holland:'A', sector:'Seni & Desain', saw:0.77 },
+];
+
+const TOKENS = [
+  { jti:'eyJhbGci...abc123', user:'Rizki Pratama', reason:'Login paksa dari device lain', by:'Super Admin', blocked:'22 Mar 2025', expires:'22 Apr 2025' },
+  { jti:'eyJhbGci...xyz789', user:'Ahmad Fauzi', reason:'Akun dilaporkan mencurigakan', by:'Super Admin', blocked:'10 Apr 2025', expires:'10 May 2025' },
+  { jti:'eyJhbGci...def456', user:'Toni Hidayat', reason:'Reset password manual', by:'Super Admin', blocked:'20 Apr 2025', expires:'20 May 2025' },
+];
+
+let currentView = 'users';
+let editingUser = null;
+let deleteCallback = null;
+
+function switchView(view, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+  btn.classList.add('active');
+  currentView = view;
+
+  const titles = {
+    users: ['Daftar Pengguna','Kelola semua pengguna sistem'],
+    test_history: ['Test History','Riwayat hasil tes pengguna'],
+    questions: ['Bank Pertanyaan','Kelola soal RIASEC untuk tes'],
+    occupations: ['Daftar Pekerjaan','Kelola data pekerjaan O*NET'],
+    token_blacklist: ['Token Blacklist','Kelola token yang dinonaktifkan'],
+  };
+  const addLabels = {
+    users: '+ Tambah Pengguna',
+    test_history: '+ Tambah Riwayat',
+    questions: '+ Tambah Soal',
+    occupations: '+ Tambah Pekerjaan',
+    token_blacklist: '+ Blacklist Token',
+  };
+  document.getElementById('topbar-title').textContent = titles[view][0];
+  document.getElementById('topbar-sub').textContent = titles[view][1];
+  document.getElementById('topbar-add-btn').textContent = addLabels[view];
+}
+
+function openAddModal() {
+  const view = currentView;
+  if(view === 'users') { editingUser = null; document.getElementById('modal-user-title').textContent = 'Tambah Pengguna'; ['fname','lname','email','pass'].forEach(f => document.getElementById('field-'+f).value=''); document.getElementById('modal-user').classList.add('open'); }
+  else if(view === 'occupations') { document.getElementById('modal-occupation-title').textContent = 'Tambah Pekerjaan'; document.getElementById('modal-occupation').classList.add('open'); }
+  else if(view === 'questions') { document.getElementById('modal-question').classList.add('open'); }
+  else { showToast('Fitur dalam pengembangan','info'); }
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function renderUsers(data) {
+  const statusBadge = { active:'badge-active', inactive:'badge-inactive', blocked:'badge-blocked' };
+  const statusLabel = { active:'Aktif', inactive:'Nonaktif', blocked:'Diblokir' };
+  const roleBadge = { admin:'badge-admin', user:'badge-user' };
+  const roleLabel = { admin:'Admin', user:'User' };
+  document.getElementById('users-tbody').innerHTML = data.map(u => `
+    <tr>
+      <td>
+        <div class="user-cell">
+          <div class="avatar">${u.fname[0]}${u.lname[0]}</div>
+          <div>
+            <div class="user-name">${u.fname} ${u.lname}</div>
+            <div class="user-email">${u.email}</div>
+          </div>
+        </div>
+      </td>
+      <td><span class="badge ${roleBadge[u.role]}">${roleLabel[u.role]}</span></td>
+      <td><span class="badge ${statusBadge[u.status]}">${statusLabel[u.status]}</span></td>
+      <td style="color:var(--text-muted);font-size:12px;">${u.joined}</td>
+      <td style="font-weight:600;">${u.tests}</td>
+      <td>
+        <div class="action-btns">
+          <button class="btn btn-ghost btn-sm" onclick="viewUser(${u.id})">Detail</button>
+          <button class="btn btn-ghost btn-sm" onclick="editUser(${u.id})">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmDelete('Hapus pengguna <strong>${u.fname} ${u.lname}</strong>?','Semua data tes dan riwayat pengguna ini akan dihapus permanen.',()=>deleteUser(${u.id}))">Hapus</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function filterUsers(val) {
+  const filtered = USERS.filter(u => `${u.fname} ${u.lname} ${u.email}`.toLowerCase().includes(val.toLowerCase()));
+  renderUsers(filtered);
+  document.getElementById('users-page-info').textContent = `Menampilkan ${filtered.length} dari ${USERS.length} pengguna`;
+}
+
+function viewUser(id) {
+  const u = USERS.find(x=>x.id===id);
+  if(!u) return;
+  document.getElementById('user-detail-content').innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border);">
+      <div style="width:56px;height:56px;border-radius:50%;background:var(--amber-light);color:var(--app-accent);font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;">${u.fname[0]}${u.lname[0]}</div>
+      <div>
+        <div style="font-size:18px;font-weight:800;">${u.fname} ${u.lname}</div>
+        <div style="font-size:13px;color:var(--text-muted);">${u.email}</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#F7F7F7;border-radius:10px;padding:12px;">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:600;margin-bottom:4px;">PERAN</div>
+        <div style="font-size:14px;font-weight:700;">${u.role === 'admin' ? '🛡️ Admin' : '👤 User'}</div>
+      </div>
+      <div style="background:#F7F7F7;border-radius:10px;padding:12px;">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:600;margin-bottom:4px;">STATUS</div>
+        <div style="font-size:14px;font-weight:700;">${u.status === 'active' ? '✅ Aktif' : u.status === 'blocked' ? '🚫 Diblokir' : '⏸️ Nonaktif'}</div>
+      </div>
+      <div style="background:#F7F7F7;border-radius:10px;padding:12px;">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:600;margin-bottom:4px;">BERGABUNG</div>
+        <div style="font-size:14px;font-weight:700;">${u.joined}</div>
+      </div>
+      <div style="background:#F7F7F7;border-radius:10px;padding:12px;">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:600;margin-bottom:4px;">TOTAL TES</div>
+        <div style="font-size:14px;font-weight:700;">${u.tests} kali</div>
+      </div>
+    </div>
+  `;
+  document.getElementById('modal-user-detail').classList.add('open');
+}
+
+function editUser(id) {
+  const u = USERS.find(x=>x.id===id);
+  if(!u) return;
+  editingUser = id;
+  document.getElementById('modal-user-title').textContent = 'Edit Pengguna';
+  document.getElementById('field-fname').value = u.fname;
+  document.getElementById('field-lname').value = u.lname;
+  document.getElementById('field-email').value = u.email;
+  document.getElementById('field-role').value = u.role;
+  document.getElementById('field-status').value = u.status;
+  document.getElementById('modal-user').classList.add('open');
+}
+
+function saveUser() {
+  closeModal('modal-user');
+  showToast(editingUser ? 'Pengguna berhasil diperbarui!' : 'Pengguna baru berhasil ditambahkan!', 'success');
+}
+
+function confirmDelete(title, desc, cb) {
+  document.getElementById('delete-title').innerHTML = title;
+  document.getElementById('delete-desc').textContent = desc;
+  deleteCallback = cb;
+  document.getElementById('confirm-delete-btn').onclick = () => { cb(); closeModal('modal-delete'); };
+  document.getElementById('modal-delete').classList.add('open');
+}
+
+function deleteUser(id) {
+  showToast('Pengguna berhasil dihapus', 'danger');
+}
+
+function renderHistory() {
+  document.getElementById('history-tbody').innerHTML = HISTORY.map(h => `
+    <tr>
+      <td>
+        <div class="user-cell">
+          <div class="avatar" style="font-size:10px;">${h.user.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
+          <span style="font-weight:600;font-size:13px;">${h.user}</span>
+        </div>
+      </td>
+      <td>${h.type.split('').map(c=>`<span class="riasec-badge r-${c}" style="margin-right:2px;">${c}</span>`).join('')}</td>
+      <td><span style="font-family:var(--mono);font-size:12px;font-weight:700;">${h.saw.toFixed(2)}</span></td>
+      <td><span style="font-family:var(--mono);font-size:12px;font-weight:700;">${h.cf.toFixed(2)}</span></td>
+      <td style="font-size:12px;font-weight:600;color:var(--app-accent);">${h.career}</td>
+      <td style="font-size:12px;color:var(--text-muted);">${h.date}</td>
+      <td>
+        <div class="action-btns">
+          <button class="btn btn-ghost btn-sm" onclick="showToast('Memuat detail tes...','info')">Lihat</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmDelete('Hapus riwayat tes ini?','Riwayat tes pengguna ini akan dihapus permanen.',()=>showToast('Riwayat dihapus','danger'))">Hapus</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderQuestions(data) {
+  document.getElementById('questions-tbody').innerHTML = data.map(q => `
+    <tr>
+      <td style="font-family:var(--mono);font-size:12px;color:var(--text-muted);">${q.id.toString().padStart(2,'0')}</td>
+      <td style="max-width:280px;font-size:12px;line-height:1.5;">${q.text}</td>
+      <td><span class="riasec-badge r-${q.type}">${q.type}</span></td>
+      <td style="font-family:var(--mono);font-size:12px;">${q.saw.toFixed(3)}</td>
+      <td style="font-family:var(--mono);font-size:12px;">${q.cf.toFixed(1)}</td>
+      <td>
+        <div class="action-btns">
+          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('modal-question').classList.add('open')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmDelete('Hapus pertanyaan ini?','Pertanyaan tidak dapat dipulihkan setelah dihapus.',()=>showToast('Pertanyaan dihapus','danger'))">Hapus</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function filterQuestions(type) {
+  const filtered = type ? QUESTIONS.filter(q=>q.type===type) : QUESTIONS;
+  renderQuestions(filtered);
+}
+
+function renderOccupations() {
+  document.getElementById('occupations-tbody').innerHTML = OCCUPATIONS.map(o => `
+    <tr>
+      <td style="font-weight:600;">${o.name}</td>
+      <td><span class="mono-text">${o.onet}</span></td>
+      <td><span class="riasec-badge r-${o.holland}">${o.holland}</span></td>
+      <td style="font-size:12px;color:var(--text-muted);">${o.sector}</td>
+      <td style="font-family:var(--mono);font-size:12px;font-weight:600;">${o.saw.toFixed(2)}</td>
+      <td>
+        <div class="action-btns">
+          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('modal-occupation').classList.add('open')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmDelete('Hapus pekerjaan <strong>${o.name}</strong>?','Pekerjaan ini tidak akan muncul di rekomendasi setelah dihapus.',()=>showToast('Pekerjaan dihapus','danger'))">Hapus</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderTokens() {
+  document.getElementById('tokens-tbody').innerHTML = TOKENS.map((t,i) => `
+    <tr>
+      <td><span class="mono-text">${t.jti}</span></td>
+      <td style="font-weight:600;font-size:12px;">${t.user}</td>
+      <td style="font-size:12px;color:var(--text-muted);max-width:160px;">${t.reason}</td>
+      <td style="font-size:12px;color:var(--text-muted);">${t.by}</td>
+      <td style="font-size:12px;color:var(--danger);font-weight:600;">${t.blocked}</td>
+      <td style="font-size:12px;color:var(--text-muted);">${t.expires}</td>
+      <td>
+        <button class="btn btn-success btn-sm" onclick="confirmDelete('Hapus token dari blacklist?','Token ini akan aktif kembali setelah dihapus dari blacklist.',()=>showToast('Token dihapus dari blacklist','success'))">Hapus</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+let toastTimeout;
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = type === 'success' ? '✓ ' + msg : type === 'danger' ? '✕ ' + msg : 'ℹ ' + msg;
+  t.className = 'toast show ' + (type === 'success' ? 'success' : type === 'danger' ? 'danger' : '');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if(e.target === m) m.classList.remove('open'); });
+});
+
+renderUsers(USERS);
+renderHistory();
+renderQuestions(QUESTIONS);
+renderOccupations();
+renderTokens();
+</script>
+</body>
+</html>
