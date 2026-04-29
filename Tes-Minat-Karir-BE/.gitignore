@@ -1,5 +1,17 @@
-.env*
+# Environment variables
+.env
+.env.*
 
+# Virtual environments
 env/
+.venv/
+venv/
+
+# Python cache
 __pycache__/
+*.py[cod]
+
+# Test and coverage artifacts
 .pytest_cache/
+.coverage
+htmlcov/
