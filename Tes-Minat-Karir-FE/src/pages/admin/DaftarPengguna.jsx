@@ -199,7 +199,7 @@ export default function DaftarPengguna() {
                   <div className="flex gap-2">
                     <button onClick={() => openDetail(u)} className="text-xs px-3 py-1 border rounded-full">Detail</button>
                     <button onClick={() => openEdit(u)} className="text-xs px-3 py-1 border rounded-full">Edit</button>
-                    <button onClick={() => openDelete(u)} className="text-xs px-3 py-1 bg-red-100 text-red-600 rounded-full">Hapus</button>
+                    <button onClick={() => openDelete(u)} className="text-xs px-3 py-1 bg-red-100 text-red-600 hover:bg-red-500 hover:text-white transition-all duration-200 rounded-full">Hapus</button>
                   </div>
                 </td>
 
