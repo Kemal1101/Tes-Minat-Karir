@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { questions, riasecData } from './questions';
+import { riasecData } from './questions';
+import { Config } from './dto/config';
 import './App.css';
 
 import {
@@ -26,12 +27,32 @@ ChartJS.register(
 );
 
 function App() {
+  const [apiQuestions, setApiQuestions] = useState([]);
+  const [isFetchingQuestions, setIsFetchingQuestions] = useState(true);
+  const [apiResult, setApiResult] = useState(null);
+
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState(Array(questions.length).fill(null));
+  const [answers, setAnswers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [showValidation, setShowValidation] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showAllCareers, setShowAllCareers] = useState(false);
+
+  useEffect(() => {
+    fetch(`${Config.apiBaseUrl}/questions`)
+      .then(res => res.json())
+      .then(data => {
+        const questionsArray = data.data || data; // Fallback to data if data.data is missing
+        setApiQuestions(questionsArray);
+        setAnswers(Array(questionsArray.length).fill(null));
+        setIsFetchingQuestions(false);
+      })
+      .catch(err => {
+        console.error("Error fetching questions:", err);
+        setIsFetchingQuestions(false);
+      });
+  }, []);
 
   const handleSelect = (val) => {
     const newAnswers = [...answers];
@@ -41,7 +62,7 @@ function App() {
     
     // Auto-advance ke pertanyaan berikutnya setelah 600ms
     setTimeout(() => {
-      if (currentIndex < questions.length - 1) {
+      if (currentIndex < apiQuestions.length - 1) {
         setIsTransitioning(true);
         setTimeout(() => {
           setCurrentIndex(currentIndex + 1);
@@ -57,7 +78,7 @@ function App() {
       return;
     }
     
-    if (currentIndex < questions.length - 1) {
+    if (currentIndex < apiQuestions.length - 1) {
       setIsTransitioning(true);
       setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
@@ -74,32 +95,33 @@ function App() {
     }, 300);
   };
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     if (!answers[currentIndex]) {
       setShowValidation(true);
       return;
     }
 
     setIsLoading(true);
-    setTimeout(() => {
+    
+    try {
+      const response = await fetch(`${Config.apiBaseUrl}/calculate-result`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nama: "Anonim",
+          jawaban: answers
+        }),
+      });
+      const data = await response.json();
+      setApiResult(data);
       setIsLoading(false);
       setIsFinished(true);
-    }, 1500);
-  };
-
-  const calculateResults = () => {
-    const totals = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
-
-    answers.forEach((val, idx) => {
-      if (val) totals[questions[idx].category] += val;
-    });
-
-    const normalized = {};
-    Object.keys(totals).forEach(key => {
-      normalized[key] = Math.round((totals[key] / 25) * 100);
-    });
-
-    return normalized;
+    } catch (error) {
+      console.error("Error calculating result:", error);
+      setIsLoading(false);
+    }
   };
 
   /* ================= LOADING ================= */
@@ -138,13 +160,13 @@ function App() {
   }
 
   /* ================= RESULT ================= */
-  if (isFinished) {
-    const scores = calculateResults();
+  if (isFinished && apiResult) {
+    const scores = apiResult.detail_persentase;
     const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
     const topCode = sorted[0][0];
 
     const radarData = {
-      labels: sorted.map(([code]) => riasecData[code].name),
+      labels: sorted.map(([code]) => riasecData[code] ? riasecData[code].name : code),
       datasets: [
         {
           data: sorted.map(([, score]) => score),
@@ -212,10 +234,10 @@ function App() {
                       <div className="flex items-center gap-3">
                         <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#854836' }}></div>
                         <span className="font-inter font-medium text-text-primary">
-                          {riasecData[code].name}
+                          {riasecData[code] ? riasecData[code].name : code}
                         </span>
                       </div>
-                      <span className="font-poppins font-bold text-accent">{score}%</span>
+                      <span className="font-poppins font-bold text-accent">{Math.round(score)}%</span>
                     </div>
                   ))}
                 </div>
@@ -234,11 +256,11 @@ function App() {
                       </div>
                       <div className="flex-1">
                         <h3 className="text-lg font-poppins font-bold text-accent mb-1">
-                          {riasecData[code].name}
-                          <span className="text-saffron ml-2">({score}%)</span>
+                          {riasecData[code] ? riasecData[code].name : code}
+                          <span className="text-saffron ml-2">({Math.round(score)}%)</span>
                         </h3>
                         <p className="text-gray-600 font-inter text-sm leading-relaxed">
-                          {riasecData[code].description}
+                          {riasecData[code] ? riasecData[code].description : ""}
                         </p>
                       </div>
                     </div>
@@ -246,20 +268,59 @@ function App() {
                 ))}
 
                 {/* Career Recommendations */}
-                <div className="bg-gradient-to-br from-saffron/10 to-accent/5 rounded-3xl shadow-md-custom p-6">
-                  <h3 className="text-lg font-poppins font-bold text-accent mb-4">
-                    💼 Rekomendasi Karir
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {riasecData[topCode].careers.map((career) => (
-                      <span
-                        key={career}
-                        className="inline-block px-4 py-2 bg-white text-accent rounded-full font-inter font-medium text-sm border border-accent/20 hover:border-accent/50 transition-all"
-                      >
-                        {career}
-                      </span>
-                    ))}
+                <div className="bg-white rounded-3xl shadow-md-custom p-6 border-t-4 border-saffron">
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-xl font-poppins font-bold text-accent">
+                      💼 Rekomendasi Karir
+                    </h3>
+                    <span className="text-sm font-inter text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                      Berdasarkan {apiResult.metode_perankingan || 'SAW'}
+                    </span>
                   </div>
+                  
+                  <div className="space-y-4">
+                    {apiResult.rekomendasi_profesi && (showAllCareers ? apiResult.rekomendasi_profesi : apiResult.rekomendasi_profesi.slice(0, 3)).map((career, index) => {
+                      const jobName = typeof career === 'object' ? career.Occupation || career.nama_pekerjaan || career.job_title : career;
+                      const score = typeof career === 'object' ? (career.Skor_SAW || career.skor || '') : '';
+                      const code = typeof career === 'object' ? (career['Interest Code'] || '') : '';
+                      
+                      return (
+                        <div key={index} className="flex items-center p-4 bg-gradient-to-r from-bg-light to-white rounded-2xl border border-gray-100 hover:border-saffron hover:shadow-md transition-all group">
+                          <div className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full font-poppins font-bold text-white mr-4 ${index === 0 ? 'bg-yellow-400 shadow-lg' : index === 1 ? 'bg-gray-300 shadow-md' : index === 2 ? 'bg-amber-600 shadow-md' : 'bg-accent'}`}>
+                            #{index + 1}
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-poppins font-bold text-text-primary text-lg group-hover:text-accent transition-colors">
+                              {jobName}
+                            </h4>
+                            {typeof career === 'object' && (code || score) && (
+                              <div className="flex gap-2 mt-1">
+                                {code && (
+                                  <span className="text-xs font-inter font-semibold bg-accent/10 text-accent px-2 py-0.5 rounded-md">
+                                    Kode: {code}
+                                  </span>
+                                )}
+                                {score && (
+                                  <span className="text-xs font-inter font-semibold bg-saffron/20 text-accent px-2 py-0.5 rounded-md">
+                                    Skor: {score}
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  
+                  {apiResult.rekomendasi_profesi && apiResult.rekomendasi_profesi.length > 3 && (
+                    <button
+                      onClick={() => setShowAllCareers(!showAllCareers)}
+                      className="mt-6 w-full py-3 bg-gray-50 hover:bg-gray-100 text-accent font-poppins font-semibold rounded-xl transition-colors border border-gray-200"
+                    >
+                      {showAllCareers ? 'Sembunyikan' : `Lihat Semua Pekerjaan (${apiResult.rekomendasi_profesi.length})`}
+                    </button>
+                  )}
                 </div>
 
                 {/* Restart Button */}
@@ -278,8 +339,39 @@ function App() {
   }
 
   /* ================= TEST ================= */
-  const q = questions[currentIndex];
-  const progress = ((currentIndex + 1) / questions.length) * 100;
+  if (isFetchingQuestions) {
+    return (
+      <div className="min-h-screen flex flex-col bg-bg-light">
+        <nav className="bg-white border-b-4 border-accent shadow-soft">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center">
+            <div className="text-3xl font-poppins font-black">
+              <span className="text-accent">RIASEC</span>
+              <span className="text-saffron ml-2">Career</span>
+            </div>
+          </div>
+        </nav>
+        <div className="flex-1 flex flex-col items-center justify-center px-4">
+          <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin mb-4"></div>
+          <h2 className="text-xl font-poppins font-bold text-accent text-center">
+            Memuat pertanyaan...
+          </h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (apiQuestions.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col bg-bg-light">
+        <div className="flex-1 flex flex-col items-center justify-center px-4">
+          <h2 className="text-xl font-poppins text-red-500">Gagal memuat pertanyaan.</h2>
+        </div>
+      </div>
+    );
+  }
+
+  const q = apiQuestions[currentIndex];
+  const progress = ((currentIndex + (answers[currentIndex] !== null ? 1 : 0)) / apiQuestions.length) * 100;
 
   const options = [
     { v: 1, l: 'Sangat Tidak Suka' },
@@ -316,11 +408,12 @@ function App() {
           {/* Progress Section */}
           <div className="mb-8 animate-fade-in">
             {/* Progress Bar */}
-            <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden shadow-soft mb-3">
+            <div className="relative h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-3">
               <div
-                className="h-full bg-gradient-to-r from-accent to-saffron rounded-full transition-all duration-500 ease-out shadow-md"
+                className="h-full bg-gradient-to-r from-[#854836] to-[#F5B553] rounded-full shadow-md"
                 style={{
                   width: `${progress}%`,
+                  transition: 'width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)'
                 }}
               ></div>
             </div>
@@ -328,7 +421,7 @@ function App() {
             {/* Progress Text */}
             <div className="flex justify-between items-center">
               <span className="text-sm font-poppins font-bold text-accent">
-                Pertanyaan {currentIndex + 1} dari {questions.length}
+                Pertanyaan {currentIndex + 1} dari {apiQuestions.length}
               </span>
               <span className="text-xs font-inter text-gray-500">
                 {Math.round(progress)}% Selesai
@@ -425,15 +518,15 @@ function App() {
             </button>
 
             <button
-              onClick={currentIndex === questions.length - 1 ? handleFinish : handleNext}
+              onClick={currentIndex === apiQuestions.length - 1 ? handleFinish : handleNext}
               disabled={!answers[currentIndex]}
               className={`flex-1 py-3 px-6 rounded-xl font-poppins font-bold text-white transition-all duration-300 hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed ${
-                currentIndex === questions.length - 1
+                currentIndex === apiQuestions.length - 1
                   ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:shadow-lg'
                   : 'bg-gradient-to-r from-accent to-accent-dark hover:shadow-lg'
               }`}
             >
-              {currentIndex === questions.length - 1
+              {currentIndex === apiQuestions.length - 1
                 ? '🎉 Lihat Hasil'
                 : 'Selanjutnya →'}
             </button>
