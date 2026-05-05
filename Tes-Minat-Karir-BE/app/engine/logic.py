@@ -146,11 +146,8 @@ async def check_data():
 # ==========================================
 # KONFIGURASI SISTEM PAKAR
 # ==========================================
-KATEGORI_SOAL = (['R']*5) + (['I']*5) + (['A']*5) + (['S']*5) + (['E']*5) + (['C']*5)
-
-# Simulasi nilai pakar untuk 5 pertanyaan (Sangat Kuat, Kuat, Cukup, dll)
-# Digandakan 6x karena ada 6 dimensi (Total 30 bobot pakar)
-CF_PAKAR = [1.0, 0.8, 0.8, 1.0, 0.6] * 6 
+# (Data cf_pakar dan kategori sekarang diambil dinamis dari database 
+# tabel Questions pada saat startup di fungsi lifespan)
 
 def likert_to_cf(nilai: int) -> float:
     """Mengubah skala Likert 1-5 menjadi nilai kepastian User (0.0 - 1.0)"""
@@ -233,10 +230,17 @@ async def calculate_result(data: SubmitAnswers):
     cf_tunggal = {'R': [], 'I': [], 'A': [], 'S': [], 'E': [], 'C': []}
     
     for i, ans in enumerate(data.jawaban):
-        kat = KATEGORI_SOAL[i]           # Cari dimensinya apa (R/I/A/S/E/C)
-        cf_user = likert_to_cf(ans)      # Konversi jawaban user
-        cf_he = CF_PAKAR[i] * cf_user    # Kalikan dengan bobot pakar
-        cf_tunggal[kat].append(cf_he)
+        if i >= len(QUESTIONS):
+            break # Hindari error index out of range jika data DB kurang dari 30
+            
+        kat = str(QUESTIONS[i].get("category", "R")).upper()
+        cf_pakar_db = float(QUESTIONS[i].get("cf_pakar", 0.0))
+        
+        cf_user = likert_to_cf(ans)             # Konversi jawaban user
+        cf_he = cf_pakar_db * cf_user           # Kalikan dengan bobot pakar dari DB
+        
+        if kat in cf_tunggal:
+            cf_tunggal[kat].append(cf_he)
 
     # 4. RULE 2: Kalkulasi CF Kombinasi Iteratif per Kategori
     cf_final = {}
@@ -259,7 +263,7 @@ async def calculate_result(data: SubmitAnswers):
     job_ids_added = set()
     jobs_with_errors = []
 
-    # Pencarian Level 1 (Exact Match)
+    # Pencarian Level 1: Syarat Minimal 2 huruf cocok, atau huruf pertama cocok jika kode pekerjaan cuma 1 huruf
     for idx, job in enumerate(OCCUPATIONS):
         try:
             interest_code = sanitize_interest_code(job.get('Interest Code', ''))
@@ -272,7 +276,16 @@ async def calculate_result(data: SubmitAnswers):
                 })
                 continue
 
-            if interest_code.startswith(kode_holland):
+            # Hitung irisan huruf antara Top 3 Holland User dan Interest Code Pekerjaan
+            huruf_cocok = sum(1 for huruf in kode_holland if huruf in interest_code)
+            
+            is_match = False
+            if len(interest_code) == 1 and interest_code in kode_holland:
+                is_match = True
+            elif huruf_cocok >= 2:
+                is_match = True
+                
+            if is_match:
                 job_id = job.get('Code') or job.get('Occupation') or str(idx)
                 if job_id not in job_ids_added:
                     rekomendasi.append(job)
@@ -286,29 +299,28 @@ async def calculate_result(data: SubmitAnswers):
             })
             logger.error(f"Error processing job at index {idx}: {e}")
 
-    # Pencarian Level 2 (Permutasi) untuk memperkaya kandidat ranking SAW
+    # Pencarian Level 2 (Kelonggaran): Jika kandidat kurang dari 10, ambil pekerjaan yang setidaknya 
+    # memiliki huruf pertama yang sama dengan salah satu Top 3 dari Holland Code User.
     if len(rekomendasi) < 10:
-        semua_perm = [''.join(p) for p in permutations(kode_holland) if ''.join(p) != kode_holland]
-        for perm in semua_perm:
-            for idx, job in enumerate(OCCUPATIONS):
-                try:
-                    interest_code = sanitize_interest_code(job.get('Interest Code', ''))
-                    if not interest_code:
-                        continue
+        for idx, job in enumerate(OCCUPATIONS):
+            try:
+                interest_code = sanitize_interest_code(job.get('Interest Code', ''))
+                if not interest_code:
+                    continue
 
-                    if interest_code.startswith(perm):
-                        job_id = job.get('Code') or job.get('Occupation') or str(idx)
-                        if job_id not in job_ids_added:
-                            rekomendasi.append(job)
-                            job_ids_added.add(job_id)
+                if interest_code[0] in kode_holland:
+                    job_id = job.get('Code') or job.get('Occupation') or str(idx)
+                    if job_id not in job_ids_added:
+                        rekomendasi.append(job)
+                        job_ids_added.add(job_id)
 
-                except Exception as e:
-                    jobs_with_errors.append({
-                        "occupation": job.get('Occupation', 'Unknown'),
-                        "error": f"EXCEPTION: {str(e)}",
-                        "level": 2
-                    })
-                    logger.error(f"Error processing job at index {idx} (Level 2): {e}")
+            except Exception as e:
+                jobs_with_errors.append({
+                    "occupation": job.get('Occupation', 'Unknown'),
+                    "error": f"EXCEPTION: {str(e)}",
+                    "level": 2
+                })
+                logger.error(f"Error processing job at index {idx} (Level 2): {e}")
 
             if len(rekomendasi) >= 25:
                 break
@@ -336,20 +348,27 @@ async def calculate_result(data: SubmitAnswers):
                 keyword_scores[kata_bersih] = ans
 
     # Tahap 2: Bentuk matriks keputusan (C1, C2)
+    import re
     matriks_keputusan = []
     for job in rekomendasi:
-        # C1: agregasi nilai CF berdasarkan huruf Interest Code pekerjaan
+        # C1: agregasi nilai CF (Dibatasi maksimal 3 huruf pertama untuk mencegah bias)
         c1_score = 0.0
         job_code = sanitize_interest_code(job.get('Interest Code', ''))
-        for letter in job_code:
+        
+        # Ambil maksimal 3 huruf pertama interest_code agar profesi berkode panjang 
+        # tidak otomatis mendapatkan nilai C1 lebih tinggi dari profesi berkode 2/3 huruf
+        top_letters = job_code[:3]
+        for letter in top_letters:
             if letter in cf_final:
                 c1_score += float(cf_final[letter])
 
-        # C2: relevansi keyword user terhadap nama pekerjaan
+        # C2: relevansi keyword user terhadap nama pekerjaan menggunakan word boundary
         c2_score = 0.0
         job_title = str(job.get('Occupation', '')).lower()
         for kata, poin in keyword_scores.items():
-            if kata in job_title:
+            # Gunakan regex word boundary \b agar pencocokan tepat (misal: "it" != "arsitek")
+            # re.escape() untuk mencegah karakter khusus keyword merusak regex
+            if re.search(r'\b' + re.escape(kata) + r'\b', job_title):
                 c2_score += float(poin)
 
         matriks_keputusan.append({
