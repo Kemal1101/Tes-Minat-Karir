@@ -22,10 +22,8 @@ OCCUPATIONS = []
 # ==========================================
 # 2. LIFESPAN (Data Loader saat Startup)
 # ==========================================
-@asynccontextmanager
-async def lifespan(app: FastAPI):
+def load_data():
     global QUESTIONS, OCCUPATIONS
-
     logger.info("Memuat data statis ke dalam memori...")
     
     # Load Questions dari database
@@ -98,6 +96,9 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error(f"Gagal memuat occupations dari database: {e}")
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    load_data()
     yield 
     
     # --- PROSES SHUTDOWN ---
@@ -141,6 +142,17 @@ async def check_data():
         "total_occupations_loaded": len(OCCUPATIONS),
         "sample_question": QUESTIONS[0] if QUESTIONS else None,
         "sample_occupation": OCCUPATIONS[0] if OCCUPATIONS else None
+    }
+
+# Endpoint untuk reload data dari database tanpa restart server
+@app.post("/api/refresh-data")
+async def refresh_data():
+    load_data()
+    return {
+        "status": "success",
+        "message": "Cache berhasil direfresh dari database.",
+        "total_questions": len(QUESTIONS),
+        "total_occupations": len(OCCUPATIONS)
     }
 
 # ==========================================
@@ -245,6 +257,9 @@ async def calculate_result(data: SubmitAnswers):
     # 4. RULE 2: Kalkulasi CF Kombinasi Iteratif per Kategori
     cf_final = {}
     for kat, list_cf in cf_tunggal.items():
+        if not list_cf:
+            cf_final[kat] = 0.0
+            continue
         cf_old = list_cf[0]
         for cf_new in list_cf[1:]:
             cf_old = cf_old + cf_new * (1 - cf_old)
@@ -358,19 +373,26 @@ async def calculate_result(data: SubmitAnswers):
         # Ambil maksimal 3 huruf pertama interest_code agar profesi berkode panjang 
         # tidak otomatis mendapatkan nilai C1 lebih tinggi dari profesi berkode 2/3 huruf
         top_letters = job_code[:3]
-        for letter in top_letters:
+        
+        # Bobot posisi (Positional Weighting):
+        # Huruf ke-1 memiliki nilai lebih tinggi dibanding huruf ke-2 dan ke-3
+        position_weights = [1.0, 0.75, 0.5]
+        
+        for idx, letter in enumerate(top_letters):
             if letter in cf_final:
-                c1_score += float(cf_final[letter])
+                weight = position_weights[idx] if idx < len(position_weights) else 0.5
+                c1_score += float(cf_final[letter]) * weight
 
-        # C2: relevansi keyword user terhadap nama pekerjaan menggunakan word boundary
+        # C2: relevansi keyword user terhadap nama pekerjaan
         c2_score = 0.0
         job_title = str(job.get('Occupation', '')).lower()
         for kata, poin in keyword_scores.items():
-            # Gunakan regex word boundary \b agar pencocokan tepat (misal: "it" != "arsitek")
-            # re.escape() untuk mencegah karakter khusus keyword merusak regex
-            if re.search(r'\b' + re.escape(kata) + r'\b', job_title):
+            # Regex diubah agar menoleransi akhiran s, es, ing, ers, dll.
+            # Contoh: "engineer" akan cocok dengan "engineers" atau "engineering"
+            pattern = r'\b' + re.escape(kata) + r'(?:s|es|ing|ers|ed)?\b'
+            if re.search(pattern, job_title):
                 c2_score += float(poin)
-
+                
         matriks_keputusan.append({
             "job": job,
             "C1": c1_score,
