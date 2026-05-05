@@ -112,6 +112,7 @@ async def lifespan(app: FastAPI):
 class SubmitAnswers(BaseModel):
     nama: str = "Anonim"
     jawaban: List[int] # Harus berisi array 30 angka (1-5)
+    target_job_zone: int = 0 # 0=Semua, 1/2=SMA, 3=D3, 4=S1, 5=S2/S3
 
 app = FastAPI(
     title="RIASEC Career Profiler API",
@@ -294,6 +295,12 @@ async def calculate_result(data: SubmitAnswers):
             # Hitung irisan huruf antara Top 3 Holland User dan Interest Code Pekerjaan
             huruf_cocok = sum(1 for huruf in kode_holland if huruf in interest_code)
             
+            # Filter Job Zone jika user mengisinya (> 0)
+            if data.target_job_zone > 0:
+                job_zone_str = str(job.get('Job Zone', '')).strip()
+                if job_zone_str and str(data.target_job_zone) not in job_zone_str:
+                    continue
+                    
             is_match = False
             if len(interest_code) == 1 and interest_code in kode_holland:
                 is_match = True
@@ -322,6 +329,12 @@ async def calculate_result(data: SubmitAnswers):
                 interest_code = sanitize_interest_code(job.get('Interest Code', ''))
                 if not interest_code:
                     continue
+
+                # Filter Job Zone (Konsisten dengan Level 1)
+                if data.target_job_zone > 0:
+                    job_zone_str = str(job.get('Job Zone', '')).strip()
+                    if job_zone_str and str(data.target_job_zone) not in job_zone_str:
+                        continue
 
                 if interest_code[0] in kode_holland:
                     job_id = job.get('Code') or job.get('Occupation') or str(idx)
