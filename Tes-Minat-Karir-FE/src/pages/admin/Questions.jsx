@@ -76,63 +76,72 @@ export default function Questions() {
   function handleDelete() {
     setData(prev => prev.filter(q => q.id !== delTarget.id));
     toast("Pertanyaan dihapus", "danger");
+    setDeleteOpen(false);
   }
 
   const set = (k) => (val) => setForm(f => ({ ...f, [k]: val }));
 
  return (
-  <div className="p-6">
+  <div className="p-6 bg-[#f8f6f2] min-h-screen">
 
     {/* STATS */}
     <div className="grid grid-cols-3 gap-4 mb-6">
-      <div className="bg-white p-4 rounded-xl border">
-        <div className="text-xs text-gray-500 mb-1">TOTAL SOAL</div>
-        <div className="text-2xl font-bold">{data.length}</div>
-      </div>
 
-      <div className="bg-white p-4 rounded-xl border">
-        <div className="text-xs text-gray-500 mb-1">RATA-RATA PER TIPE</div>
-        <div className="text-2xl font-bold">
-          {Math.round(data.length / 6)}
-        </div>
-      </div>
-
-      <div className="bg-white p-4 rounded-xl border">
-        <div className="text-xs text-gray-500 mb-1">BOBOT SAW</div>
-        <div className="text-2xl font-bold">0.167</div>
-      </div>
-    </div>
-
-    {/* BADGE RIASEC */}
-    <div className="flex gap-2 flex-wrap mb-6">
-      {Object.entries(RIASEC_STYLE).map(([type, s]) => (
+      {[
+        {
+          label: "TOTAL SOAL",
+          value: data.length,
+          badge: "6 tipe RIASEC",
+          color: "blue"
+        },
+        {
+          label: "PER TIPE",
+          value: Math.round(data.length / 6),
+          badge: "seimbang",
+          color: "green"
+        },
+        {
+          label: "BOBOT RATA-RATA",
+          value: "0.17",
+          badge: "SAW",
+          color: "blue"
+        }
+      ].map((card, i) => (
         <div
-          key={type}
-          className="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold"
-          style={{ background: s.bg, color: s.color }}
+          key={i}
+          className="bg-white rounded-2xl p-5 border transition-all duration-200 hover:shadow-md hover:-translate-y-1 cursor-pointer"
         >
-          <span>{type}</span>
-          <span>{s.label}</span>
-          <span className="font-bold">{typeCounts[type]}</span>
+          <div className="text-xs text-gray-400 mb-1">{card.label}</div>
+          <div className="text-3xl font-bold">{card.value}</div>
+          <span className={`text-xs px-2 py-1 rounded-full ${
+            card.color === "green"
+              ? "bg-green-100 text-green-700"
+              : "bg-blue-100 text-blue-600"
+          }`}>
+            {card.badge}
+          </span>
         </div>
       ))}
+
     </div>
 
     {/* TABLE */}
     <div className="bg-white rounded-2xl border overflow-hidden">
 
       {/* HEADER */}
-      <div className="p-4 flex justify-between items-center border-b">
-        <div className="font-bold">Bank Soal</div>
+      <div className="flex justify-between items-center p-5 border-b">
+        <div className="font-semibold">Bank Soal</div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-3 items-center">
+
+          {/* FILTER */}
           <select
             value={typeFilter}
             onChange={(e) => {
               setTypeFilter(e.target.value);
               setPage(1);
             }}
-            className="bg-gray-100 border px-3 py-2 rounded text-xs"
+            className="bg-gray-100 border px-3 py-2 rounded-lg text-sm"
           >
             <option value="">Semua Tipe</option>
             {Object.entries(RIASEC_STYLE).map(([t, s]) => (
@@ -142,8 +151,9 @@ export default function Questions() {
             ))}
           </select>
 
+          {/* SEARCH */}
           <input
-            className="bg-gray-100 border px-3 py-2 rounded text-xs w-[200px]"
+            className="bg-gray-100 border px-4 py-2 rounded-full text-sm w-[220px]"
             placeholder="🔍 Cari soal..."
             value={search}
             onChange={(e) => {
@@ -151,105 +161,161 @@ export default function Questions() {
               setPage(1);
             }}
           />
+
+          {/* ADD BUTTON */}
+          <button
+            onClick={openCreate}
+            className="bg-black text-white px-4 py-2 rounded-full text-sm"
+          >
+            + Tambah
+          </button>
+
         </div>
       </div>
 
+      {/* TABLE */}
       <table className="w-full text-sm">
         <thead className="text-xs text-gray-400 uppercase">
           <tr>
-            <th className="p-3 text-left">#</th>
-            <th className="p-3 text-left">Pertanyaan</th>
-            <th className="p-3 text-left">Tipe</th>
-            <th className="p-3 text-left">SAW</th>
-            <th className="p-3 text-left">CF</th>
-            <th className="p-3 text-left">Aksi</th>
+            <th className="p-4 text-left">#</th>
+            <th className="p-4 text-left">Pertanyaan</th>
+            <th className="p-4 text-left">Tipe</th>
+            <th className="p-4 text-left">SAW</th>
+            <th className="p-4 text-left">CF</th>
+            <th className="p-4 text-left">Aksi</th>
           </tr>
         </thead>
 
         <tbody>
-          {paginated.length === 0 ? (
-            <tr>
-              <td colSpan={6} className="text-center py-10 text-gray-400 text-sm">
-                Tidak ada soal ditemukan
-              </td>
-            </tr>
-          ) : (
-            paginated.map((q) => (
+          {paginated.map((q, i) => {
+            const s = RIASEC_STYLE[q.type] || {};
+            return (
               <tr key={q.id} className="border-t hover:bg-gray-50">
 
-                {/* ID */}
-                <td className="p-3 text-gray-400 text-xs">
-                  {String(q.id).padStart(2, "0")}
+                <td className="p-4 text-gray-400 font-semibold">
+                  {String(i + 1).padStart(2, "0")}
                 </td>
 
-                {/* TEXT */}
-                <td className="p-3 max-w-[300px] text-sm leading-relaxed">
-                  {q.text}
-                </td>
+                <td className="p-4 max-w-[400px]">{q.text}</td>
 
-                {/* RIASEC */}
-                <td className="p-3">
+                <td className="p-4">
                   <span
-                    className="px-2 py-1 text-xs rounded-full font-semibold"
-                    style={{
-                      background: RIASEC_STYLE[q.type]?.bg,
-                      color: RIASEC_STYLE[q.type]?.color,
-                    }}
+                    className="text-xs px-3 py-1 rounded-full font-semibold"
+                    style={{ background: s.bg, color: s.color }}
                   >
                     {q.type}
                   </span>
                 </td>
 
-                {/* SAW */}
-                <td className="p-3 font-semibold">
+                <td className="p-4 font-semibold">
                   {q.saw.toFixed(3)}
                 </td>
 
-                {/* CF */}
-                <td className="p-3 font-semibold">
+                <td className="p-4">
                   {q.cf.toFixed(1)}
                 </td>
 
-                {/* AKSI */}
-                <td className="p-3">
+                <td className="p-4">
                   <div className="flex gap-2">
+
                     <button
                       onClick={() => openEdit(q)}
-                      className="text-xs px-3 py-1 border rounded"
+                      className="text-xs px-3 py-1 border rounded-full hover:bg-gray-100"
                     >
                       Edit
                     </button>
+
                     <button
-                      onClick={() => openDelete(q)}
-                      className="text-xs px-3 py-1 bg-red-100 text-red-600 rounded"
+                      onClick={() => {
+                        setDelTarget(q);
+                        setDeleteOpen(true);
+                      }}
+                      className="text-xs px-3 py-1 bg-red-100 text-red-600 rounded-full hover:bg-red-200"
                     >
                       Hapus
                     </button>
+
                   </div>
                 </td>
 
               </tr>
-            ))
-          )}
+            );
+          })}
         </tbody>
       </table>
 
-      {/* PAGINATION */}
-      <div className="p-4 flex justify-between items-center">
+      {/* FOOTER */}
+      <div className="flex justify-between items-center p-4">
         <div className="text-xs text-gray-400">
-          Menampilkan {paginated.length} dari {filtered.length} soal
+          Menampilkan {(page - 1) * PAGE_SIZE + 1}–
+          {Math.min(page * PAGE_SIZE, filtered.length)} dari {filtered.length} soal
         </div>
 
         <Pagination current={page} total={totalPages} onChange={setPage} />
       </div>
     </div>
 
-    {/* MODAL (tetap pakai logic lama) */}
-    {formOpen && (
-      <Modal open={formOpen} onClose={() => setFormOpen(false)} title="Form">
-        {/* tetap */}
-      </Modal>
-    )}
+    {/* MODAL FORM */}
+    <Modal
+      open={formOpen}
+      onClose={() => setFormOpen(false)}
+      title={editing ? "Edit Pertanyaan" : "Tambah Pertanyaan"}
+    >
+      <div className="space-y-3">
+
+        <textarea
+          className="w-full border p-3 rounded-lg text-sm"
+          placeholder="Tulis pertanyaan..."
+          value={form.text}
+          onChange={(e) => set("text")(e.target.value)}
+        />
+
+        <select
+          className="w-full border p-2 rounded-lg text-sm"
+          value={form.type}
+          onChange={(e) => set("type")(e.target.value)}
+        >
+          {Object.entries(RIASEC_STYLE).map(([t, s]) => (
+            <option key={t} value={t}>{t} — {s.label}</option>
+          ))}
+        </select>
+
+        <div className="grid grid-cols-2 gap-2">
+          <input
+            type="number"
+            step="0.001"
+            className="border p-2 rounded-lg text-sm"
+            value={form.saw}
+            onChange={(e) => set("saw")(e.target.value)}
+          />
+          <input
+            type="number"
+            step="0.01"
+            className="border p-2 rounded-lg text-sm"
+            value={form.cf}
+            onChange={(e) => set("cf")(e.target.value)}
+          />
+        </div>
+
+        <button
+          onClick={handleSave}
+          className="w-full bg-black text-white py-2 rounded-lg text-sm"
+        >
+          Simpan
+        </button>
+
+      </div>
+    </Modal>
+
+    {/* DELETE MODAL */}
+    <ConfirmModal
+      open={deleteOpen}
+      onClose={() => setDeleteOpen(false)}
+      onConfirm={handleDelete}
+      title="Hapus pertanyaan?"
+      desc="Data tidak bisa dikembalikan."
+    />
+
   </div>
-  );
+);
 }

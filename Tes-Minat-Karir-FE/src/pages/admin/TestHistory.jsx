@@ -75,46 +75,71 @@ export default function TestHistory() {
   function handleDelete() {
     setData(prev => prev.filter(h => h.id !== delTarget.id));
     toast("Riwayat tes dihapus", "danger");
+    setDeleteOpen(false);
   }
 
   const set = (k) => (val) => setForm(f => ({ ...f, [k]: val }));
 
   return (
-  <div className="p-6">
+  <div className="p-6 bg-[#f8f6f2] min-h-screen">
 
     {/* STATS */}
     <div className="grid grid-cols-4 gap-4 mb-6">
-      <div className="bg-white p-4 rounded-xl border">
-        <div className="text-xs text-gray-500 mb-1">TOTAL TES</div>
-        <div className="text-2xl font-bold">{data.length}</div>
-      </div>
 
-      <div className="bg-white p-4 rounded-xl border">
-        <div className="text-xs text-gray-500 mb-1">RATA-RATA CF</div>
-        <div className="text-2xl font-bold">{avgSAW.toFixed(2)}</div>
-      </div>
+      {[
+        {
+          label: "TOTAL TES",
+          value: data.length,
+          badge: "↑ 12 minggu ini",
+          color: "green"
+        },
+        {
+          label: "RATA-RATA SKOR",
+          value: avgSAW.toFixed(2),
+          badge: "keyakinan tinggi",
+          color: "blue"
+        },
+        {
+          label: "TIPE DOMINAN",
+          value: dominant,
+          badge: "paling sering",
+          color: "green"
+        },
+        {
+          label: "TES HARI INI",
+          value: 7,
+          badge: "aktif",
+          color: "blue"
+        }
+      ].map((card, i) => (
+        <div
+          key={i}
+          className="bg-white rounded-2xl p-5 border transition-all duration-200 hover:shadow-md hover:-translate-y-1 cursor-pointer"
+        >
+          <div className="text-xs text-gray-400 mb-1">{card.label}</div>
+          <div className="text-3xl font-bold">{card.value}</div>
+          <span className={`text-xs px-2 py-1 rounded-full ${
+            card.color === "green"
+              ? "bg-green-100 text-green-700"
+              : "bg-blue-100 text-blue-600"
+          }`}>
+            {card.badge}
+          </span>
+        </div>
+      ))}
 
-      <div className="bg-white p-4 rounded-xl border">
-        <div className="text-xs text-gray-500 mb-1">TIPE DOMINAN</div>
-        <div className="text-2xl font-bold">{dominant}</div>
-      </div>
-
-      <div className="bg-white p-4 rounded-xl border">
-        <div className="text-xs text-gray-500 mb-1">TES HARI INI</div>
-        <div className="text-2xl font-bold">7</div>
-      </div>
     </div>
 
     {/* TABLE */}
     <div className="bg-white rounded-2xl border overflow-hidden">
 
       {/* HEADER */}
-      <div className="p-4 flex justify-between items-center border-b">
-        <div className="font-bold">Riwayat Tes</div>
+      <div className="flex justify-between items-center p-5 border-b">
+        <div className="font-semibold">Riwayat Tes</div>
 
         <input
-          className="bg-gray-100 border px-3 py-2 rounded text-xs w-[220px]"
-          placeholder="🔍 Cari pengguna atau karir..."
+          className="bg-gray-100 border px-4 py-2 rounded-full text-sm w-[260px]"
+          placeholder="🔍 Cari pengguna..."
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
@@ -126,114 +151,126 @@ export default function TestHistory() {
       <table className="w-full text-sm">
         <thead className="text-xs text-gray-400 uppercase">
           <tr>
-            <th className="p-3 text-left">Pengguna</th>
-            <th className="p-3 text-left">Tipe</th>
-            <th className="p-3 text-left">SAW</th>
-            <th className="p-3 text-left">CF</th>
-            <th className="p-3 text-left">Karir</th>
-            <th className="p-3 text-left">Tanggal</th>
-            <th className="p-3 text-left">Aksi</th>
+            <th className="p-4 text-left">Pengguna</th>
+            <th className="p-4 text-left">Tipe Holland</th>
+            <th className="p-4 text-left">SAW</th>
+            <th className="p-4 text-left">CF</th>
+            <th className="p-4 text-left">Karir</th>
+            <th className="p-4 text-left">Tanggal</th>
+            <th className="p-4 text-left">Aksi</th>
           </tr>
         </thead>
 
         <tbody>
-          {paginated.length === 0 ? (
-            <tr>
-              <td colSpan={7} className="text-center py-10 text-gray-400 text-sm">
-                Tidak ada data tes
+          {paginated.map((h) => (
+            <tr key={h.id} className="border-t hover:bg-gray-50">
+
+              {/* USER */}
+              <td className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#FAEEDA] text-[#854F0B] flex items-center justify-center text-xs font-bold">
+                    {h.user.slice(0, 2).toUpperCase()}
+                  </div>
+                  <div className="font-semibold">{h.user}</div>
+                </div>
               </td>
+
+              {/* RIASEC */}
+              <td className="p-4">
+                <div className="flex gap-1">
+                  {h.type.split("").map((c) => {
+                    const s = RIASEC_STYLE[c] || {};
+                    return (
+                      <span
+                        key={c}
+                        className="text-xs px-2 py-1 rounded-full font-semibold"
+                        style={{ background: s.bg, color: s.color }}
+                      >
+                        {c}
+                      </span>
+                    );
+                  })}
+                </div>
+              </td>
+
+              <td className="p-4 font-semibold">{h.saw.toFixed(2)}</td>
+              <td className="p-4 font-semibold">{h.cf.toFixed(2)}</td>
+
+              <td className="p-4 text-[#854F0B] font-semibold">
+                {h.career}
+              </td>
+
+              <td className="p-4 text-gray-500">{h.date}</td>
+
+              {/* AKSI */}
+              <td className="p-4">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      setViewing(h);
+                      setDetailOpen(true);
+                    }}
+                    className="text-xs px-3 py-1 border rounded-full hover:bg-gray-100"
+                  >
+                    Lihat
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setDelTarget(h);
+                      setDeleteOpen(true);
+                    }}
+                    className="text-xs px-3 py-1 bg-red-100 text-red-600 rounded-full hover:bg-red-200"
+                  >
+                    Hapus
+                  </button>
+                </div>
+              </td>
+
             </tr>
-          ) : (
-            paginated.map((h) => (
-              <tr key={h.id} className="border-t hover:bg-gray-50">
-
-                {/* USER */}
-                <td className="p-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-[#FAEEDA] text-[#854F0B] rounded-full flex items-center justify-center text-xs font-bold">
-                      {h.user[0]}
-                    </div>
-                    <div className="font-semibold text-sm">{h.user}</div>
-                  </div>
-                </td>
-
-                {/* RIASEC */}
-                <td className="p-3">
-                  {h.type.split("").map((c) => (
-                    <span
-                      key={c}
-                      className="px-2 py-1 text-xs rounded-full mr-1"
-                      style={{
-                        background: RIASEC_STYLE[c]?.bg,
-                        color: RIASEC_STYLE[c]?.color,
-                      }}
-                    >
-                      {c}
-                    </span>
-                  ))}
-                </td>
-
-                {/* SAW */}
-                <td className="p-3 font-semibold">
-                  {h.saw.toFixed(2)}
-                </td>
-
-                {/* CF */}
-                <td className="p-3 font-semibold">
-                  {h.cf.toFixed(2)}
-                </td>
-
-                {/* KARIR */}
-                <td className="p-3 text-[#854F0B] font-semibold">
-                  {h.career}
-                </td>
-
-                {/* TANGGAL */}
-                <td className="p-3 text-gray-500 text-sm">
-                  {h.date}
-                </td>
-
-                {/* AKSI */}
-                <td className="p-3">
-                  <div className="flex gap-2">
-                    
-                    <button
-                      onClick={() => openEdit(h)}
-                      className="text-xs px-3 py-1 border rounded"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => openDelete(h)}
-                      className="text-xs px-3 py-1 bg-red-100 text-red-600 rounded"
-                    >
-                      Hapus
-                    </button>
-                  </div>
-                </td>
-
-              </tr>
-            ))
-          )}
+          ))}
         </tbody>
       </table>
 
-      {/* PAGINATION */}
-      <div className="p-4 flex justify-between items-center">
+      {/* FOOTER */}
+      <div className="flex justify-between items-center p-4">
+
         <div className="text-xs text-gray-400">
-          Menampilkan {paginated.length} dari {filtered.length} data
+          Menampilkan {(page - 1) * PAGE_SIZE + 1}–
+          {Math.min(page * PAGE_SIZE, filtered.length)} dari {filtered.length} tes
         </div>
 
         <Pagination current={page} total={totalPages} onChange={setPage} />
       </div>
     </div>
 
-    {/* MODAL (TIDAK DIUBAH) */}
-    {formOpen && (
-      <Modal open={formOpen} onClose={() => setFormOpen(false)} title="Form">
-        {/* tetap pakai form lama */}
-      </Modal>
-    )}
+    {/* DETAIL MODAL */}
+    <Modal
+      open={detailOpen}
+      onClose={() => setDetailOpen(false)}
+      title="Detail Hasil Tes"
+    >
+      {viewing && (
+        <div className="space-y-3 text-sm">
+          <div><b>Pengguna:</b> {viewing.user}</div>
+          <div><b>Tipe:</b> {viewing.type}</div>
+          <div><b>SAW:</b> {viewing.saw}</div>
+          <div><b>CF:</b> {viewing.cf}</div>
+          <div><b>Karir:</b> {viewing.career}</div>
+          <div><b>Tanggal:</b> {viewing.date}</div>
+        </div>
+      )}
+    </Modal>
+
+    {/* DELETE MODAL */}
+    <ConfirmModal
+      open={deleteOpen}
+      onClose={() => setDeleteOpen(false)}
+      onConfirm={handleDelete}
+      title="Hapus riwayat ini?"
+      desc="Data tidak bisa dikembalikan setelah dihapus."
+    />
+
   </div>
 );
 }
