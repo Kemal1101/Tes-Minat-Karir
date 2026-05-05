@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { useState } from "react";
-import Sidebar from "../../components/admin/sidebar";
+import Sidebar from "../../components/admin/Sidebar";
 import Topbar from "../../components/shared/Topbar";
 import { useToast } from "../../hooks/useToast";
 import { AdminPageContext } from "../../hooks/useAdminPage";
