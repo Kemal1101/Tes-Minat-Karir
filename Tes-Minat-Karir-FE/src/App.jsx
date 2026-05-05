@@ -38,6 +38,8 @@ function App() {
   const [showValidation, setShowValidation] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showAllCareers, setShowAllCareers] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
+  const [targetJobZone, setTargetJobZone] = useState(null);
 
   useEffect(() => {
     fetch(`${Config.apiBaseUrl}/questions`)
@@ -111,7 +113,8 @@ function App() {
         },
         body: JSON.stringify({
           nama: "Anonim",
-          jawaban: answers
+          jawaban: answers,
+          target_job_zone: targetJobZone
         }),
       });
       const data = await response.json();
@@ -365,6 +368,74 @@ function App() {
       <div className="min-h-screen flex flex-col bg-bg-light">
         <div className="flex-1 flex flex-col items-center justify-center px-4">
           <h2 className="text-xl font-poppins text-red-500">Gagal memuat pertanyaan.</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isStarted) {
+    return (
+      <div className="min-h-screen flex flex-col bg-bg-light">
+        <nav className="bg-white border-b-4 border-accent shadow-soft">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center">
+            <div className="text-3xl font-poppins font-black">
+              <span className="text-accent">RIASEC</span>
+              <span className="text-saffron ml-2">Career</span>
+            </div>
+          </div>
+        </nav>
+
+        <div className="flex-1 flex items-center justify-center px-4 py-8 md:py-12">
+          <div className="w-full max-w-2xl bg-white rounded-3xl shadow-lg-custom p-8 md:p-10 animate-fade-in">
+            <h2 className="text-2xl md:text-3xl font-poppins font-bold text-accent mb-6 text-center">
+              Selamat Datang di Tes Minat Karir
+            </h2>
+            <p className="text-gray-600 font-inter text-center mb-8">
+              Sebelum memulai, beritahu kami sedikit tentang rencana pendidikan Anda untuk rekomendasi karir yang lebih akurat.
+            </p>
+
+            <div className="mb-8">
+              <label className="block text-lg font-poppins font-semibold text-text-primary mb-4">
+                Apa level pendidikan terakhir atau target pendidikan masa depan Anda?
+              </label>
+              
+              <div className="space-y-3">
+                {[
+                  { v: 1, l: 'Lulusan SMA/SMK' },
+                  { v: 3, l: 'D3 / Vokasi' },
+                  { v: 4, l: 'S1 / Sarjana' },
+                  { v: 5, l: 'S2 / Spesialis / Dokter' },
+                ].map(opt => (
+                  <button
+                    key={opt.v}
+                    onClick={() => setTargetJobZone(opt.v)}
+                    className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
+                      targetJobZone === opt.v 
+                        ? 'border-accent bg-accent/5 shadow-md' 
+                        : 'border-gray-200 hover:border-accent hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                        targetJobZone === opt.v ? 'border-accent' : 'border-gray-400'
+                      }`}>
+                        {targetJobZone === opt.v && <div className="w-2.5 h-2.5 bg-accent rounded-full"></div>}
+                      </div>
+                      <span className="font-inter font-medium text-text-primary">{opt.l}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <button
+              onClick={() => setIsStarted(true)}
+              disabled={!targetJobZone}
+              className="w-full py-4 bg-gradient-to-r from-accent to-accent-dark text-white rounded-xl font-poppins font-bold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-102"
+            >
+              Mulai Tes Sekarang →
+            </button>
+          </div>
         </div>
       </div>
     );
