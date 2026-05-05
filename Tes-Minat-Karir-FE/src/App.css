@@ -1,317 +1,86 @@
-/* ============================================================
-   RIASEC CAREER — FINAL CLEAN UI (STABLE VERSION)
-   ============================================================ */
+/* Custom CSS for RIASEC App - Tailwind powered */
 
 :root {
-  --accent:  #854836;
+  --accent: #854836;
   --saffron: #F5B553;
-  --bg:      #FDFBFA;
-  --surface: #FFFFFF;
-  --border:  #E8E0D8;
-  --text:    #2C2C2C;
-  --shadow:  0 10px 30px rgba(133, 72, 54, 0.08);
+  --bg-light: #FDFBFA;
+  --text-primary: #2C2C2C;
+  --accent-dark: #6d392c;
 }
 
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Base styles */
+html {
+  scroll-behavior: smooth;
 }
 
-html, body, #root {
-  height: 100%;
-  width: 100%;
-  background: var(--bg);
-  font-family: 'Segoe UI', system-ui, sans-serif;
+body {
+  background-color: var(--bg-light);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* NAVBAR */
-.navbar {
-  background: white;
-  padding: 1.5rem;
-  text-align: center;
-  border-bottom: 3px solid var(--accent);
-}
-
-.logo {
-  font-size: 1.8rem;
-  font-weight: 900;
-  color: var(--accent);
-}
-
-.logo span {
-  color: var(--saffron);
-}
-
-/* ================= TEST ================= */
-
-.main {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container {
-  width: 100%;
-  max-width: 800px;
-}
-
-/* PROGRESS */
-.test-header {
-  margin-bottom: 1rem;
-}
-
-.progress-bar {
-  height: 10px;
-  background: #eee;
-  border-radius: 50px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--accent);
-}
-
-/* QUESTION CARD */
-.question-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 20px;
-  margin-bottom: 1rem;
-  box-shadow: var(--shadow);
-}
-
-/* HEADER SOAL */
-.question-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.question-number {
-  font-size: 0.9rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--accent), #6d392c);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 8px;
-}
-
-.question-category {
-  font-size: 0.75rem;
-  font-weight: 900;
-  color: #000;
-  background: var(--saffron);
-  padding: 6px 16px;
-  border-radius: 50px;
-  text-transform: uppercase;
-  box-shadow: 0 4px 10px rgba(245, 181, 83, 0.4);
-}
-
-/* PERTANYAAN */
-.question-text {
-  font-size: 1.5rem;
-  font-weight: 800;
-  text-align: center;
-  margin-bottom: 1.8rem;
-  color: var(--accent);
-}
-
-/* OPTIONS */
-.option {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid #eee;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.option:hover {
-  transform: translateY(-2px);
-  border-color: var(--saffron);
-}
-
-.option.selected {
-  border-color: var(--accent);
-  background: #fdf7f2;
-}
-
-.option::before {
-  content: "";
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 2px solid var(--accent);
-}
-
-.option.selected::before {
-  background: var(--accent);
-  box-shadow: inset 0 0 0 3px white;
-}
-
-/* BUTTON */
-.test-nav {
-  display: flex;
-  justify-content: space-between;
-}
-
-button {
-  padding: 10px 20px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: 0.5;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), #6d392c);
-  color: white;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
 }
 
-.btn-secondary {
-  background: white;
-  border: 1px solid var(--accent);
-  color: var(--accent);
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ================= RESULT ================= */
-
-.result-main {
-  padding-top: 2.5rem;
-  overflow-y: auto;
+button {
+  transition: all 0.35s ease-out;
 }
 
-.result-hero {
-  text-align: center;
-  margin-bottom: 2rem;
+button:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-.result-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 2rem;
+/* Utility classes */
+.scale-102 {
+  transform: scale(1.02);
 }
 
-/* CHART */
-.chart-section {
-  background: white;
-  padding: 2rem;
-  border-radius: 24px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  text-align: center;
+.shadow-md-custom {
+  box-shadow: 0 4px 20px rgba(133, 72, 54, 0.12);
 }
 
-/* FIX RADAR */
+.shadow-lg-custom {
+  box-shadow: 0 20px 40px rgba(133, 72, 54, 0.15);
+}
+
+.shadow-soft {
+  box-shadow: 0 10px 30px rgba(133, 72, 54, 0.08);
+}
+
+.transition-smooth {
+  transition: all 0.35s ease-out;
+}
+
+/* Radar Chart Container Fix */
 .radar-container {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 520px;
+  height: 460px;
 }
 
 .radar-container canvas {
-  width: 460px !important;
-  height: 460px !important;
+  max-width: 100%;
+  max-height: 100%;
 }
 
-/* LEGEND */
-.radar-legend {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.8rem;
-  margin-top: 1.5rem;
+/* Prevent text selection jumps */
+button, [role="button"] {
+  user-select: none;
 }
 
-.legend-item {
-  display: flex;
-  justify-content: space-between;
-  background: #faf6f2;
-  border: 1px solid var(--border);
-  padding: 0.6rem;
-  border-radius: 10px;
-}
 
-/* DETAIL */
-.details-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.type-card {
-  display: flex;
-  gap: 1rem;
-  padding: 1.2rem;
-  border-left: 5px solid var(--accent);
-  background: white;
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-}
-
-/* CAREER */
-.career-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.tag {
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  color: var(--accent);
-}
-
-/* 🔥 TOMBOL ULANGI TEST */
-.restart-wrap {
-  display: flex;
-  justify-content: center;
-  margin-top: 2.5rem;
-}
-
-.restart-wrap .btn-primary {
-  padding: 2.5rem 4.5rem;
-  font-size: 2.4rem;
-  font-weight: 900;
-  border-radius: 60px;
-  background: linear-gradient(135deg, var(--accent), #6d392c);
-  box-shadow: 0 10px 25px rgba(133, 72, 54, 0.3);
-  transition: 0.3s;
-}
-
-.restart-wrap .btn-primary:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(133, 72, 54, 0.4);
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .result-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .radar-container canvas {
-    width: 320px !important;
-    height: 320px !important;
-  }
-}
