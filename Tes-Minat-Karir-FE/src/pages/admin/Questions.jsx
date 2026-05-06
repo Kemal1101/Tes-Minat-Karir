@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { QUESTIONS as INITIAL } from "../../data/mockData";
+import { useState, useEffect } from "react";
 import { useToast } from "../../hooks/useToast";
 import Modal, { ConfirmModal } from "../../components/admin/Modal";
+import { api } from "../../lib/api";
 import {
   Button, FormGroup, FormGrid, Input, Select, Textarea,
   Pagination, SearchInput, StatCard, StatsGrid,
@@ -27,11 +27,11 @@ function RiasecBadge({ type, showLabel = false }) {
 }
 
 const PAGE_SIZE = 8;
-const emptyForm = { text: "", type: "R", saw: "0.167", cf: "0.5" };
+const emptyForm = { text: "", type: "R", cf: "0.5", keywords: "" };
 
 export default function Questions() {
   const toast  = useToast();
-  const [data,       setData]       = useState(INITIAL);
+  const [data,       setData]       = useState([]);
   const [search,     setSearch]     = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [page,       setPage]       = useState(1);
@@ -42,6 +42,27 @@ export default function Questions() {
   const [delTarget,  setDelTarget]  = useState(null);
   const [form,       setForm]       = useState(emptyForm);
 
+  useEffect(() => {
+    loadQuestions();
+  }, []);
+
+  const loadQuestions = async () => {
+    try {
+      const result = await api.getQuestions();
+      const mapped = result.map(q => ({
+        id: q.id,
+        text: q.text,
+        type: q.category,
+        cf: q.cf_pakar,
+        keywords: q.keywords || ""
+      }));
+      setData(mapped);
+    } catch (err) {
+      toast("Gagal memuat soal", "danger");
+      console.error(err);
+    }
+  };
+
   // Derived
   const filtered = data.filter(q => {
     const matchSearch = q.text.toLowerCase().includes(search.toLowerCase());
@@ -51,32 +72,44 @@ export default function Questions() {
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paginated  = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
-  // Stats per type
-  const typeCounts = Object.fromEntries(
-    Object.keys(RIASEC_STYLE).map(t => [t, data.filter(q => q.type === t).length])
-  );
-
   function openCreate() { setEditing(null); setForm(emptyForm); setFormOpen(true); }
-  function openEdit(q)  { setEditing(q); setForm({ text: q.text, type: q.type, saw: q.saw.toString(), cf: q.cf.toString() }); setFormOpen(true); }
+  function openEdit(q)  { setEditing(q); setForm({ text: q.text, type: q.type, cf: q.cf.toString(), keywords: q.keywords || "" }); setFormOpen(true); }
   function openDelete(q){ setDelTarget(q); setDeleteOpen(true); }
 
-  function handleSave() {
+  async function handleSave() {
     if (!form.text.trim()) { toast("Teks pertanyaan wajib diisi", "danger"); return; }
-    const entry = { ...form, saw: parseFloat(form.saw), cf: parseFloat(form.cf) };
-    if (editing) {
-      setData(prev => prev.map(q => q.id === editing.id ? { ...q, ...entry } : q));
-      toast("Pertanyaan berhasil diperbarui!", "success");
-    } else {
-      setData(prev => [...prev, { id: Date.now(), ...entry }]);
-      toast("Pertanyaan berhasil ditambahkan!", "success");
+    try {
+      const payload = {
+        text: form.text,
+        category: form.type,
+        cf_pakar: parseFloat(form.cf),
+        keywords: form.keywords || ""
+      };
+      if (editing) {
+        await api.updateQuestion(editing.id, payload);
+        toast("Pertanyaan berhasil diperbarui!", "success");
+      } else {
+        await api.createQuestion(payload);
+        toast("Pertanyaan berhasil ditambahkan!", "success");
+      }
+      loadQuestions();
+      setFormOpen(false);
+    } catch (err) {
+      toast("Gagal menyimpan pertanyaan", "danger");
+      console.error(err);
     }
-    setFormOpen(false);
   }
 
-  function handleDelete() {
-    setData(prev => prev.filter(q => q.id !== delTarget.id));
-    toast("Pertanyaan dihapus", "danger");
-    setDeleteOpen(false);
+  async function handleDelete() {
+    try {
+      await api.deleteQuestion(delTarget.id);
+      toast("Pertanyaan dihapus", "danger");
+      loadQuestions();
+      setDeleteOpen(false);
+    } catch (err) {
+      toast("Gagal menghapus pertanyaan", "danger");
+      console.error(err);
+    }
   }
 
   const set = (k) => (val) => setForm(f => ({ ...f, [k]: val }));
@@ -96,15 +129,9 @@ export default function Questions() {
         },
         {
           label: "PER TIPE",
-          value: Math.round(data.length / 6),
+          value: Math.round(data.length / 6) || 0,
           badge: "seimbang",
           color: "green"
-        },
-        {
-          label: "BOBOT RATA-RATA",
-          value: "0.17",
-          badge: "SAW",
-          color: "blue"
         }
       ].map((card, i) => (
         <div
@@ -180,8 +207,7 @@ export default function Questions() {
             <th className="p-4 text-left">#</th>
             <th className="p-4 text-left">Pertanyaan</th>
             <th className="p-4 text-left">Tipe</th>
-            <th className="p-4 text-left">SAW</th>
-            <th className="p-4 text-left">CF</th>
+            <th className="p-4 text-left">CF Pakar</th>
             <th className="p-4 text-left">Aksi</th>
           </tr>
         </thead>
@@ -207,12 +233,8 @@ export default function Questions() {
                   </span>
                 </td>
 
-                <td className="p-4 font-semibold">
-                  {q.saw.toFixed(3)}
-                </td>
-
                 <td className="p-4">
-                  {q.cf.toFixed(1)}
+                  {(q.cf || 0).toFixed(1)}
                 </td>
 
                 <td className="p-4">
@@ -270,6 +292,13 @@ export default function Questions() {
           onChange={(e) => set("text")(e.target.value)}
         />
 
+        <textarea
+          className="w-full border p-3 rounded-lg text-sm"
+          placeholder="Keywords (pisahkan dengan koma)..."
+          value={form.keywords}
+          onChange={(e) => set("keywords")(e.target.value)}
+        />
+
         <select
           className="w-full border p-2 rounded-lg text-sm"
           value={form.type}
@@ -281,13 +310,6 @@ export default function Questions() {
         </select>
 
         <div className="grid grid-cols-2 gap-2">
-          <input
-            type="number"
-            step="0.001"
-            className="border p-2 rounded-lg text-sm"
-            value={form.saw}
-            onChange={(e) => set("saw")(e.target.value)}
-          />
           <input
             type="number"
             step="0.01"
@@ -319,3 +341,4 @@ export default function Questions() {
   </div>
 );
 }
+

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { OCCUPATIONS as INITIAL } from "../../data/mockData";
 import { useToast } from "../../hooks/useToast";
 import { useAdminPage } from "../../hooks/useAdminPage";
+import { api } from "../../lib/api";
 
 import Modal, { ConfirmModal } from "../../components/admin/Modal";
 import {
-  Button, FormGroup, FormGrid, Input, Select, Textarea,
+  Button, FormGroup, FormGrid, Input, Select, Textarea, Pagination
 } from "../../components/ui/UI";
 
 const RIASEC_STYLE = {
@@ -45,7 +45,7 @@ export default function Occupations() {
   const toast = useToast();
   const { setActions } = useAdminPage();
 
-  const [data, setData] = useState(INITIAL);
+  const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
@@ -56,11 +56,34 @@ export default function Occupations() {
   const [form, setForm] = useState(emptyForm);
 
   useEffect(() => {
+    loadOccupations();
     setActions({
       onAdd: openCreate,
-      onRefresh: () => toast("Data pekerjaan diperbarui", "info"),
+      onRefresh: () => {
+        loadOccupations();
+        toast("Data pekerjaan diperbarui", "info");
+      },
     });
   }, []);
+
+  const loadOccupations = async () => {
+    try {
+      const result = await api.getOccupations();
+      const mapped = result.map(o => ({
+        id: o.id,
+        name: o.occupation || "",
+        onet: o.code || "",
+        holland: o.interest_code || "I",
+        sector: o.job_zone || "Teknologi Informasi",
+        saw: 0.80,
+        desc: ""
+      }));
+      setData(mapped);
+    } catch (err) {
+      toast("Gagal memuat pekerjaan", "danger");
+      console.error(err);
+    }
+  };
 
   const filtered = data.filter(o =>
     `${o.name} ${o.onet} ${o.sector}`
@@ -98,30 +121,46 @@ export default function Occupations() {
     setDeleteOpen(true);
   }
 
-  function handleSave() {
+  async function handleSave() {
     if (!form.name || !form.onet) {
       toast("Nama & O*NET wajib diisi", "danger");
       return;
     }
 
-    const entry = { ...form, saw: parseFloat(form.saw) };
+    try {
+      const payload = {
+        occupation: form.name,
+        code: form.onet,
+        interest_code: form.holland,
+        job_zone: form.sector
+      };
 
-    if (editing) {
-      setData(prev =>
-        prev.map(o => (o.id === editing.id ? { ...o, ...entry } : o))
-      );
-      toast("Berhasil update pekerjaan", "success");
-    } else {
-      setData(prev => [{ id: Date.now(), ...entry }, ...prev]);
-      toast("Berhasil tambah pekerjaan", "success");
+      if (editing) {
+        await api.updateOccupation(editing.id, payload);
+        toast("Berhasil update pekerjaan", "success");
+      } else {
+        await api.createOccupation(payload);
+        toast("Berhasil tambah pekerjaan", "success");
+      }
+      
+      loadOccupations();
+      setFormOpen(false);
+    } catch (err) {
+      toast("Gagal menyimpan pekerjaan", "danger");
+      console.error(err);
     }
-
-    setFormOpen(false);
   }
 
-  function handleDelete() {
-    setData(prev => prev.filter(o => o.id !== delTarget.id));
-    toast("Pekerjaan dihapus", "danger");
+  async function handleDelete() {
+    try {
+      await api.deleteOccupation(delTarget.id);
+      toast("Pekerjaan dihapus", "danger");
+      loadOccupations();
+      setDeleteOpen(false);
+    } catch (err) {
+      toast("Gagal menghapus pekerjaan", "danger");
+      console.error(err);
+    }
   }
 
   const set = key => val => setForm(f => ({ ...f, [key]: val }));
@@ -173,25 +212,26 @@ export default function Occupations() {
           />
         </div>
 
-        <table className="w-full text-sm">
-          <thead className="text-xs text-gray-400 uppercase">
-            <tr>
-              <th className="p-4 text-left">Nama</th>
-              <th className="p-4 text-left">O*NET</th>
-              <th className="p-4 text-left">Tipe</th>
-              <th className="p-4 text-left">Sektor</th>
-              <th className="p-4 text-left">SAW</th>
-              <th className="p-4 text-left">Aksi</th>
-            </tr>
-          </thead>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="text-xs text-gray-400 uppercase">
+              <tr>
+                <th className="p-4 text-left">Nama</th>
+                <th className="p-4 text-left">O*NET</th>
+                <th className="p-4 text-left">Tipe</th>
+                <th className="p-4 text-left">Sektor</th>
+                <th className="p-4 text-left">SAW</th>
+                <th className="p-4 text-left">Aksi</th>
+              </tr>
+            </thead>
 
           <tbody>
             {paginated.map(o => (
               <tr key={o.id} className="border-t hover:bg-gray-50">
-                <td className="p-4 font-semibold">{o.name}</td>
+                <td className="p-4 font-semibold max-w-xs truncate" title={o.name}>{o.name}</td>
 
                 <td className="p-4">
-                  <span className="bg-gray-100 px-2 py-1 rounded text-xs">
+                  <span className="bg-gray-100 px-2 py-1 rounded text-xs whitespace-nowrap">
                     {o.onet}
                   </span>
                 </td>
@@ -208,21 +248,21 @@ export default function Occupations() {
                   </span>
                 </td>
 
-                <td className="p-4 text-gray-500">{o.sector}</td>
+                <td className="p-4 text-gray-500 max-w-[150px] truncate" title={o.sector}>{o.sector}</td>
 
-                <td className="p-4 font-bold">{o.saw.toFixed(2)}</td>
+                <td className="p-4 font-bold">{(o.saw || 0).toFixed(2)}</td>
 
                 <td className="p-4">
                   <div className="flex gap-2">
                     <button
                       onClick={() => openEdit(o)}
-                      className="px-3 py-1 border rounded-lg text-xs"
+                      className="px-3 py-1 border rounded-lg text-xs hover:bg-gray-100"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => openDelete(o)}
-                      className="px-3 py-1 bg-red-100 text-red-600 rounded-lg text-xs"
+                      className="px-3 py-1 bg-red-100 text-red-600 rounded-lg text-xs hover:bg-red-200"
                     >
                       Hapus
                     </button>
@@ -232,30 +272,17 @@ export default function Occupations() {
             ))}
           </tbody>
         </table>
+        </div>
 
         {/* PAGINATION */}
         <div className="p-4 flex justify-between items-center">
           <div className="text-xs text-gray-400">
-            {(page - 1) * PAGE_SIZE + 1}–
+            Menampilkan {(page - 1) * PAGE_SIZE + 1}–
             {Math.min(page * PAGE_SIZE, filtered.length)} dari{" "}
             {filtered.length}
           </div>
 
-          <div className="flex gap-2">
-            {[...Array(totalPages)].map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setPage(i + 1)}
-                className={`w-8 h-8 text-xs rounded ${
-                  page === i + 1
-                    ? "bg-orange-700 text-white"
-                    : "bg-gray-100"
-                }`}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
+          <Pagination current={page} total={totalPages} onChange={setPage} />
         </div>
       </div>
 
@@ -294,6 +321,8 @@ export default function Occupations() {
             type="number"
             value={form.saw}
             onChange={e => set("saw")(e.target.value)}
+            disabled
+            title="SAW constant in backend"
           />
         </FormGroup>
 

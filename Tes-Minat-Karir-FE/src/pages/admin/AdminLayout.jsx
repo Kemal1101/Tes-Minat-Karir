@@ -26,7 +26,6 @@ export default function AdminLayout() {
 
           <Topbar
             onAdd={() => actions.onAdd?.() || toast("Tidak ada aksi tambah di halaman ini", "info")}
-            onRefresh={() => actions.onRefresh?.() || toast("Tidak ada aksi refresh", "info")}
           />
 
           <div style={{ padding: 24, flex: 1, overflowY: "auto" }}>

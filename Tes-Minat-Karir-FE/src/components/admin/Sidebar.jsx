@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { api } from "../../lib/api";
 
 const menuItem = ({ isActive }) => ({
   display: "flex",
@@ -29,6 +30,18 @@ const badgeStyle = {
 };
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await api.logout();
+    } catch(e) {
+      console.error("Logout error", e);
+    }
+    localStorage.removeItem("token");
+    navigate("/loginadmin");
+  };
+
   return (
     <div
       style={{
@@ -75,7 +88,6 @@ export default function Sidebar() {
 
         <NavLink to="/admin/users" style={menuItem}>
           <div style={leftContent}>👥 Daftar Pengguna</div>
-          <span style={badgeStyle}>24</span>
         </NavLink>
 
         <NavLink to="/admin/history" style={menuItem}>
@@ -92,7 +104,6 @@ export default function Sidebar() {
 
         <NavLink to="/admin/blacklist" style={menuItem}>
           <div style={leftContent}>🔒 Token Blacklist</div>
-          <span style={{ ...badgeStyle, background: "#EF4444" }}>3</span>
         </NavLink>
 
         {/* SECTION: SISTEM */}
@@ -105,6 +116,7 @@ export default function Sidebar() {
         </NavLink> */}
 
         <div
+          onClick={handleLogout}
           style={{
             padding: "10px 14px",
             color: "#EF4444",

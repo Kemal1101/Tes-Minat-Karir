@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { USERS as INITIAL_USERS } from "../../data/mockData";
 import { useToast } from "../../hooks/useToast";
 import { useAdminPage } from "../../hooks/useAdminPage";
+import { api } from "../../lib/api";
 
 import Modal, { ConfirmModal } from "../../components/admin/Modal";
 import {
@@ -14,15 +14,18 @@ const ROLE_LABEL   = { admin: "Admin",  user: "User" };
 const PAGE_SIZE    = 8;
 
 const emptyForm = {
-  fname: "", lname: "", email: "",
-  role: "user", status: "active"
+  username: "", 
+  nama_lengkap: "",
+  password: "",
+  role: "user", 
+  status: "active"
 };
 
 export default function DaftarPengguna() {
   const toast = useToast();
   const { setActions } = useAdminPage();
 
-  const [users, setUsers] = useState(INITIAL_USERS);
+  const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
@@ -37,15 +40,36 @@ export default function DaftarPengguna() {
 
   // 🔗 Topbar actions
   useEffect(() => {
+    loadUsers();
     setActions({
       onAdd: openCreate,
-      onRefresh: () => toast("Data diperbarui", "info"),
+      onRefresh: () => {
+        loadUsers();
+        toast("Data diperbarui", "info");
+      },
     });
   }, []);
 
+  const loadUsers = async () => {
+    try {
+      const result = await api.getUsers();
+      const mapped = result.map(u => ({
+        id: u.id,
+        username: u.username,
+        nama_lengkap: u.nama_lengkap || "",
+        role: u.role || "user",
+        status: "active",
+      }));
+      setUsers(mapped);
+    } catch (err) {
+      toast("Gagal memuat pengguna", "danger");
+      console.error(err);
+    }
+  };
+
   // 🔍 Filter
   const filtered = users.filter(u =>
-    `${u.fname} ${u.lname} ${u.email}`
+    `${u.nama_lengkap} ${u.username}`
       .toLowerCase()
       .includes(search.toLowerCase())
   );
@@ -62,7 +86,10 @@ export default function DaftarPengguna() {
 
   function openEdit(user) {
     setEditingUser(user);
-    setForm(user);
+    setForm({
+      ...user,
+      password: "" // Don't show existing password
+    });
     setFormOpen(true);
   }
 
@@ -76,34 +103,51 @@ export default function DaftarPengguna() {
     setDeleteOpen(true);
   }
 
-  function handleSave() {
-    if (!form.fname || !form.email) {
-      toast("Nama dan email wajib diisi", "danger");
+  async function handleSave() {
+    if (!form.username) {
+      toast("Username wajib diisi", "danger");
       return;
     }
 
-    if (editingUser) {
-      setUsers(prev =>
-        prev.map(u => u.id === editingUser.id ? { ...u, ...form } : u)
-      );
-      toast("Pengguna diperbarui", "success");
-    } else {
-      const newUser = {
-        id: Date.now(),
-        ...form,
-        joined: new Date().toLocaleDateString("id-ID"),
-        tests: 0
+    try {
+      const payload = {
+        username: form.username,
+        nama_lengkap: form.nama_lengkap.trim(),
+        role: form.role
       };
-      setUsers(prev => [newUser, ...prev]);
-      toast("Pengguna ditambahkan", "success");
-    }
 
-    setFormOpen(false);
+      if (editingUser) {
+        if (form.password) payload.password = form.password;
+        await api.updateUser(editingUser.id, payload);
+        toast("Pengguna diperbarui", "success");
+      } else {
+        if (!form.password) {
+          toast("Password wajib diisi untuk pengguna baru", "danger");
+          return;
+        }
+        payload.password = form.password;
+        await api.createUser(payload);
+        toast("Pengguna ditambahkan", "success");
+      }
+      
+      loadUsers();
+      setFormOpen(false);
+    } catch (err) {
+      toast("Gagal menyimpan pengguna", "danger");
+      console.error(err);
+    }
   }
 
-  function handleDelete() {
-    setUsers(prev => prev.filter(u => u.id !== selectedUser.id));
-    toast("Pengguna dihapus", "danger");
+  async function handleDelete() {
+    try {
+      await api.deleteUser(selectedUser.id);
+      toast("Pengguna dihapus", "danger");
+      loadUsers();
+      setDeleteOpen(false);
+    } catch (err) {
+      toast("Gagal menghapus pengguna", "danger");
+      console.error(err);
+    }
   }
 
   const set = (key) => (val) => setForm(f => ({ ...f, [key]: val }));
@@ -126,15 +170,24 @@ export default function DaftarPengguna() {
         <div className="flex justify-between items-center p-5 border-b">
           <div className="font-semibold">Semua Pengguna</div>
 
-          <input
-            className="bg-gray-100 border px-4 py-2 rounded-full text-sm w-[260px]"
-            placeholder="🔍 Cari nama atau email..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-          />
+          <div className="flex gap-3 items-center">
+            <input
+              className="bg-gray-100 border px-4 py-2 rounded-full text-sm w-[260px]"
+              placeholder="🔍 Cari nama atau username..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+            />
+
+            <button
+              onClick={openCreate}
+              className="bg-black text-white px-4 py-2 rounded-full text-sm"
+            >
+              + Tambah
+            </button>
+          </div>
         </div>
 
         <table className="w-full text-sm">
@@ -143,8 +196,6 @@ export default function DaftarPengguna() {
               <th className="p-4 text-left">Pengguna</th>
               <th className="p-4 text-left">Peran</th>
               <th className="p-4 text-left">Status</th>
-              <th className="p-4 text-left">Bergabung</th>
-              <th className="p-4 text-left">Tes</th>
               <th className="p-4 text-left">Aksi</th>
             </tr>
           </thead>
@@ -156,12 +207,12 @@ export default function DaftarPengguna() {
                 {/* USER */}
                 <td className="p-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-[#FAEEDA] text-[#854F0B] flex items-center justify-center text-xs font-bold">
-                      {u.fname[0]}{u.lname[0]}
+                    <div className="w-9 h-9 rounded-full bg-[#FAEEDA] text-[#854F0B] flex items-center justify-center text-xs font-bold uppercase">
+                      {(u.nama_lengkap || u.username).substring(0, 2)}
                     </div>
                     <div>
-                      <div className="font-semibold">{u.fname} {u.lname}</div>
-                      <div className="text-xs text-gray-400">{u.email}</div>
+                      <div className="font-semibold">{u.nama_lengkap || "-"}</div>
+                      <div className="text-xs text-gray-400">{u.username}</div>
                     </div>
                   </div>
                 </td>
@@ -172,7 +223,7 @@ export default function DaftarPengguna() {
                     ${u.role === "admin"
                       ? "bg-yellow-100 text-yellow-700"
                       : "bg-blue-100 text-blue-600"}`}>
-                    {ROLE_LABEL[u.role]}
+                    {ROLE_LABEL[u.role] || u.role}
                   </span>
                 </td>
 
@@ -187,12 +238,6 @@ export default function DaftarPengguna() {
                     {STATUS_LABEL[u.status]}
                   </span>
                 </td>
-
-                {/* JOIN */}
-                <td className="p-4 text-gray-500">{u.joined}</td>
-
-                {/* TEST */}
-                <td className="p-4 font-semibold">{u.tests}</td>
 
                 {/* ACTION */}
                 <td className="p-4">
@@ -230,17 +275,29 @@ export default function DaftarPengguna() {
           </>
         }
       >
-        <FormGrid>
-          <FormGroup label="Nama Depan">
-            <Input value={form.fname} onChange={e => set("fname")(e.target.value)} />
-          </FormGroup>
-          <FormGroup label="Nama Belakang">
-            <Input value={form.lname} onChange={e => set("lname")(e.target.value)} />
-          </FormGroup>
-        </FormGrid>
+        <FormGroup label="Nama Lengkap">
+          <Input 
+            value={form.nama_lengkap} 
+            onChange={e => set("nama_lengkap")(e.target.value)} 
+            placeholder="John Doe"
+          />
+        </FormGroup>
 
-        <FormGroup label="Email">
-          <Input value={form.email} onChange={e => set("email")(e.target.value)} />
+        <FormGroup label="Username">
+          <Input 
+            value={form.username} 
+            onChange={e => set("username")(e.target.value)} 
+            placeholder="johndoe"
+          />
+        </FormGroup>
+
+        <FormGroup label={editingUser ? "Password Baru (opsional)" : "Password"}>
+          <Input 
+            type="password" 
+            placeholder={editingUser ? "Kosongkan jika tidak ingin ganti" : "password123"} 
+            value={form.password} 
+            onChange={e => set("password")(e.target.value)} 
+          />
         </FormGroup>
 
         <FormGrid>
@@ -265,11 +322,10 @@ export default function DaftarPengguna() {
       <Modal open={detailOpen} onClose={() => setDetailOpen(false)} title="Detail Pengguna">
         {selectedUser && (
           <div className="space-y-2 text-sm">
-            <div><b>Nama:</b> {selectedUser.fname} {selectedUser.lname}</div>
-            <div><b>Email:</b> {selectedUser.email}</div>
-            <div><b>Role:</b> {ROLE_LABEL[selectedUser.role]}</div>
+            <div><b>Nama Lengkap:</b> {selectedUser.nama_lengkap || "-"}</div>
+            <div><b>Username:</b> {selectedUser.username}</div>
+            <div><b>Role:</b> {ROLE_LABEL[selectedUser.role] || selectedUser.role}</div>
             <div><b>Status:</b> {STATUS_LABEL[selectedUser.status]}</div>
-            <div><b>Bergabung:</b> {selectedUser.joined}</div>
           </div>
         )}
       </Modal>

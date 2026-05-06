@@ -1,22 +1,18 @@
+import { useToast } from "../../hooks/useToast";
+
 export default function Topbar({ onAdd, onRefresh }) {
+  const toast = useToast();
   return (
     <div style={{
-      padding: 16,
+      padding: "16px 24px",
       borderBottom: "1px solid #eee",
       display: "flex",
+      alignItems: "center",
       justifyContent: "space-between",
       background: "#fff"
     }}>
-      <div style={{ fontWeight: 700 }}>Admin Dashboard</div>
-
-      <div>
-        <button onClick={onRefresh} style={{ marginRight: 8 }}>
-          Refresh
-        </button>
-        <button onClick={onAdd}>
-          Add
-        </button>
-      </div>
+      <div></div>
+      <div style={{ fontWeight: 700 }}>ADMIN DASHBOARD</div>
     </div>
   );
 }

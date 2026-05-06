@@ -17,6 +17,10 @@ import Questions from "./pages/admin/Questions";
 import Occupations from "./pages/admin/Occupations";
 import TokenBlacklist from "./pages/admin/TokenBlacklist";
 
+// Auth
+import LoginPage from "./pages/Login";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
+
 export default function App() {
   return (
     <ToastProvider>
@@ -30,14 +34,18 @@ export default function App() {
             <Route path="/result" element={<ResultPage />} />
           </Route>
 
+          <Route path="/loginadmin" element={<LoginPage />} />
+
           {/* ADMIN */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<DaftarPengguna />} />
-            <Route path="users" element={<DaftarPengguna />} />
-            <Route path="history" element={<TestHistory />} />
-            <Route path="questions" element={<Questions />} />
-            <Route path="occupations" element={<Occupations />} />
-            <Route path="blacklist" element={<TokenBlacklist />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<DaftarPengguna />} />
+              <Route path="users" element={<DaftarPengguna />} />
+              <Route path="history" element={<TestHistory />} />
+              <Route path="questions" element={<Questions />} />
+              <Route path="occupations" element={<Occupations />} />
+              <Route path="blacklist" element={<TokenBlacklist />} />
+            </Route>
           </Route>
 
         </Routes>
