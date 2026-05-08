@@ -28,6 +28,7 @@ export default function AdminLayout() {
             onAdd={() => actions.onAdd?.() || toast("Tidak ada aksi tambah di halaman ini", "info")}
             onRefresh={() => actions.onRefresh?.() || toast("Tidak ada aksi refresh", "info")}
           /> */}
+          
 
           <div style={{ paddingTop: "10px",paddingLeft:"20px", flex: 1, overflowY: "auto" }}>
             <Outlet />

@@ -31,19 +31,20 @@ export function Badge({ variant, children }) {
 
 // ─── BUTTON ────────────────────────────────────────────────────────────────────
 const BTN_VARIANTS = {
-  primary: { background: "var(--app-accent)", color: "white", border: "none" },
+  primary: { background: "var(--app-accent)", color: "black", border: "none" },
   ghost:   { background: "transparent", color: "var(--text-muted)", border: "1px solid var(--border)" },
   danger:  { background: "var(--danger-light)", color: "var(--danger)", border: "none" },
   success: { background: "var(--success-light)", color: "var(--success)", border: "none" },
 };
 
-export function Button({ variant = "ghost", size = "md", onClick, children, style }) {
+export function Button({ variant = "ghost", size = "md", onClick, children, style, ...props }) {
   const v = BTN_VARIANTS[variant] || BTN_VARIANTS.ghost;
   const pad = size === "sm" ? "5px 10px" : "9px 16px";
   const fs  = size === "sm" ? 11 : 13;
 
   return (
-    <button
+    <button 
+      { ...props }
       onClick={onClick}
       style={{
         display: "inline-flex", alignItems: "center", gap: 6,
@@ -116,22 +117,33 @@ export function SearchInput({ placeholder, value, onChange, style }) {
 
 // ─── PAGINATION ────────────────────────────────────────────────────────────────
 export function Pagination({ current, total, onChange, info }) {
+  const getPages = () => {
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+    if (current <= 4) return [1, 2, 3, 4, 5, "...", total];
+    if (current >= total - 3) return [1, "...", total - 4, total - 3, total - 2, total - 1, total];
+    return [1, "...", current - 1, current, current + 1, "...", total];
+  };
+
   return (
-    <div style={{ padding: "12px 20px", borderTop: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+    <div style={{ padding: "12px 20px", borderTop: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
       <span style={{ fontSize: 12, color: "var(--text-muted)", fontWeight: 500 }}>{info}</span>
-      <div style={{ display: "flex", gap: 4 }}>
-        {Array.from({ length: total }, (_, i) => i + 1).map(p => (
-          <button
-            key={p}
-            onClick={() => onChange(p)}
-            style={{
-              width: 28, height: 28, borderRadius: 8, border: "1px solid var(--border)",
-              background: p === current ? "var(--app-accent)" : "transparent",
-              color: p === current ? "white" : "var(--text-muted)",
-              fontSize: 12, fontWeight: 600, cursor: "pointer",
-              transition: "all 0.15s",
-            }}
-          >{p}</button>
+      <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+        {getPages().map((p, idx) => (
+          p === "..." ? (
+            <span key={`dots-${idx}`} style={{ display: "flex", alignItems: "end", padding: "0 4px", color: "var(--text-muted)" }}>...</span>
+          ) : (
+            <button
+              key={p}
+              onClick={() => onChange(p)}
+              style={{
+                width: 28, height: 28, borderRadius: 8, border: "1px solid var(--border)",
+                background: p === current ? "var(--app-accent)" : "transparent",
+                color: p === current ? "white" : "var(--text-muted)",
+                fontSize: 12, fontWeight: 600, cursor: "pointer",
+                transition: "all 0.15s",
+              }}
+            >{p}</button>
+          )
         ))}
       </div>
     </div>
