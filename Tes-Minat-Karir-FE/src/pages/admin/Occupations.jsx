@@ -207,7 +207,7 @@ export default function Occupations() {
       </div>
     </div>
 
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-[#f8f6f2] min-h-screen">
 
       {/* STATS */}
       <div className="grid grid-cols-3 gap-6 mb-8">

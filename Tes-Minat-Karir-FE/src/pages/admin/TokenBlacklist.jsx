@@ -179,7 +179,7 @@ export default function TokenBlacklist() {
       </div>
     </div>
 
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-[#f8f6f2] min-h-screen">
 
       {/* ALERT */}
       {data.length > 0 && (
