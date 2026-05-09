@@ -1,6 +1,22 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { api } from "../../lib/api";
 
+const getUsernameFromToken = () => {
+  const token = localStorage.getItem("token");
+  if (!token) return "Admin";
+
+  try {
+    const payloadBase64 = token.split(".")[1];
+    if (!payloadBase64) return "Admin";
+
+    const payloadJson = atob(payloadBase64.replace(/-/g, "+").replace(/_/g, "/"));
+    const payload = JSON.parse(payloadJson);
+    return payload?.sub || "Admin";
+  } catch {
+    return "Admin";
+  }
+};
+
 const menuItem = ({ isActive }) => ({
   display: "flex",
   alignItems: "center",
@@ -31,6 +47,8 @@ const badgeStyle = {
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const username = getUsernameFromToken();
+  const initials = username.slice(0, 2).toUpperCase();
 
   const handleLogout = async () => {
     try {
@@ -73,10 +91,10 @@ export default function Sidebar() {
               fontWeight: "bold",
             }}
           >
-            K
+            {initials}
           </div>
           <div>
-            <div style={{ fontWeight: 600 }}>KarirPakar</div>
+            <div style={{ fontWeight: 600 }}>{username}</div>
             <div style={{ fontSize: 12, color: "#888" }}>Admin Console</div>
           </div>
         </div>
@@ -100,10 +118,6 @@ export default function Sidebar() {
 
         <NavLink to="/admin/occupations" style={menuItem}>
           <div style={leftContent}>💼 Pekerjaan</div>
-        </NavLink>
-
-        <NavLink to="/admin/blacklist" style={menuItem}>
-          <div style={leftContent}>🔒 Token Blacklist</div>
         </NavLink>
 
         {/* SECTION: SISTEM */}
@@ -151,10 +165,10 @@ export default function Sidebar() {
             fontWeight: "bold",
           }}
         >
-          SA
+          {initials}
         </div>
         <div>
-          <div style={{ fontWeight: 600 }}>Super Admin</div>
+          <div style={{ fontWeight: 600 }}>{username}</div>
           <div style={{ fontSize: 12, color: "#8B5E00" }}>
             Administrator
           </div>

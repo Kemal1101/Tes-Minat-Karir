@@ -25,6 +25,25 @@ export const api = {
     return res.json();
   },
 
+  register: async (username, password, nama_lengkap) => {
+    const res = await fetch(`${API_URL}/v1/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        nama_lengkap
+      })
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.detail || "Registration failed");
+    }
+    return res.json();
+  },
+
   logout: async () => {
     const res = await fetch(`${API_URL}/v1/logout`, {
       method: "POST",

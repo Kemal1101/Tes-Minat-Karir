@@ -15,7 +15,6 @@ import DaftarPengguna from "./pages/admin/DaftarPengguna";
 import TestHistory from "./pages/admin/TestHistory";
 import Questions from "./pages/admin/Questions";
 import Occupations from "./pages/admin/Occupations";
-import TokenBlacklist from "./pages/admin/TokenBlacklist";
 
 // Auth
 import LoginPage from "./pages/Login";
@@ -44,7 +43,6 @@ export default function App() {
               <Route path="history" element={<TestHistory />} />
               <Route path="questions" element={<Questions />} />
               <Route path="occupations" element={<Occupations />} />
-              <Route path="blacklist" element={<TokenBlacklist />} />
             </Route>
           </Route>
 
