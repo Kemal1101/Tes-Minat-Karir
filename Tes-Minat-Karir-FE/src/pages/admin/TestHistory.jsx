@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TEST_HISTORY as INITIAL } from "../../data/mockData";
 import { useToast } from "../../hooks/useToast";
 import Modal, { ConfirmModal } from "../../components/admin/Modal";
+import { useAdminPage } from "../../hooks/useAdminPage";
+import { RefreshCw, Plus } from "lucide-react";
 import {
   Avatar, Badge, Button, FormGroup, FormGrid, Input, Select,
   Pagination, SearchInput, StatCard, StatsGrid,
   Table, TableCard, TableHeader, Td, Tr,
 } from "../../components/ui/UI";
+
+
+const icons = {
+  refresh: RefreshCw,
+  add: Plus,
+};
 
 const RIASEC_TYPES = ["R", "I", "A", "S", "E", "C"];
 const RIASEC_STYLE = {
@@ -32,6 +40,7 @@ const emptyForm = { user: "", type: "SAI", saw: "0.80", cf: "0.75", career: "", 
 
 export default function TestHistory() {
   const toast  = useToast();
+  const { setActions } = useAdminPage();
   const [data,   setData]   = useState(INITIAL);
   const [search, setSearch] = useState("");
   const [page,   setPage]   = useState(1);
@@ -44,7 +53,35 @@ export default function TestHistory() {
   const [delTarget,  setDelTarget]  = useState(null);
   const [form,       setForm]       = useState(emptyForm);
 
-  // Derived
+
+    // 🔗 Dynamic Topbar
+  const topbar = {
+    title: "Test History",
+
+    subtitle: "Riwayat hasil tes minat karir pengguna",
+
+    actions: [
+      {
+        label: "Refresh",
+        icon: "refresh",
+        variant: "secondary",
+
+        onClick: () => {
+          toast("Data diperbarui", "info");
+        },
+      },
+    ],
+  };
+
+  useEffect(() => {
+    setActions(topbar);
+
+    return () => {
+      setActions(null);
+    };
+  }, []);
+
+  // 🔍 Filter
   const filtered   = data.filter(h => h.user.toLowerCase().includes(search.toLowerCase()) || h.career.toLowerCase().includes(search.toLowerCase()));
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paginated  = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
@@ -79,8 +116,55 @@ export default function TestHistory() {
   }
 
   const set = (k) => (val) => setForm(f => ({ ...f, [k]: val }));
+  const { title, subtitle, actions } = topbar;
+
 
   return (
+   <>
+    {/* Top Bar */}
+    <div className="bg-white border-b border-zinc-200 px-4 py-2 flex items-start justify-between sticky top-0 z-50">
+
+      {/* LEFT */}
+      <div className="leading-tight">
+        <h1 className="m-0 text-[20px] font-bold text-zinc-900 leading-none">
+          {title}
+        </h1>
+
+        <p className="m-0 mt-1 text-xs text-zinc-500 leading-none">
+          {subtitle}
+        </p>
+      </div>
+
+      {/* RIGHT */}
+      <div className="flex items-center gap-3">
+        {actions.map((action, index) => {
+          const Icon = icons[action.icon];
+
+          return (
+            <button
+              key={index}
+              onClick={action.onClick}
+              className={`
+                inline-flex items-center gap-2
+                h-10 px-5 rounded-xl
+                text-sm font-medium
+                transition-all
+
+                ${
+                  action.variant === "primary"
+                    ? "bg-amber-700 hover:bg-amber-800 text-white"
+                    : "border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700"
+                }
+              `}
+            >
+              {Icon && <Icon size={16} />}
+              {action.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+
   <div className="p-6 bg-[#f8f6f2] min-h-screen">
 
     {/* STATS */}
@@ -205,28 +289,12 @@ export default function TestHistory() {
               {/* AKSI */}
               <td className="p-4">
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      setViewing(h);
-                      setDetailOpen(true);
-                    }}
-                    className="text-xs px-3 py-1 border rounded-full hover:bg-gray-100"
-                  >
-                    Lihat
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setDelTarget(h);
-                      setDeleteOpen(true);
-                    }}
-                    className="text-xs px-3 py-1 bg-red-100 text-red-600 rounded-full hover:bg-red-200"
-                  >
-                    Hapus
-                  </button>
+                  <button onClick={() => { setViewing(h);setDetailOpen(true); }} className="text-xs px-3 py-1 border rounded-full hover:bg-gray-100">
+                    Lihat </button>
+                  <button onClick={() => openDelete(h)} className="text-xs px-3 py-1 bg-red-100 text-red-600 hover:bg-red-500 hover:text-white transition-all duration-200 rounded-full">
+                    Hapus</button>
                 </div>
               </td>
-
             </tr>
           ))}
         </tbody>
@@ -272,5 +340,6 @@ export default function TestHistory() {
     />
 
   </div>
+  </>
 );
 }

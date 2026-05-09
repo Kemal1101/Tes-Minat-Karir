@@ -35,11 +35,12 @@ export default function CTASection() {
     <>
       <section
         id="social-proof"
-        className="py-24 md:py-32 px-4 md:px-8 flex flex-col items-center justify-center text-center"
+        className="relative py-24 md:py-32 px-4 md:px-8 flex flex-col items-center justify-center text-center"
       >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-96 md:h-96 bg-appBlob/10 rounded-full blur-[80px] -z-10"></div>
         <h2
           ref={counterRef}
-          className="text-7xl md:text-8xl lg:text-[10rem] font-bold font-mono tracking-tighter text-black mb-4"
+          className="text-7xl md:text-8xl lg:text-[10rem] font-bold font-mono tracking-tighter text-black mb-4 drop-shadow-sm"
         >
           0
         </h2>
@@ -48,18 +49,22 @@ export default function CTASection() {
         </p>
       </section>
 
-      <section className="py-16 md:py-24 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto bg-white/60 backdrop-blur-xl border border-white/50 rounded-[2rem] p-8 md:p-16 text-center shadow-[0_20px_40px_rgba(0,0,0,0.05)]">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 text-black">
+      <section className="min-h-screen flex flex-col justify-center py-24 md:py-32 px-4 md:px-8">
+        <div className="relative max-w-4xl w-full mx-auto bg-white/50 backdrop-blur-2xl border border-white/60 rounded-[3rem] p-12 md:p-24 text-center shadow-[0_20px_60px_rgba(0,0,0,0.05)] overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-appAccent/5 rounded-full blur-3xl -mr-20 -mt-20"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-appBlob/10 rounded-full blur-3xl -ml-20 -mb-20"></div>
+          
+          <h2 className="relative z-10 text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 text-black">
             Siap Menemukan Arah Karir?
           </h2>
-          <p className="text-base md:text-lg text-gray-600 font-medium mb-8 md:mb-10">
-            Mulai tes sekarang dan dapatkan rekomendasi karir yang sesuai dengan minatmu.
+          <p className="text-lg md:text-xl text-gray-600 font-medium mb-10 md:mb-12 max-w-2xl mx-auto leading-relaxed">
+            Mulai tes sekarang dan dapatkan rekomendasi karir yang akurat sesuai
+            dengan preferensi aktivitas Anda.
           </p>
 
           <button
             type="button"
-            className="bg-appAccent text-white px-8 py-3.5 md:py-4 rounded-full text-sm md:text-base font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(133,72,54,0.6)] whitespace-nowrap"
+            className="relative z-10 bg-appAccent text-white px-10 py-4 md:py-5 rounded-full text-base md:text-lg font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(133,72,54,0.3)] whitespace-nowrap"
           >
             Mulai Tes Sekarang
           </button>

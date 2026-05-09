@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { useState } from "react";
 import Sidebar from "../../components/admin/Sidebar";
-import Topbar from "../../components/shared/Topbar";
+//import Topbar from "../../components/shared/Topbar";
 import { useToast } from "../../hooks/useToast";
 import { AdminPageContext } from "../../hooks/useAdminPage";
 
@@ -24,11 +24,13 @@ export default function AdminLayout() {
         {/* Main */}
         <div style={{ marginLeft: 240, flex: 1, display: "flex", flexDirection: "column" }}>
 
-          <Topbar
+          {/* <Topbar
             onAdd={() => actions.onAdd?.() || toast("Tidak ada aksi tambah di halaman ini", "info")}
-          />
+            onRefresh={() => actions.onRefresh?.() || toast("Tidak ada aksi refresh", "info")}
+          /> */}
+          
 
-          <div style={{ padding: 24, flex: 1, overflowY: "auto" }}>
+          <div style={{ paddingTop: "10px",paddingLeft:"20px", flex: 1, overflowY: "auto" }}>
             <Outlet />
           </div>
 

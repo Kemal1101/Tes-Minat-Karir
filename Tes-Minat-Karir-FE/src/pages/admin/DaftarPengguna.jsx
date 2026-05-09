@@ -4,6 +4,7 @@ import { useAdminPage } from "../../hooks/useAdminPage";
 import { api } from "../../lib/api";
 
 import Modal, { ConfirmModal } from "../../components/admin/Modal";
+import { RefreshCw, Plus } from "lucide-react";
 import {
   Button, FormGrid, FormGroup, Input,
   Pagination, Select
@@ -12,7 +13,10 @@ import {
 const STATUS_LABEL = { active: "Aktif", inactive: "Nonaktif", blocked: "Diblokir" };
 const ROLE_LABEL   = { admin: "Admin",  user: "User" };
 const PAGE_SIZE    = 8;
-
+const icons = {
+  refresh: RefreshCw,
+  add: Plus,
+};
 const emptyForm = {
   username: "", 
   nama_lengkap: "",
@@ -37,9 +41,42 @@ export default function DaftarPengguna() {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const [form, setForm] = useState(emptyForm);
+  // 🔗 Dynamic Topbar
+  const topbar = {
+    title: "Daftar Pengguna",
 
-  // 🔗 Topbar actions
+    subtitle: "Kelola semua pengguna sistem",
+
+    actions: [
+      {
+        label: "Refresh",
+        icon: "refresh",
+        variant: "secondary",
+
+        onClick: () => {
+          toast("Data diperbarui", "info");
+        },
+      },
+
+      {
+        label: "Tambah Pengguna",
+        icon: "add",
+        variant: "primary",
+
+        onClick: openCreate,
+      },
+    ],
+  };
+
   useEffect(() => {
+    setActions(topbar.actions);
+
+    return () => {
+      setActions(null);
+    };
+   }, []);
+  
+  useEffect (() => {
     loadUsers();
     setActions({
       onAdd: openCreate,
@@ -152,7 +189,54 @@ export default function DaftarPengguna() {
 
   const set = (key) => (val) => setForm(f => ({ ...f, [key]: val }));
 
+  const { title, subtitle, actions } = topbar;
+
   return (
+    <>
+    {/* Top Bar */}
+    <div className="bg-white border-b border-zinc-200 px-4 py-2 flex items-start justify-between sticky top-0 z-50">
+
+      {/* LEFT */}
+      <div className="leading-tight">
+        <h1 className="m-0 text-[20px] font-bold text-zinc-900 leading-none">
+          {title}
+        </h1>
+
+        <p className="m-0 mt-1 text-xs text-zinc-500 leading-none">
+          {subtitle}
+        </p>
+      </div>
+
+      {/* RIGHT */}
+      <div className="flex items-center gap-3">
+        {actions.map((action, index) => {
+          const Icon = icons[action.icon];
+
+          return (
+            <button
+              key={index}
+              onClick={action.onClick}
+              className={`
+                inline-flex items-center gap-2
+                h-10 px-5 rounded-xl
+                text-sm font-medium
+                transition-all
+
+                ${
+                  action.variant === "primary"
+                    ? "bg-amber-700 hover:bg-amber-800 text-white"
+                    : "border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700"
+                }
+              `}
+            >
+              {Icon && <Icon size={16} />}
+              {action.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+
     <div className="p-6 bg-[#f8f6f2] min-h-screen">
 
       {/* STATS */}
@@ -160,11 +244,11 @@ export default function DaftarPengguna() {
         <Card title="TOTAL PENGGUNA" value={users.length} badge="↑ 4 bulan ini" green />
         <Card title="AKTIF" value={users.filter(u => u.status === "active").length} badge="79%" green />
         <Card title="ADMIN" value={users.filter(u => u.role === "admin").length} badge="dari total" blue />
-        <Card title="NONAKTIF" value={users.filter(u => u.status !== "active").length} badge="perlu tindak" red />
+        <Card title="NONAKTIF" value={users.filter(u => u.status !== "active").length} badge="perlu tindakan" red />
       </div>
 
       {/* TABLE */}
-      <div className="bg-white rounded-2xl border overflow-hidden">
+      <div className="bg-white rounded-2xl border border-bg-[#f8f6f2] overflow-hidden">
 
         {/* HEADER */}
         <div className="flex justify-between items-center p-5 border-b">
@@ -340,6 +424,7 @@ export default function DaftarPengguna() {
       />
 
     </div>
+    </>
   );
 }
 

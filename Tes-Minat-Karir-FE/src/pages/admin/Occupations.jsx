@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 import { useToast } from "../../hooks/useToast";
 import { useAdminPage } from "../../hooks/useAdminPage";
+import { RefreshCw, Plus } from "lucide-react";
 import { api } from "../../lib/api";
 
 import Modal, { ConfirmModal } from "../../components/admin/Modal";
 import {
   Button, FormGroup, FormGrid, Input, Select, Textarea, Pagination
 } from "../../components/ui/UI";
+
+const icons = {
+  refresh: RefreshCw,
+  add: Plus,
+};
 
 const RIASEC_STYLE = {
   R: { bg: "#FCEBEB", color: "#A32D2D" },
@@ -55,6 +61,42 @@ export default function Occupations() {
   const [delTarget, setDelTarget] = useState(null);
   const [form, setForm] = useState(emptyForm);
 
+  // 🔗 Dynamic Topbar
+  const topbar = {
+    title: "Daftar Pekerjaan",
+
+    subtitle: "kelola daftar pekerjaan",
+
+    actions: [
+      {
+        label: "Refresh",
+        icon: "refresh",
+        variant: "secondary",
+
+        onClick: () => {
+          toast("Data diperbarui", "info");
+        },
+      },
+
+      {
+        label: "Tambah Pekerjaan",
+        icon: "add",
+        variant: "primary",
+
+        onClick: openCreate,
+      },
+    ],
+  };
+
+  useEffect(() => {
+    setActions(topbar.actions);
+
+    return () => {
+      setActions(null);
+    };
+  }, []);
+
+  
   useEffect(() => {
     loadOccupations();
     setActions({
@@ -85,6 +127,7 @@ export default function Occupations() {
     }
   };
 
+  // 🔍 Filter
   const filtered = data.filter(o =>
     `${o.name} ${o.onet} ${o.sector}`
       .toLowerCase()
@@ -164,9 +207,55 @@ export default function Occupations() {
   }
 
   const set = key => val => setForm(f => ({ ...f, [key]: val }));
+  const { title, subtitle, actions } = topbar;
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+     <>
+    {/* Top Bar */}
+    <div className="bg-white border-b border-zinc-200 px-4 py-2 flex items-start justify-between sticky top-0 z-50">
+
+      {/* LEFT */}
+      <div className="leading-tight">
+        <h1 className="m-0 text-[20px] font-bold text-zinc-900 leading-none">
+          {title}
+        </h1>
+
+        <p className="m-0 mt-1 text-xs text-zinc-500 leading-none">
+          {subtitle}
+        </p>
+      </div>
+
+      {/* RIGHT */}
+      <div className="flex items-center gap-3">
+        {actions.map((action, index) => {
+          const Icon = icons[action.icon];
+
+          return (
+            <button
+              key={index}
+              onClick={action.onClick}
+              className={`
+                inline-flex items-center gap-2
+                h-10 px-5 rounded-xl
+                text-sm font-medium
+                transition-all
+
+                ${
+                  action.variant === "primary"
+                    ? "bg-amber-700 hover:bg-amber-800 text-white"
+                    : "border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700"
+                }
+              `}
+            >
+              {Icon && <Icon size={16} />}
+              {action.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+
+    <div className="p-6 bg-[#f8f6f2] min-h-screen">
 
       {/* STATS */}
       <div className="grid grid-cols-3 gap-6 mb-8">
@@ -256,13 +345,13 @@ export default function Occupations() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => openEdit(o)}
-                      className="px-3 py-1 border rounded-lg text-xs hover:bg-gray-100"
+                      className="px-3 py-1 border rounded-lg text-xs"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => openDelete(o)}
-                      className="px-3 py-1 bg-red-100 text-red-600 rounded-lg text-xs hover:bg-red-200"
+                      className="px-3 py-1 bg-red-100 text-red-600 rounded-lg text-xs hover:bg-red-500 hover:text-white transision-all duration-200 rounded-full"
                     >
                       Hapus
                     </button>
@@ -345,5 +434,6 @@ export default function Occupations() {
         desc="Data akan hilang permanen"
       />
     </div>
+    </>
   );
 }
