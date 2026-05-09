@@ -96,7 +96,7 @@ export default function Occupations() {
     };
   }, []);
 
-  
+
   useEffect(() => {
     loadOccupations();
     setActions({
@@ -127,7 +127,7 @@ export default function Occupations() {
     }
   };
 
-  // 🔍 Filter
+    // 🔍 Filter
   const filtered = data.filter(o =>
     `${o.name} ${o.onet} ${o.sector}`
       .toLowerCase()
@@ -210,7 +210,7 @@ export default function Occupations() {
   const { title, subtitle, actions } = topbar;
 
   return (
-     <>
+    <>
     {/* Top Bar */}
     <div className="bg-white border-b border-zinc-200 px-4 py-2 flex items-start justify-between sticky top-0 z-50">
 
@@ -343,18 +343,10 @@ export default function Occupations() {
 
                 <td className="p-4">
                   <div className="flex gap-2">
-                    <button
-                      onClick={() => openEdit(o)}
-                      className="px-3 py-1 border rounded-lg text-xs"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => openDelete(o)}
-                      className="px-3 py-1 bg-red-100 text-red-600 rounded-lg text-xs hover:bg-red-500 hover:text-white transision-all duration-200 rounded-full"
-                    >
-                      Hapus
-                    </button>
+                    <button onClick={() => openEdit(o)} className="px-3 py-1 border rounded-lg text-xs" >
+                      Edit </button>
+                    <button onClick={() => openDelete(o)} className="text-xs px-3 py-1 bg-red-100 text-red-600 hover:bg-red-500 hover:text-white transition-all duration-200 rounded-full">
+                      Hapus </button>
                   </div>
                 </td>
               </tr>
@@ -365,10 +357,10 @@ export default function Occupations() {
 
         {/* PAGINATION */}
         <div className="p-4 flex justify-between items-center">
-          <div className="text-xs text-gray-400">
+          <div className="text-xs text-black-400">
             Menampilkan {(page - 1) * PAGE_SIZE + 1}–
             {Math.min(page * PAGE_SIZE, filtered.length)} dari{" "}
-            {filtered.length}
+            {filtered.length} Pekerjaan
           </div>
 
           <Pagination current={page} total={totalPages} onChange={setPage} />
