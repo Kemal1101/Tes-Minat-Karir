@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 
 const HEADLINE_OPTIONS = [
@@ -72,9 +73,9 @@ export default function HeroSection() {
 
         {/* CTA Button */}
         <div className="cta-group flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto px-4 sm:px-0">
-          <button className="w-full sm:w-auto bg-appAccent text-white rounded-full px-8 py-3.5 md:py-4 text-sm md:text-base font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_4px_16px_rgba(133,72,54,0.25)]">
+          <Link to="/test" className="w-full sm:w-auto bg-appAccent text-white rounded-full px-8 py-3.5 md:py-4 text-sm md:text-base font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_4px_16px_rgba(133,72,54,0.25)] text-center">
             Mulai Tes Sekarang
-          </button>
+          </Link>
         </div>
       </div>
     </section>

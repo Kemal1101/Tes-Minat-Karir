@@ -132,5 +132,23 @@ export const api = {
     });
     if (!res.ok) throw new Error("Failed to delete occupation");
     return res.json();
+  },
+  
+  // Public Test Methods
+  getPublicQuestions: async () => {
+    const res = await fetch(`${API_URL}/v1/questions`);
+    if (!res.ok) throw new Error("Failed to fetch questions");
+    return res.json();
+  },
+  calculateResult: async (data) => {
+    const res = await fetch(`${API_URL}/v1/calculate-result`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error("Failed to calculate result");
+    return res.json();
   }
 };
