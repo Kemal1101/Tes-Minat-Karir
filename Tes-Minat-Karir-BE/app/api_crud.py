@@ -43,28 +43,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     
     return {"access_token": access_token, "token_type": "bearer"}
 
-@auth_router.post("/logout", tags=["Auth"])
-async def logout(token: str | None = Depends(oauth2_scheme_optional), db: Session = Depends(get_db)):
-    if not token:
-        raise HTTPException(
-            status_code=401,
-            detail="Bearer token wajib dikirim untuk logout",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
 
-    try:
-        username = revoke_access_token(db=db, token=token)
-    except JWTError:
-        raise HTTPException(
-            status_code=401,
-            detail="Token tidak valid atau sudah kedaluwarsa",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-
-    return {
-        "message": "Logout berhasil. Token telah dinonaktifkan.",
-        "username": username,
-    }
 
 @auth_router.post("/register", response_model=schemas.UserResponse, tags=["Auth"])
 def register(user_reg: schemas.UserRegister, db: Session = Depends(get_db)):
@@ -202,3 +181,25 @@ def delete_occupation(occupation_id: int, db: Session = Depends(get_db)):
     if db_occupation is None:
         raise HTTPException(status_code=404, detail="Occupation not found")
     return db_occupation
+@auth_router.post("/logout", tags=["Auth"])
+async def logout(token: str | None = Depends(oauth2_scheme_optional), db: Session = Depends(get_db)):
+    if not token:
+        raise HTTPException(
+            status_code=401,
+            detail="Bearer token wajib dikirim untuk logout",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    try:
+        username = revoke_access_token(db=db, token=token)
+    except JWTError:
+        raise HTTPException(
+            status_code=401,
+            detail="Token tidak valid atau sudah kedaluwarsa",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    return {
+        "message": "Logout berhasil. Token telah dinonaktifkan.",
+        "username": username,
+    }

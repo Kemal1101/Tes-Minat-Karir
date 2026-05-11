@@ -1,58 +1,66 @@
+import tailwindcssAnimate from "tailwindcss-animate";
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     extend: {
       fontFamily: {
-        inter: ['Inter', 'sans-serif'],
+        sans: ['"Host Grotesk"', "sans-serif"],
+        mono: ['"IBM Plex Mono"', "monospace"],
         poppins: ['Poppins', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       colors: {
-        accent: '#854836',
-        saffron: '#F5B553',
-        'accent-dark': '#6d392c',
-        'bg-light': '#FDFBFA',
-        'surface': '#FFFFFF',
-        'border-light': '#E8E0D8',
-        'text-primary': '#2C2C2C',
-      },
-      boxShadow: {
-        'soft': '0 10px 30px rgba(133, 72, 54, 0.08)',
-        'md-custom': '0 4px 20px rgba(133, 72, 54, 0.12)',
-        'lg-custom': '0 20px 40px rgba(133, 72, 54, 0.15)',
-        'hover': '0 12px 35px rgba(133, 72, 54, 0.2)',
-      },
-      animation: {
-        'fade-in': 'fadeIn 0.4s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'pulse-ring': 'pulseRing 1.5s ease-in-out infinite',
-        'progress-fill': 'progressFill 0.6s ease-out',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
         },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
         },
-        pulseRing: {
-          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
-          '50%': { transform: 'scale(1.05)', opacity: '0.8' },
+        destructive: {
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
         },
-        progressFill: {
-          '0%': { width: '0%' },
-          '100%': { width: '100%' },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
         },
+        accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
+        },
+        popover: {
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
+        },
+        card: {
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
+        },
+        appBg: "#F7F7F7",
+        appAccent: "#854836",
+        appBlob: "#F5B553",
+        "bg-light": "var(--bg-light)",
+        saffron: "var(--saffron)",
+        "accent-dark": "var(--accent-dark)",
+        "text-primary": "var(--text-primary)",
       },
-      transitionDuration: {
-        '350': '350ms',
+      borderRadius: {
+        playful: "24px",
+        "playful-lg": "32px",
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
     },
   },
-  plugins: [],
-}
+  plugins: [tailwindcssAnimate],
+};
