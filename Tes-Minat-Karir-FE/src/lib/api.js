@@ -136,12 +136,12 @@ export const api = {
   
   // Public Test Methods
   getPublicQuestions: async () => {
-    const res = await fetch(`${API_URL}/v1/questions`);
+    const res = await fetch(`${API_URL}/questions`);
     if (!res.ok) throw new Error("Failed to fetch questions");
     return res.json();
   },
   calculateResult: async (data) => {
-    const res = await fetch(`${API_URL}/v1/calculate-result`, {
+    const res = await fetch(`${API_URL}/calculate-result`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

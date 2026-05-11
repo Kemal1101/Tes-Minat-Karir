@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { riasecData } from './questions';
+const riasecData = {
+  R: { name: "Realistic", description: "Tipe praktis, suka bekerja dengan mesin, alat, atau aktivitas luar ruangan." },
+  I: { name: "Investigative", description: "Tipe analitis, suka memecahkan masalah, meneliti, dan ilmu pengetahuan." },
+  A: { name: "Artistic", description: "Tipe kreatif, imajinatif, dan suka mengekspresikan diri melalui seni dan desain." },
+  S: { name: "Social", description: "Tipe sosial, suka membantu, mengajar, dan berinteraksi dengan orang lain." },
+  E: { name: "Enterprising", description: "Tipe ambisius, suka memimpin, berbisnis, dan memengaruhi orang lain." },
+  C: { name: "Conventional", description: "Tipe teratur, teliti, dan suka bekerja dengan data, angka, atau prosedur yang jelas." }
+};
 import { api } from '../../lib/api';
 import './App.css';
 
