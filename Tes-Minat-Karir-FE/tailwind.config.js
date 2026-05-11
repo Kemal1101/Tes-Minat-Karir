@@ -8,6 +8,8 @@ export default {
       fontFamily: {
         sans: ['"Host Grotesk"', "sans-serif"],
         mono: ['"IBM Plex Mono"', "monospace"],
+        poppins: ['Poppins', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       colors: {
         border: "var(--border)",
@@ -46,6 +48,10 @@ export default {
         appBg: "#F7F7F7",
         appAccent: "#854836",
         appBlob: "#F5B553",
+        "bg-light": "var(--bg-light)",
+        saffron: "var(--saffron)",
+        "accent-dark": "var(--accent-dark)",
+        "text-primary": "var(--text-primary)",
       },
       borderRadius: {
         playful: "24px",

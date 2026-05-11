@@ -29,9 +29,10 @@ export default function App() {
           {/* PUBLIC */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/test" element={<TestPage />} />
-            <Route path="/result" element={<ResultPage />} />
           </Route>
+          
+          <Route path="/test" element={<TestPage />} />
+          <Route path="/result" element={<ResultPage />} />
 
           <Route path="/loginadmin" element={<LoginPage />} />
 
