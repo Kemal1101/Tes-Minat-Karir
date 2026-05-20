@@ -58,36 +58,12 @@ export default function Questions() {
 
     subtitle: "Kelola semua pertanyaan untuk tes",
 
-    actions: [
-      {
-        label: "Refresh",
-        icon: "refresh",
-        variant: "secondary",
-
-        onClick: () => {
-          toast("Data diperbarui", "info");
-        },
-      },
-
-      {
-        label: "Tambah Pertanyaan",
-        icon: "add",
-        variant: "primary",
-
-        onClick: openCreate,
-      },
-    ],
+    actions: [],
   };
 
   useEffect(() => {
     setActions(topbar);
 
-    return () => {
-      setActions(null);
-    };
-  }, []);
-
-  useEffect(() => {
     loadQuestions();
   }, []);
 
@@ -250,6 +226,12 @@ export default function Questions() {
         <div className="font-semibold">Bank Soal</div>
 
         <div className="flex gap-3 items-center">
+
+          {/* BUTTON */}
+          <button onClick={openCreate} className="inline-flex items-center gap-2 h-9 px-4 rounded-xl text-sm font-medium bg-amber-700 hover:bg-amber-800 text-white transition-all">
+            <Plus size={16} />
+            Tambah
+          </button>
 
           {/* FILTER */}
           <select

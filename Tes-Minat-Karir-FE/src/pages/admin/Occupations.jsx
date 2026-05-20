@@ -67,25 +67,7 @@ export default function Occupations() {
 
     subtitle: "kelola daftar pekerjaan",
 
-    actions: [
-      {
-        label: "Refresh",
-        icon: "refresh",
-        variant: "secondary",
-
-        onClick: () => {
-          toast("Data diperbarui", "info");
-        },
-      },
-
-      {
-        label: "Tambah Pekerjaan",
-        icon: "add",
-        variant: "primary",
-
-        onClick: openCreate,
-      },
-    ],
+    actions: [],
   };
 
   useEffect(() => {
@@ -101,10 +83,6 @@ export default function Occupations() {
     loadOccupations();
     setActions({
       onAdd: openCreate,
-      onRefresh: () => {
-        loadOccupations();
-        toast("Data pekerjaan diperbarui", "info");
-      },
     });
   }, []);
 
@@ -290,15 +268,21 @@ export default function Occupations() {
         <div className="p-6 flex justify-between items-center">
           <div className="text-lg font-bold">Daftar Pekerjaan</div>
 
-          <input
-            className="bg-gray-100 px-4 py-2 rounded-xl text-sm w-[260px]"
-            placeholder="🔍 Cari..."
-            value={search}
-            onChange={e => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-          />
+          <div className="flex gap-3 items-center">
+            <button onClick={openCreate} className="inline-flex items-center gap-2 h-9 px-4 rounded-xl text-sm font-medium bg-amber-700 hover:bg-amber-800 text-white transition-all">
+              <Plus size={16} />
+              Tambah
+            </button>
+            <input
+              className="bg-gray-100 px-4 py-2 rounded-xl text-sm w-[260px]"
+              placeholder="🔍 Cari..."
+              value={search}
+              onChange={e => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+            />
+          </div>
         </div>
 
         <div className="overflow-x-auto">
