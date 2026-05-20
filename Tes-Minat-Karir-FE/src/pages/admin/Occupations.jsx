@@ -76,6 +76,8 @@ export default function Occupations() {
   const [editing, setEditing] = useState(null);
   const [delTarget, setDelTarget] = useState(null);
   const [form, setForm] = useState(emptyForm);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // 🔗 Dynamic Topbar
   const topbar = {
@@ -139,6 +141,7 @@ export default function Occupations() {
       return;
     }
 
+    setIsSaving(true);
     try {
       const payload = {
         occupation: form.name,
@@ -160,10 +163,13 @@ export default function Occupations() {
     } catch (err) {
       toast("Gagal menyimpan pekerjaan", "danger");
       console.error(err);
+    } finally {
+      setIsSaving(false);
     }
   }
 
   async function handleDelete() {
+    setIsDeleting(true);
     try {
       await api.deleteOccupation(delTarget.id);
       toast("Pekerjaan dihapus", "danger");
@@ -172,6 +178,8 @@ export default function Occupations() {
     } catch (err) {
       toast("Gagal menghapus pekerjaan", "danger");
       console.error(err);
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -289,9 +297,23 @@ export default function Occupations() {
               </tr>
             </thead>
 
-          <tbody>
-            {paginated.map(o => (
-              <tr key={o.id} className="border-t hover:bg-gray-50">
+          {isLoading ? (
+            <tbody>
+              {[...Array(5)].map((_, i) => (
+                <tr key={i} className="border-t animate-pulse bg-gray-50/50">
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-3/4"></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-16"></div></td>
+                  <td className="p-4"><div className="h-6 w-6 bg-gray-200 rounded-full"></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-1/2"></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-8"></div></td>
+                  <td className="p-4"><div className="h-8 bg-gray-200 rounded w-24"></div></td>
+                </tr>
+              ))}
+            </tbody>
+          ) : (
+            <tbody>
+              {paginated.map(o => (
+                <tr key={o.id} className="border-t hover:bg-gray-50">
                 <td className="p-4 font-semibold max-w-xs truncate" title={o.name}>{o.name}</td>
 
                 <td className="p-4">
@@ -326,7 +348,8 @@ export default function Occupations() {
                 </td>
               </tr>
             ))}
-          </tbody>
+            </tbody>
+          )}
         </table>
         </div>
 
@@ -389,7 +412,9 @@ export default function Occupations() {
           />
         </FormGroup>
 
-        <Button onClick={handleSave}>Simpan</Button>
+        <Button onClick={handleSave} disabled={isSaving}>
+          {isSaving ? "Memproses..." : "Simpan"}
+        </Button>
       </Modal>
 
       {/* DELETE */}
@@ -397,6 +422,7 @@ export default function Occupations() {
         open={deleteOpen}
         onClose={() => setDeleteOpen(false)}
         onConfirm={handleDelete}
+        isDeleting={isDeleting}
         title="Hapus data?"
         desc="Data akan hilang permanen"
       />

@@ -54,8 +54,9 @@ export default function DaftarPengguna() {
 
   const [editingUser, setEditingUser] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
-
   const [form, setForm] = useState(emptyForm);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   // 🔗 Dynamic Topbar
   const topbar = {
     title: "Daftar Pengguna",
@@ -117,6 +118,7 @@ export default function DaftarPengguna() {
       return;
     }
 
+    setIsSaving(true);
     try {
       const payload = {
         username: form.username,
@@ -143,10 +145,13 @@ export default function DaftarPengguna() {
     } catch (err) {
       toast("Gagal menyimpan pengguna", "danger");
       console.error(err);
+    } finally {
+      setIsSaving(false);
     }
   }
 
   async function handleDelete() {
+    setIsDeleting(true);
     try {
       await api.deleteUser(selectedUser.id);
       toast("Pengguna dihapus", "danger");
@@ -155,6 +160,8 @@ export default function DaftarPengguna() {
     } catch (err) {
       toast("Gagal menghapus pengguna", "danger");
       console.error(err);
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -252,8 +259,20 @@ export default function DaftarPengguna() {
             </tr>
           </thead>
 
-          <tbody>
-            {paginated.map(u => (
+          {isLoading ? (
+            <tbody>
+              {[...Array(5)].map((_, i) => (
+                <tr key={i} className="border-t animate-pulse bg-gray-50/50">
+                  <td className="p-4"><div className="flex gap-3"><div className="w-9 h-9 bg-gray-200 rounded-full"></div><div><div className="h-4 bg-gray-200 rounded w-24 mb-1"></div><div className="h-3 bg-gray-200 rounded w-16"></div></div></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-12"></div></td>
+                  <td className="p-4"><div className="h-6 w-16 bg-gray-200 rounded-full"></div></td>
+                  <td className="p-4"><div className="h-8 bg-gray-200 rounded w-32"></div></td>
+                </tr>
+              ))}
+            </tbody>
+          ) : (
+            <tbody>
+              {paginated.map(u => (
               <tr key={u.id} className="border-t hover:bg-gray-50">
 
                 {/* USER */}
@@ -302,7 +321,8 @@ export default function DaftarPengguna() {
 
               </tr>
             ))}
-          </tbody>
+            </tbody>
+          )}
         </table>
 
         {/* FOOTER */}
@@ -322,8 +342,8 @@ export default function DaftarPengguna() {
         title={editingUser ? "Edit Pengguna" : "Tambah Pengguna"}
         footer={
           <>
-            <Button variant="ghost" onClick={() => setFormOpen(false)}>Batal</Button>
-            <Button variant="primary" onClick={handleSave}>Simpan</Button>
+            <Button variant="ghost" onClick={() => setFormOpen(false)} disabled={isSaving}>Batal</Button>
+            <Button variant="primary" onClick={handleSave} disabled={isSaving}>{isSaving ? "Memproses..." : "Simpan"}</Button>
           </>
         }
       >
@@ -387,6 +407,7 @@ export default function DaftarPengguna() {
         open={deleteOpen}
         onClose={() => setDeleteOpen(false)}
         onConfirm={handleDelete}
+        isDeleting={isDeleting}
         title="Hapus pengguna?"
         desc="Data akan dihapus permanen."
       />

@@ -66,6 +66,8 @@ export default function Questions() {
   const [editing,    setEditing]    = useState(null);
   const [delTarget,  setDelTarget]  = useState(null);
   const [form,       setForm]       = useState(emptyForm);
+  const [isSaving,   setIsSaving]   = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
 
     // 🔗 Dynamic Topbar
@@ -96,6 +98,7 @@ export default function Questions() {
 
   async function handleSave() {
     if (!form.text.trim()) { toast("Teks pertanyaan wajib diisi", "danger"); return; }
+    setIsSaving(true);
     try {
       const payload = {
         text: form.text,
@@ -115,10 +118,13 @@ export default function Questions() {
     } catch (err) {
       toast("Gagal menyimpan pertanyaan", "danger");
       console.error(err);
+    } finally {
+      setIsSaving(false);
     }
   }
 
   async function handleDelete() {
+    setIsDeleting(true);
     try {
       await api.deleteQuestion(delTarget.id);
       toast("Pertanyaan dihapus", "danger");
@@ -127,6 +133,8 @@ export default function Questions() {
     } catch (err) {
       toast("Gagal menghapus pertanyaan", "danger");
       console.error(err);
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -272,8 +280,21 @@ export default function Questions() {
           </tr>
         </thead>
 
-        <tbody>
-          {paginated.map((q, i) => {
+          {isLoading ? (
+            <tbody>
+              {[...Array(5)].map((_, i) => (
+                <tr key={i} className="border-t animate-pulse bg-gray-50/50">
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-8"></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-3/4"></div></td>
+                  <td className="p-4"><div className="h-6 w-16 bg-gray-200 rounded-full"></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-8"></div></td>
+                  <td className="p-4"><div className="h-8 bg-gray-200 rounded w-24"></div></td>
+                </tr>
+              ))}
+            </tbody>
+          ) : (
+            <tbody>
+              {paginated.map((q, i) => {
             const s = RIASEC_STYLE[q.type] || {};
             return (
               <tr key={q.id} className="border-t hover:bg-gray-50">
@@ -309,8 +330,9 @@ export default function Questions() {
               </tr>
             );
           })}
-        </tbody>
-      </table>
+            </tbody>
+          )}
+        </table>
 
       {/* FOOTER */}
       <div className="flex justify-between items-center p-4">
@@ -367,9 +389,10 @@ export default function Questions() {
 
         <button
           onClick={handleSave}
-          className="w-full bg-black text-white py-2 rounded-lg text-sm"
+          disabled={isSaving}
+          className="w-full bg-black text-white py-2 rounded-lg text-sm disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
-          Simpan
+          {isSaving ? "Memproses..." : "Simpan"}
         </button>
 
       </div>
@@ -380,6 +403,7 @@ export default function Questions() {
       open={deleteOpen}
       onClose={() => setDeleteOpen(false)}
       onConfirm={handleDelete}
+      isDeleting={isDeleting}
       title="Hapus pertanyaan?"
       desc="Data tidak bisa dikembalikan."
     />
