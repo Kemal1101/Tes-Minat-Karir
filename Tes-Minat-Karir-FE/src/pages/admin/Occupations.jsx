@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "../../hooks/useToast";
 import { useAdminPage } from "../../hooks/useAdminPage";
 import { RefreshCw, Plus } from "lucide-react";
@@ -50,8 +51,23 @@ const emptyForm = {
 export default function Occupations() {
   const toast = useToast();
   const { setActions } = useAdminPage();
+  const queryClient = useQueryClient();
 
-  const [data, setData] = useState([]);
+  const { data = [], isLoading } = useQuery({
+    queryKey: ['occupations'],
+    queryFn: async () => {
+      const result = await api.getOccupations();
+      return result.map(o => ({
+        id: o.id,
+        name: o.occupation || "",
+        onet: o.code || "",
+        holland: o.interest_code || "I",
+        sector: o.job_zone || "Teknologi Informasi",
+        saw: 0.80,
+        desc: ""
+      }));
+    }
+  });
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
@@ -71,39 +87,14 @@ export default function Occupations() {
   };
 
   useEffect(() => {
-    setActions(topbar.actions);
+    setActions({
+      onAdd: openCreate,
+    });
 
     return () => {
       setActions(null);
     };
   }, []);
-
-
-  useEffect(() => {
-    loadOccupations();
-    setActions({
-      onAdd: openCreate,
-    });
-  }, []);
-
-  const loadOccupations = async () => {
-    try {
-      const result = await api.getOccupations();
-      const mapped = result.map(o => ({
-        id: o.id,
-        name: o.occupation || "",
-        onet: o.code || "",
-        holland: o.interest_code || "I",
-        sector: o.job_zone || "Teknologi Informasi",
-        saw: 0.80,
-        desc: ""
-      }));
-      setData(mapped);
-    } catch (err) {
-      toast("Gagal memuat pekerjaan", "danger");
-      console.error(err);
-    }
-  };
 
     // 🔍 Filter
   const filtered = data.filter(o =>
@@ -164,7 +155,7 @@ export default function Occupations() {
         toast("Berhasil tambah pekerjaan", "success");
       }
       
-      loadOccupations();
+      queryClient.invalidateQueries({ queryKey: ['occupations'] });
       setFormOpen(false);
     } catch (err) {
       toast("Gagal menyimpan pekerjaan", "danger");
@@ -176,7 +167,7 @@ export default function Occupations() {
     try {
       await api.deleteOccupation(delTarget.id);
       toast("Pekerjaan dihapus", "danger");
-      loadOccupations();
+      queryClient.invalidateQueries({ queryKey: ['occupations'] });
       setDeleteOpen(false);
     } catch (err) {
       toast("Gagal menghapus pekerjaan", "danger");

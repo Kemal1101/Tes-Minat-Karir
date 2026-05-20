@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "../../hooks/useToast";
 import { useAdminPage } from "../../hooks/useAdminPage";
 import { api } from "../../lib/api";
@@ -28,8 +29,22 @@ const emptyForm = {
 export default function DaftarPengguna() {
   const toast = useToast();
   const { setActions } = useAdminPage();
+  const queryClient = useQueryClient();
 
-  const [users, setUsers] = useState([]);
+  const { data: users = [], isLoading } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const result = await api.getUsers();
+      return result.map(u => ({
+        id: u.id,
+        username: u.username,
+        nama_lengkap: u.nama_lengkap || "",
+        role: u.role || "user",
+        status: "active",
+      }));
+    }
+  });
+
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
@@ -51,36 +66,14 @@ export default function DaftarPengguna() {
   };
 
   useEffect(() => {
-    setActions(topbar.actions);
+    setActions({
+      onAdd: openCreate,
+    });
 
     return () => {
       setActions(null);
     };
    }, []);
-  
-  useEffect (() => {
-    loadUsers();
-    setActions({
-      onAdd: openCreate,
-    });
-  }, []);
-
-  const loadUsers = async () => {
-    try {
-      const result = await api.getUsers();
-      const mapped = result.map(u => ({
-        id: u.id,
-        username: u.username,
-        nama_lengkap: u.nama_lengkap || "",
-        role: u.role || "user",
-        status: "active",
-      }));
-      setUsers(mapped);
-    } catch (err) {
-      toast("Gagal memuat pengguna", "danger");
-      console.error(err);
-    }
-  };
 
   // 🔍 Filter
   const filtered = users.filter(u =>
@@ -145,7 +138,7 @@ export default function DaftarPengguna() {
         toast("Pengguna ditambahkan", "success");
       }
       
-      loadUsers();
+      queryClient.invalidateQueries({ queryKey: ['users'] });
       setFormOpen(false);
     } catch (err) {
       toast("Gagal menyimpan pengguna", "danger");
@@ -157,7 +150,7 @@ export default function DaftarPengguna() {
     try {
       await api.deleteUser(selectedUser.id);
       toast("Pengguna dihapus", "danger");
-      loadUsers();
+      queryClient.invalidateQueries({ queryKey: ['users'] });
       setDeleteOpen(false);
     } catch (err) {
       toast("Gagal menghapus pengguna", "danger");

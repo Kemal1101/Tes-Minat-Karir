@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { QUESTIONS as INITIAL } from "../../data/mockData";
 import { useToast } from "../../hooks/useToast";
 import { useAdminPage } from "../../hooks/useAdminPage";
@@ -40,7 +41,22 @@ const emptyForm = { text: "", type: "R", cf: "0.5", keywords: "" };
 export default function Questions() {
   const toast  = useToast();
   const { setActions } = useAdminPage();
-  const [data,       setData]       = useState([]);
+  const queryClient = useQueryClient();
+
+  const { data = [], isLoading } = useQuery({
+    queryKey: ['questions'],
+    queryFn: async () => {
+      const result = await api.getQuestions();
+      return result.map(q => ({
+        id: q.id,
+        text: q.text,
+        type: q.category,
+        cf: q.cf_pakar,
+        keywords: q.keywords || ""
+      }));
+    }
+  });
+
   const [search,     setSearch]     = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [page,       setPage]       = useState(1);
@@ -63,26 +79,7 @@ export default function Questions() {
 
   useEffect(() => {
     setActions(topbar);
-
-    loadQuestions();
   }, []);
-
-  const loadQuestions = async () => {
-    try {
-      const result = await api.getQuestions();
-      const mapped = result.map(q => ({
-        id: q.id,
-        text: q.text,
-        type: q.category,
-        cf: q.cf_pakar,
-        keywords: q.keywords || ""
-      }));
-      setData(mapped);
-    } catch (err) {
-      toast("Gagal memuat soal", "danger");
-      console.error(err);
-    }
-  };
 
   // 🔍 Filter
   const filtered = data.filter(q => {
@@ -113,7 +110,7 @@ export default function Questions() {
         await api.createQuestion(payload);
         toast("Pertanyaan berhasil ditambahkan!", "success");
       }
-      loadQuestions();
+      queryClient.invalidateQueries({ queryKey: ['questions'] });
       setFormOpen(false);
     } catch (err) {
       toast("Gagal menyimpan pertanyaan", "danger");
@@ -125,7 +122,7 @@ export default function Questions() {
     try {
       await api.deleteQuestion(delTarget.id);
       toast("Pertanyaan dihapus", "danger");
-      loadQuestions();
+      queryClient.invalidateQueries({ queryKey: ['questions'] });
       setDeleteOpen(false);
     } catch (err) {
       toast("Gagal menghapus pertanyaan", "danger");

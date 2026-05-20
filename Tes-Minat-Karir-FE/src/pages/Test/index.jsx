@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 const riasecData = {
   R: { name: "Realistic", description: "Tipe praktis, suka bekerja dengan mesin, alat, atau aktivitas luar ruangan." },
   I: { name: "Investigative", description: "Tipe analitis, suka memecahkan masalah, meneliti, dan ilmu pengetahuan." },
@@ -34,8 +35,14 @@ ChartJS.register(
 );
 
 function App() {
-  const [apiQuestions, setApiQuestions] = useState([]);
-  const [isFetchingQuestions, setIsFetchingQuestions] = useState(true);
+  const { data: apiQuestions = [], isLoading: isFetchingQuestions } = useQuery({
+    queryKey: ['publicQuestions'],
+    queryFn: async () => {
+      const res = await api.getPublicQuestions();
+      return res.data || res;
+    }
+  });
+
   const [apiResult, setApiResult] = useState(null);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -49,18 +56,10 @@ function App() {
   const [targetJobZone, setTargetJobZone] = useState(null);
 
   useEffect(() => {
-    api.getPublicQuestions()
-      .then(data => {
-        const questionsArray = data.data || data; // Fallback to data if data.data is missing
-        setApiQuestions(questionsArray);
-        setAnswers(Array(questionsArray.length).fill(null));
-        setIsFetchingQuestions(false);
-      })
-      .catch(err => {
-        console.error("Error fetching questions:", err);
-        setIsFetchingQuestions(false);
-      });
-  }, []);
+    if (apiQuestions.length > 0 && answers.length === 0) {
+      setAnswers(Array(apiQuestions.length).fill(null));
+    }
+  }, [apiQuestions]);
 
   const handleSelect = (val) => {
     const newAnswers = [...answers];
