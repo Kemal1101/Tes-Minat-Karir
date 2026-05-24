@@ -2,7 +2,13 @@ from sqlalchemy import Column, Integer, BigInteger, String, Float, ForeignKey, D
 from sqlalchemy.sql import func
 from .database import Base
 
-class User(Base):
+
+class AuditMixin:
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    # server_onupdate ensures DB will set timestamp on UPDATE when supported; also keep onupdate for SQLAlchemy
+    updated_at = Column(DateTime(timezone=True), nullable=True, onupdate=func.now(), server_onupdate=func.now())
+
+class User(AuditMixin, Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
@@ -10,7 +16,7 @@ class User(Base):
     password_hash = Column(String)
     role = Column(String, default="user") # 'admin' atau 'user'
 
-class Question(Base):
+class Question(AuditMixin, Base):
     __tablename__ = "questions"
     id = Column(Integer, primary_key=True, index=True)
     text = Column(String)
@@ -18,15 +24,14 @@ class Question(Base):
     cf_pakar = Column(Float)   
     keywords = Column(String, nullable=True)
 
-class TestHistory(Base):
+class TestHistory(AuditMixin, Base):
     __tablename__ = "test_history"
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     holland_code = Column(String)
     result_json = Column(JSON) # Menyimpan detail persentase RIASEC
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-class OccupationRiasec(Base):
+class OccupationRiasec(AuditMixin, Base):
     __tablename__ = "occupations_riasec"
 
     id = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
@@ -36,7 +41,7 @@ class OccupationRiasec(Base):
     occupation = Column("Occupation", String, nullable=True)
 
 
-class TokenBlacklist(Base):
+class TokenBlacklist(AuditMixin, Base):
     __tablename__ = "token_blacklist"
 
     id = Column(Integer, primary_key=True, index=True)

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "../../hooks/useToast";
 import { useAdminPage } from "../../hooks/useAdminPage";
 import { RefreshCw, Plus } from "lucide-react";
@@ -50,68 +51,13 @@ const emptyForm = {
 export default function Occupations() {
   const toast = useToast();
   const { setActions } = useAdminPage();
+  const queryClient = useQueryClient();
 
-  const [data, setData] = useState([]);
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-
-  const [formOpen, setFormOpen] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const [editing, setEditing] = useState(null);
-  const [delTarget, setDelTarget] = useState(null);
-  const [form, setForm] = useState(emptyForm);
-
-  // 🔗 Dynamic Topbar
-  const topbar = {
-    title: "Daftar Pekerjaan",
-
-    subtitle: "kelola daftar pekerjaan",
-
-    actions: [
-      {
-        label: "Refresh",
-        icon: "refresh",
-        variant: "secondary",
-
-        onClick: () => {
-          toast("Data diperbarui", "info");
-        },
-      },
-
-      {
-        label: "Tambah Pekerjaan",
-        icon: "add",
-        variant: "primary",
-
-        onClick: openCreate,
-      },
-    ],
-  };
-
-  useEffect(() => {
-    setActions(topbar.actions);
-
-    return () => {
-      setActions(null);
-    };
-  }, []);
-
-
-  useEffect(() => {
-    loadOccupations();
-    setActions({
-      onAdd: openCreate,
-      onRefresh: () => {
-        loadOccupations();
-        toast("Data pekerjaan diperbarui", "info");
-      },
-    });
-  }, []);
-
-  const loadOccupations = async () => {
-    try {
+  const { data = [], isLoading } = useQuery({
+    queryKey: ['occupations'],
+    queryFn: async () => {
       const result = await api.getOccupations();
-      const mapped = result.map(o => ({
+      return result.map(o => ({
         id: o.id,
         name: o.occupation || "",
         onet: o.code || "",
@@ -120,12 +66,37 @@ export default function Occupations() {
         saw: 0.80,
         desc: ""
       }));
-      setData(mapped);
-    } catch (err) {
-      toast("Gagal memuat pekerjaan", "danger");
-      console.error(err);
     }
+  });
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+
+  const [formOpen, setFormOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [editing, setEditing] = useState(null);
+  const [delTarget, setDelTarget] = useState(null);
+  const [form, setForm] = useState(emptyForm);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // 🔗 Dynamic Topbar
+  const topbar = {
+    title: "Daftar Pekerjaan",
+
+    subtitle: "kelola daftar pekerjaan",
+
+    actions: [],
   };
+
+  useEffect(() => {
+    setActions({
+      onAdd: openCreate,
+    });
+
+    return () => {
+      setActions(null);
+    };
+  }, []);
 
     // 🔍 Filter
   const filtered = data.filter(o =>
@@ -170,6 +141,7 @@ export default function Occupations() {
       return;
     }
 
+    setIsSaving(true);
     try {
       const payload = {
         occupation: form.name,
@@ -186,23 +158,28 @@ export default function Occupations() {
         toast("Berhasil tambah pekerjaan", "success");
       }
       
-      loadOccupations();
+      queryClient.invalidateQueries({ queryKey: ['occupations'] });
       setFormOpen(false);
     } catch (err) {
       toast("Gagal menyimpan pekerjaan", "danger");
       console.error(err);
+    } finally {
+      setIsSaving(false);
     }
   }
 
   async function handleDelete() {
+    setIsDeleting(true);
     try {
       await api.deleteOccupation(delTarget.id);
       toast("Pekerjaan dihapus", "danger");
-      loadOccupations();
+      queryClient.invalidateQueries({ queryKey: ['occupations'] });
       setDeleteOpen(false);
     } catch (err) {
       toast("Gagal menghapus pekerjaan", "danger");
       console.error(err);
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -290,15 +267,21 @@ export default function Occupations() {
         <div className="p-6 flex justify-between items-center">
           <div className="text-lg font-bold">Daftar Pekerjaan</div>
 
-          <input
-            className="bg-gray-100 px-4 py-2 rounded-xl text-sm w-[260px]"
-            placeholder="🔍 Cari..."
-            value={search}
-            onChange={e => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-          />
+          <div className="flex gap-3 items-center">
+            <button onClick={openCreate} className="inline-flex items-center gap-2 h-9 px-4 rounded-xl text-sm font-medium bg-amber-700 hover:bg-amber-800 text-white transition-all">
+              <Plus size={16} />
+              Tambah
+            </button>
+            <input
+              className="bg-gray-100 px-4 py-2 rounded-xl text-sm w-[260px]"
+              placeholder="🔍 Cari..."
+              value={search}
+              onChange={e => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+            />
+          </div>
         </div>
 
         <div className="overflow-x-auto">
@@ -314,9 +297,23 @@ export default function Occupations() {
               </tr>
             </thead>
 
-          <tbody>
-            {paginated.map(o => (
-              <tr key={o.id} className="border-t hover:bg-gray-50">
+          {isLoading ? (
+            <tbody>
+              {[...Array(5)].map((_, i) => (
+                <tr key={i} className="border-t animate-pulse bg-gray-50/50">
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-3/4"></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-16"></div></td>
+                  <td className="p-4"><div className="h-6 w-6 bg-gray-200 rounded-full"></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-1/2"></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-8"></div></td>
+                  <td className="p-4"><div className="h-8 bg-gray-200 rounded w-24"></div></td>
+                </tr>
+              ))}
+            </tbody>
+          ) : (
+            <tbody>
+              {paginated.map(o => (
+                <tr key={o.id} className="border-t hover:bg-gray-50">
                 <td className="p-4 font-semibold max-w-xs truncate" title={o.name}>{o.name}</td>
 
                 <td className="p-4">
@@ -351,7 +348,8 @@ export default function Occupations() {
                 </td>
               </tr>
             ))}
-          </tbody>
+            </tbody>
+          )}
         </table>
         </div>
 
@@ -414,7 +412,9 @@ export default function Occupations() {
           />
         </FormGroup>
 
-        <Button onClick={handleSave}>Simpan</Button>
+        <Button onClick={handleSave} disabled={isSaving}>
+          {isSaving ? "Memproses..." : "Simpan"}
+        </Button>
       </Modal>
 
       {/* DELETE */}
@@ -422,6 +422,7 @@ export default function Occupations() {
         open={deleteOpen}
         onClose={() => setDeleteOpen(false)}
         onConfirm={handleDelete}
+        isDeleting={isDeleting}
         title="Hapus data?"
         desc="Data akan hilang permanen"
       />

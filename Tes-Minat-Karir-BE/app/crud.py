@@ -76,6 +76,7 @@ def create_user(db: Session, user: UserCreate):
         nama_lengkap=user.nama_lengkap,
         password_hash=hashed_password,
         role=user.role,
+        created_at=datetime.now(timezone.utc),
     )
     db.add(db_user)
     db.commit()
@@ -93,7 +94,8 @@ def update_user(db: Session, user_id: int, user: UserUpdate):
     
     for key, value in update_data.items():
         setattr(db_user, key, value)
-        
+    # set audit updated timestamp
+    db_user.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(db_user)
     return db_user
@@ -128,7 +130,7 @@ def create_question(db: Session, question: QuestionCreate):
         if not exists:
             break
             
-    db_question = Question(id=random_id, **question.model_dump())
+    db_question = Question(id=random_id, **question.model_dump(), created_at=datetime.now(timezone.utc))
     db.add(db_question)
     db.commit()
     db.refresh(db_question)
@@ -141,6 +143,7 @@ def update_question(db: Session, question_id: int, question: QuestionUpdate):
         return None
     for key, value in question.model_dump(exclude_unset=True).items():
         setattr(db_question, key, value)
+    db_question.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(db_question)
     return db_question
@@ -172,7 +175,7 @@ def create_occupation(db: Session, occupation: OccupationCreate):
         if not exists:
             break
             
-    db_occupation = OccupationRiasec(id=random_id, **occupation.model_dump())
+    db_occupation = OccupationRiasec(id=random_id, **occupation.model_dump(), created_at=datetime.now(timezone.utc))
     db.add(db_occupation)
     db.commit()
     db.refresh(db_occupation)
@@ -185,6 +188,7 @@ def update_occupation(db: Session, occupation_id: int, occupation: OccupationUpd
         return None
     for key, value in occupation.model_dump(exclude_unset=True).items():
         setattr(db_occupation, key, value)
+    db_occupation.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(db_occupation)
     return db_occupation
