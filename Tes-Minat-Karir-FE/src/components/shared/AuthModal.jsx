@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import gsap from "gsap";
 import { api } from "../../lib/api";
+import { useNavigate } from "react-router-dom";
 
-export default function AuthModal({ isOpen, onClose }) {
+export default function AuthModal({ isOpen, onClose, onSuccess }) {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("login"); // "login" | "register"
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -77,6 +79,12 @@ export default function AuthModal({ isOpen, onClose }) {
       localStorage.setItem("token", response.access_token);
       handleClose();
       setLoginData({ username: "", password: "" });
+      
+      if (onSuccess) {
+        onSuccess(response);
+      } else {
+        navigate("/dashboard");
+      }
     } catch (err) {
       setError(err.message || "Login gagal. Silakan cek username dan password.");
     } finally {
@@ -91,15 +99,25 @@ export default function AuthModal({ isOpen, onClose }) {
 
     try {
       await api.register(registerData.username, registerData.password, registerData.nama_lengkap);
+      
+      // Auto-login setelah registrasi berhasil
+      const response = await api.login(registerData.username, registerData.password);
+      localStorage.setItem("token", response.access_token);
+      
       setError("");
       setShowSuccessPopup(true);
       setRegisterData({ nama_lengkap: "", username: "", password: "" });
       
-      // Auto close success popup after 3 seconds
+      // Auto close success popup and redirect after 2 seconds
       setTimeout(() => {
         setShowSuccessPopup(false);
-        setActiveTab("login");
-      }, 3000);
+        handleClose();
+        if (onSuccess) {
+          onSuccess(response);
+        } else {
+          navigate("/dashboard");
+        }
+      }, 2000);
     } catch (err) {
       setError(err.message || "Registrasi gagal. Silakan coba lagi.");
     } finally {

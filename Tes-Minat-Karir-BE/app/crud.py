@@ -7,7 +7,8 @@ from app.models import User, Question, OccupationRiasec, TokenBlacklist, TestHis
 from app.schemas import (
     UserCreate, UserUpdate,
     QuestionCreate, QuestionUpdate,
-    OccupationCreate, OccupationUpdate
+    OccupationCreate, OccupationUpdate,
+    TestHistoryCreate
 )
 from app.auth import get_password_hash
 
@@ -199,3 +200,19 @@ def delete_occupation(db: Session, occupation_id: int):
         db.delete(db_occupation)
         db.commit()
     return db_occupation
+
+# --- Test History CRUD ---
+def create_test_history(db: Session, user_id: int, history: TestHistoryCreate):
+    db_history = TestHistory(
+        user_id=user_id,
+        holland_code=history.holland_code,
+        result_json=history.result_json,
+        created_at=datetime.now(timezone.utc)
+    )
+    db.add(db_history)
+    db.commit()
+    db.refresh(db_history)
+    return db_history
+
+def get_test_history_by_user(db: Session, user_id: int, skip: int = 0, limit: int = 100):
+    return db.query(TestHistory).filter(TestHistory.user_id == user_id).order_by(TestHistory.created_at.desc()).offset(skip).limit(limit).all()
