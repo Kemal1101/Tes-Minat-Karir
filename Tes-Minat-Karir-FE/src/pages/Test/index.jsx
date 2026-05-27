@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 const riasecData = {
   R: { name: "Realistic", description: "Tipe praktis, suka bekerja dengan mesin, alat, atau aktivitas luar ruangan." },
@@ -10,6 +11,8 @@ const riasecData = {
 };
 import { api } from '../../lib/api';
 import './App.css';
+import { useToast } from '../../hooks/useToast';
+import AuthModal from '../../components/shared/AuthModal';
 
 import {
   Radar
@@ -35,6 +38,7 @@ ChartJS.register(
 );
 
 function App() {
+  const navigate = useNavigate();
   const { data: apiQuestions = [], isLoading: isFetchingQuestions } = useQuery({
     queryKey: ['publicQuestions'],
     queryFn: async () => {
@@ -44,6 +48,9 @@ function App() {
   });
 
   const [apiResult, setApiResult] = useState(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const toast = useToast();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
@@ -123,6 +130,45 @@ function App() {
       console.error("Error calculating result:", error);
       setIsLoading(false);
     }
+  };
+
+  const handleSaveResult = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    const detailPersentase = apiResult?.detail_persentase || {};
+    const rekomendasiProfesi = Array.isArray(apiResult?.rekomendasi_profesi)
+      ? apiResult.rekomendasi_profesi
+      : [];
+
+    setIsSaving(true);
+    try {
+      await api.saveTestResult({
+        holland_code: apiResult.kode_holland,
+        result_json: {
+          scores: detailPersentase,
+          recommendations: rekomendasiProfesi,
+          ranking_method: apiResult?.metode_perankingan || 'SAW'
+        }
+      });
+      toast("Hasil tes berhasil disimpan ke riwayat!", "success");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 900);
+    } catch (error) {
+      console.error("Error saving result:", error);
+      toast("Gagal menyimpan hasil tes", "error");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleAuthSuccess = async () => {
+    setIsAuthModalOpen(false);
+    handleSaveResult();
   };
 
   /* ================= LOADING ================= */
@@ -324,17 +370,32 @@ function App() {
                   )}
                 </div>
 
-                {/* Restart Button */}
-                <button
-                  onClick={() => window.location.reload()}
-                  className="w-full py-3 px-6 bg-gradient-to-r from-accent to-accent-dark text-white rounded-xl font-poppins font-bold hover:shadow-lg-custom transition-all"
-                >
-                  Ulangi Test
-                </button>
+                {/* Save and Restart Buttons */}
+                <div className="flex flex-col gap-3 mt-6">
+                  <button
+                    onClick={handleSaveResult}
+                    disabled={isSaving}
+                    className="w-full py-3 px-6 bg-white text-accent border-2 border-accent rounded-xl font-poppins font-bold hover:bg-accent/5 transition-all flex items-center justify-center gap-2"
+                  >
+                    {isSaving ? "Menyimpan..." : "💾 Simpan Hasil ke Riwayat"}
+                  </button>
+                  <button
+                    onClick={() => window.location.reload()}
+                    className="w-full py-3 px-6 bg-gradient-to-r from-accent to-accent-dark text-white rounded-xl font-poppins font-bold hover:shadow-lg-custom transition-all"
+                  >
+                    Ulangi Test
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <AuthModal 
+          isOpen={isAuthModalOpen} 
+          onClose={() => setIsAuthModalOpen(false)} 
+          onSuccess={handleAuthSuccess} 
+        />
       </div>
     );
   }

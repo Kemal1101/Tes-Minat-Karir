@@ -203,3 +203,12 @@ async def logout(token: str | None = Depends(oauth2_scheme_optional), db: Sessio
         "message": "Logout berhasil. Token telah dinonaktifkan.",
         "username": username,
     }
+
+# --- Test History ---
+@auth_router.post("/history", response_model=schemas.TestHistoryResponse, tags=["History"])
+def save_test_history(history: schemas.TestHistoryCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    return crud.create_test_history(db=db, user_id=current_user.id, history=history)
+
+@auth_router.get("/history", response_model=List[schemas.TestHistoryResponse], tags=["History"])
+def get_user_history(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    return crud.get_test_history_by_user(db=db, user_id=current_user.id, skip=skip, limit=limit)

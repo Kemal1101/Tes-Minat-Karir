@@ -8,6 +8,7 @@ import MainLayout from "./layouts/MainLayout";
 import LandingPage from "./pages/Landing";
 import TestPage from "./pages/Test";
 import ResultPage from "./pages/Result";
+import DashboardPage from "./pages/Dashboard";
 
 // Admin
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -33,6 +34,7 @@ export default function App() {
           
           <Route path="/test" element={<TestPage />} />
           <Route path="/result" element={<ResultPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
 
           <Route path="/loginadmin" element={<LoginPage />} />
 
