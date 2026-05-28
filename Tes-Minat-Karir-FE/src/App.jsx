@@ -6,9 +6,14 @@ import { ToastProvider } from "./hooks/useToast";
 // Public
 import MainLayout from "./layouts/MainLayout";
 import LandingPage from "./pages/Landing";
+<<<<<<< HEAD
+import TestPage from "./pages/Test/index";
+import ResultPage from "./pages/Result/index";
+=======
 import TestPage from "./pages/Test";
 import ResultPage from "./pages/Result";
 import DashboardPage from "./pages/Dashboard";
+>>>>>>> 0c32943e47ccb2c2d9d55c63f3e3b512b0927936
 
 // Admin
 import AdminLayout from "./pages/admin/AdminLayout";
