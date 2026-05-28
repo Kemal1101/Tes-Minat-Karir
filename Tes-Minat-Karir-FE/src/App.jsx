@@ -6,8 +6,8 @@ import { ToastProvider } from "./hooks/useToast";
 // Public
 import MainLayout from "./layouts/MainLayout";
 import LandingPage from "./pages/Landing";
-import TestPage from "./pages/Test";
-import ResultPage from "./pages/Result";
+import TestPage from "./pages/Test/index";
+import ResultPage from "./pages/Result/index";
 
 // Admin
 import AdminLayout from "./pages/admin/AdminLayout";
