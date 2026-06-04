@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "../../hooks/useToast";
 import { useAdminPage } from "../../hooks/useAdminPage";
 import { api } from "../../lib/api";
@@ -28,8 +29,22 @@ const emptyForm = {
 export default function DaftarPengguna() {
   const toast = useToast();
   const { setActions } = useAdminPage();
+  const queryClient = useQueryClient();
 
-  const [users, setUsers] = useState([]);
+  const { data: users = [], isLoading } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const result = await api.getUsers();
+      return result.map(u => ({
+        id: u.id,
+        username: u.username,
+        nama_lengkap: u.nama_lengkap || "",
+        role: u.role || "user",
+        status: "active",
+      }));
+    }
+  });
+
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
@@ -39,70 +54,27 @@ export default function DaftarPengguna() {
 
   const [editingUser, setEditingUser] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
-
   const [form, setForm] = useState(emptyForm);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   // 🔗 Dynamic Topbar
   const topbar = {
     title: "Daftar Pengguna",
 
     subtitle: "Kelola semua pengguna sistem",
 
-    actions: [
-      {
-        label: "Refresh",
-        icon: "refresh",
-        variant: "secondary",
-
-        onClick: () => {
-          toast("Data diperbarui", "info");
-        },
-      },
-
-      {
-        label: "Tambah Pengguna",
-        icon: "add",
-        variant: "primary",
-
-        onClick: openCreate,
-      },
-    ],
+    actions: [],
   };
 
   useEffect(() => {
-    setActions(topbar.actions);
+    setActions({
+      onAdd: openCreate,
+    });
 
     return () => {
       setActions(null);
     };
    }, []);
-  
-  useEffect (() => {
-    loadUsers();
-    setActions({
-      onAdd: openCreate,
-      onRefresh: () => {
-        loadUsers();
-        toast("Data diperbarui", "info");
-      },
-    });
-  }, []);
-
-  const loadUsers = async () => {
-    try {
-      const result = await api.getUsers();
-      const mapped = result.map(u => ({
-        id: u.id,
-        username: u.username,
-        nama_lengkap: u.nama_lengkap || "",
-        role: u.role || "user",
-        status: "active",
-      }));
-      setUsers(mapped);
-    } catch (err) {
-      toast("Gagal memuat pengguna", "danger");
-      console.error(err);
-    }
-  };
 
   // 🔍 Filter
   const filtered = users.filter(u =>
@@ -146,6 +118,7 @@ export default function DaftarPengguna() {
       return;
     }
 
+    setIsSaving(true);
     try {
       const payload = {
         username: form.username,
@@ -167,23 +140,28 @@ export default function DaftarPengguna() {
         toast("Pengguna ditambahkan", "success");
       }
       
-      loadUsers();
+      queryClient.invalidateQueries({ queryKey: ['users'] });
       setFormOpen(false);
     } catch (err) {
       toast("Gagal menyimpan pengguna", "danger");
       console.error(err);
+    } finally {
+      setIsSaving(false);
     }
   }
 
   async function handleDelete() {
+    setIsDeleting(true);
     try {
       await api.deleteUser(selectedUser.id);
       toast("Pengguna dihapus", "danger");
-      loadUsers();
+      queryClient.invalidateQueries({ queryKey: ['users'] });
       setDeleteOpen(false);
     } catch (err) {
       toast("Gagal menghapus pengguna", "danger");
       console.error(err);
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -255,6 +233,10 @@ export default function DaftarPengguna() {
           <div className="font-semibold">Semua Pengguna</div>
 
           <div className="flex gap-3 items-center">
+            <button onClick={openCreate} className="inline-flex items-center gap-2 h-9 px-4 rounded-xl text-sm font-medium bg-amber-700 hover:bg-amber-800 text-white transition-all">
+              <Plus size={16} />
+              Tambah
+            </button>
             <input
               className="bg-gray-100 border px-4 py-2 rounded-full text-sm w-[260px]"
               placeholder="🔍 Cari nama atau username..."
@@ -264,13 +246,6 @@ export default function DaftarPengguna() {
                 setPage(1);
               }}
             />
-
-            <button
-              onClick={openCreate}
-              className="bg-black text-white px-4 py-2 rounded-full text-sm"
-            >
-              + Tambah
-            </button>
           </div>
         </div>
 
@@ -284,8 +259,20 @@ export default function DaftarPengguna() {
             </tr>
           </thead>
 
-          <tbody>
-            {paginated.map(u => (
+          {isLoading ? (
+            <tbody>
+              {[...Array(5)].map((_, i) => (
+                <tr key={i} className="border-t animate-pulse bg-gray-50/50">
+                  <td className="p-4"><div className="flex gap-3"><div className="w-9 h-9 bg-gray-200 rounded-full"></div><div><div className="h-4 bg-gray-200 rounded w-24 mb-1"></div><div className="h-3 bg-gray-200 rounded w-16"></div></div></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-12"></div></td>
+                  <td className="p-4"><div className="h-6 w-16 bg-gray-200 rounded-full"></div></td>
+                  <td className="p-4"><div className="h-8 bg-gray-200 rounded w-32"></div></td>
+                </tr>
+              ))}
+            </tbody>
+          ) : (
+            <tbody>
+              {paginated.map(u => (
               <tr key={u.id} className="border-t hover:bg-gray-50">
 
                 {/* USER */}
@@ -334,7 +321,8 @@ export default function DaftarPengguna() {
 
               </tr>
             ))}
-          </tbody>
+            </tbody>
+          )}
         </table>
 
         {/* FOOTER */}
@@ -354,8 +342,8 @@ export default function DaftarPengguna() {
         title={editingUser ? "Edit Pengguna" : "Tambah Pengguna"}
         footer={
           <>
-            <Button variant="ghost" onClick={() => setFormOpen(false)}>Batal</Button>
-            <Button variant="primary" onClick={handleSave}>Simpan</Button>
+            <Button variant="ghost" onClick={() => setFormOpen(false)} disabled={isSaving}>Batal</Button>
+            <Button variant="primary" onClick={handleSave} disabled={isSaving}>{isSaving ? "Memproses..." : "Simpan"}</Button>
           </>
         }
       >
@@ -419,6 +407,7 @@ export default function DaftarPengguna() {
         open={deleteOpen}
         onClose={() => setDeleteOpen(false)}
         onConfirm={handleDelete}
+        isDeleting={isDeleting}
         title="Hapus pengguna?"
         desc="Data akan dihapus permanen."
       />

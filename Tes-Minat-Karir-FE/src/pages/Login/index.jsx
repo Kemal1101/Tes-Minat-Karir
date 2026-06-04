@@ -8,12 +8,14 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const toast = useToast();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
     try {
       const result = await api.login(username, password);
       // Simpan token ke localStorage
@@ -36,7 +38,7 @@ export default function LoginPage() {
         navigate("/");
       }
     } catch (err) {
-      toast("Username atau password salah", "danger");
+      setError("Username atau password salah");
       console.error(err);
     } finally {
       setLoading(false);
@@ -47,6 +49,11 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-[#f8f6f2] p-4">
       <div className="bg-white p-8 rounded-2xl shadow-sm border max-w-sm w-full">
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">Login Admin</h1>
+        {error && (
+          <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm text-center mb-4 border border-red-200 animate-slide-up">
+            {error}
+          </div>
+        )}
         <form onSubmit={handleLogin} className="space-y-4">
           <FormGroup label="Username">
             <Input 

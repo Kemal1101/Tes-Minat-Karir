@@ -80,3 +80,19 @@ class TokenData(BaseModel):
     username: Optional[str] = None
     role: Optional[str] = None
 
+from datetime import datetime
+
+# --- Test History Schemas ---
+class TestHistoryCreate(BaseModel):
+    holland_code: str
+    result_json: dict
+
+class TestHistoryResponse(BaseModel):
+    id: int
+    user_id: int
+    holland_code: str
+    result_json: dict
+    created_at: Optional[datetime] = None
+    
+    class Config:
+        from_attributes = True

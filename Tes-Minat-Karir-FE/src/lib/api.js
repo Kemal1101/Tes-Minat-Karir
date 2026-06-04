@@ -25,6 +25,25 @@ export const api = {
     return res.json();
   },
 
+  register: async (username, password, nama_lengkap) => {
+    const res = await fetch(`${API_URL}/v1/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        nama_lengkap
+      })
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.detail || "Registration failed");
+    }
+    return res.json();
+  },
+
   logout: async () => {
     const res = await fetch(`${API_URL}/v1/logout`, {
       method: "POST",
@@ -112,6 +131,42 @@ export const api = {
       method: "DELETE", headers: getHeaders()
     });
     if (!res.ok) throw new Error("Failed to delete occupation");
+    return res.json();
+  },
+  
+  // Public Test Methods
+  getPublicQuestions: async () => {
+    const res = await fetch(`${API_URL}/questions`);
+    if (!res.ok) throw new Error("Failed to fetch questions");
+    return res.json();
+  },
+  calculateResult: async (data) => {
+    const res = await fetch(`${API_URL}/calculate-result`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error("Failed to calculate result");
+    return res.json();
+  },
+  
+  // History Methods
+  saveTestResult: async (data) => {
+    const res = await fetch(`${API_URL}/v1/history`, {
+      method: "POST",
+      headers: getHeaders(),
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error("Failed to save test result");
+    return res.json();
+  },
+  getUserHistory: async () => {
+    const res = await fetch(`${API_URL}/v1/history`, {
+      headers: getHeaders()
+    });
+    if (!res.ok) throw new Error("Failed to fetch user history");
     return res.json();
   }
 };

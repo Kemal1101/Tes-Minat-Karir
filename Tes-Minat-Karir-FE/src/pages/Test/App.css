@@ -1,5 +1,4 @@
 /* Custom CSS for RIASEC App - Tailwind powered */
-
 :root {
   --accent: #854836;
   --saffron: #F5B553;
@@ -82,5 +81,3 @@ button:focus {
 button, [role="button"] {
   user-select: none;
 }
-
-

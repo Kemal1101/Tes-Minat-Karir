@@ -8,6 +8,7 @@ import MainLayout from "./layouts/MainLayout";
 import LandingPage from "./pages/Landing";
 import TestPage from "./pages/Test";
 import ResultPage from "./pages/Result";
+import DashboardPage from "./pages/Dashboard";
 
 // Admin
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -15,7 +16,6 @@ import DaftarPengguna from "./pages/admin/DaftarPengguna";
 import TestHistory from "./pages/admin/TestHistory";
 import Questions from "./pages/admin/Questions";
 import Occupations from "./pages/admin/Occupations";
-import TokenBlacklist from "./pages/admin/TokenBlacklist";
 
 // Auth
 import LoginPage from "./pages/Login";
@@ -30,9 +30,11 @@ export default function App() {
           {/* PUBLIC */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/test" element={<TestPage />} />
-            <Route path="/result" element={<ResultPage />} />
           </Route>
+          
+          <Route path="/test" element={<TestPage />} />
+          <Route path="/result" element={<ResultPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
 
           <Route path="/loginadmin" element={<LoginPage />} />
 
@@ -44,7 +46,6 @@ export default function App() {
               <Route path="history" element={<TestHistory />} />
               <Route path="questions" element={<Questions />} />
               <Route path="occupations" element={<Occupations />} />
-              <Route path="blacklist" element={<TokenBlacklist />} />
             </Route>
           </Route>
 

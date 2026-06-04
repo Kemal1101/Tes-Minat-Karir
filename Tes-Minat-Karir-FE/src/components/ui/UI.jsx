@@ -135,14 +135,17 @@ export function Pagination({ current, total, onChange, info }) {
             <button
               key={p}
               onClick={() => onChange(p)}
-              style={{
-                width: 28, height: 28, borderRadius: 8, border: "1px solid var(--border)",
-                background: p === current ? "var(--app-accent)" : "transparent",
-                color: p === current ? "white" : "var(--text-muted)",
-                fontSize: 12, fontWeight: 600, cursor: "pointer",
-                transition: "all 0.15s",
-              }}
-            >{p}</button>
+              className={`
+                w-7 h-7 rounded-lg border text-xs font-semibold transition-all
+
+                ${
+                  p === current
+                    ? "bg-amber-700 hover:bg-amber-800 text-white border-amber-700"
+                    : "bg-transparent text-zinc-500 border-zinc-200 hover:bg-zinc-100"
+                }
+              `} >
+              {p}
+            </button>
           )
         ))}
       </div>

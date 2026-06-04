@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -62,12 +63,12 @@ export default function CTASection() {
             dengan preferensi aktivitas Anda.
           </p>
 
-          <button
-            type="button"
-            className="relative z-10 bg-appAccent text-white px-10 py-4 md:py-5 rounded-full text-base md:text-lg font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(133,72,54,0.3)] whitespace-nowrap"
+          <Link
+            to="/test"
+            className="inline-block relative z-10 bg-appAccent text-white px-10 py-4 md:py-5 rounded-full text-base md:text-lg font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(133,72,54,0.3)] whitespace-nowrap text-center"
           >
             Mulai Tes Sekarang
-          </button>
+          </Link>
         </div>
       </section>
     </>
