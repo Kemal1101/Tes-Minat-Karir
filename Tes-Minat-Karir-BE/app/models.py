@@ -1,0 +1,51 @@
+from sqlalchemy import Column, Integer, BigInteger, String, Float, ForeignKey, DateTime, JSON
+from sqlalchemy.sql import func
+from .database import Base
+
+
+class AuditMixin:
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    # server_onupdate ensures DB will set timestamp on UPDATE when supported; also keep onupdate for SQLAlchemy
+    updated_at = Column(DateTime(timezone=True), nullable=True, onupdate=func.now(), server_onupdate=func.now())
+
+class User(AuditMixin, Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    nama_lengkap = Column(String, nullable=True)
+    password_hash = Column(String)
+    role = Column(String, default="user") # 'admin' atau 'user'
+
+class Question(AuditMixin, Base):
+    __tablename__ = "questions"
+    id = Column(Integer, primary_key=True, index=True)
+    text = Column(String)
+    category = Column(String) 
+    cf_pakar = Column(Float)   
+    keywords = Column(String, nullable=True)
+
+class TestHistory(AuditMixin, Base):
+    __tablename__ = "test_history"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    holland_code = Column(String)
+    result_json = Column(JSON) # Menyimpan detail persentase RIASEC
+
+class OccupationRiasec(AuditMixin, Base):
+    __tablename__ = "occupations_riasec"
+
+    id = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
+    interest_code = Column("Interest Code", String, nullable=True)
+    job_zone = Column("Job Zone", String, nullable=True)
+    code = Column("Code", String, nullable=True)
+    occupation = Column("Occupation", String, nullable=True)
+
+
+class TokenBlacklist(AuditMixin, Base):
+    __tablename__ = "token_blacklist"
+
+    id = Column(Integer, primary_key=True, index=True)
+    token_hash = Column(String, unique=True, index=True, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    expires_at = Column(DateTime(timezone=True), nullable=False)
+    revoked_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
