@@ -7,7 +7,8 @@ from app.models import User, Question, OccupationRiasec, TokenBlacklist, TestHis
 from app.schemas import (
     UserCreate, UserUpdate,
     QuestionCreate, QuestionUpdate,
-    OccupationCreate, OccupationUpdate
+    OccupationCreate, OccupationUpdate,
+    TestHistoryCreate
 )
 from app.auth import get_password_hash
 
@@ -76,6 +77,7 @@ def create_user(db: Session, user: UserCreate):
         nama_lengkap=user.nama_lengkap,
         password_hash=hashed_password,
         role=user.role,
+        created_at=datetime.now(timezone.utc),
     )
     db.add(db_user)
     db.commit()
@@ -93,7 +95,8 @@ def update_user(db: Session, user_id: int, user: UserUpdate):
     
     for key, value in update_data.items():
         setattr(db_user, key, value)
-        
+    # set audit updated timestamp
+    db_user.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(db_user)
     return db_user
@@ -128,7 +131,7 @@ def create_question(db: Session, question: QuestionCreate):
         if not exists:
             break
             
-    db_question = Question(id=random_id, **question.model_dump())
+    db_question = Question(id=random_id, **question.model_dump(), created_at=datetime.now(timezone.utc))
     db.add(db_question)
     db.commit()
     db.refresh(db_question)
@@ -141,6 +144,7 @@ def update_question(db: Session, question_id: int, question: QuestionUpdate):
         return None
     for key, value in question.model_dump(exclude_unset=True).items():
         setattr(db_question, key, value)
+    db_question.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(db_question)
     return db_question
@@ -172,7 +176,7 @@ def create_occupation(db: Session, occupation: OccupationCreate):
         if not exists:
             break
             
-    db_occupation = OccupationRiasec(id=random_id, **occupation.model_dump())
+    db_occupation = OccupationRiasec(id=random_id, **occupation.model_dump(), created_at=datetime.now(timezone.utc))
     db.add(db_occupation)
     db.commit()
     db.refresh(db_occupation)
@@ -185,6 +189,7 @@ def update_occupation(db: Session, occupation_id: int, occupation: OccupationUpd
         return None
     for key, value in occupation.model_dump(exclude_unset=True).items():
         setattr(db_occupation, key, value)
+    db_occupation.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(db_occupation)
     return db_occupation
@@ -195,3 +200,19 @@ def delete_occupation(db: Session, occupation_id: int):
         db.delete(db_occupation)
         db.commit()
     return db_occupation
+
+# --- Test History CRUD ---
+def create_test_history(db: Session, user_id: int, history: TestHistoryCreate):
+    db_history = TestHistory(
+        user_id=user_id,
+        holland_code=history.holland_code,
+        result_json=history.result_json,
+        created_at=datetime.now(timezone.utc)
+    )
+    db.add(db_history)
+    db.commit()
+    db.refresh(db_history)
+    return db_history
+
+def get_test_history_by_user(db: Session, user_id: int, skip: int = 0, limit: int = 100):
+    return db.query(TestHistory).filter(TestHistory.user_id == user_id).order_by(TestHistory.created_at.desc()).offset(skip).limit(limit).all()

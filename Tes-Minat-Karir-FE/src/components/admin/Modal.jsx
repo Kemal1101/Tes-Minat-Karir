@@ -74,7 +74,7 @@ export default function Modal({ open, onClose, title, children, footer, size = "
 }
 
 // ─── CONFIRM DELETE MODAL ─────────────────────────────────────────────────────
-export function ConfirmModal({ open, onClose, onConfirm, title = "Hapus data ini?", desc = "Tindakan ini tidak dapat dibatalkan." }) {
+export function ConfirmModal({ open, onClose, onConfirm, isDeleting = false, title = "Hapus data ini?", desc = "Tindakan ini tidak dapat dibatalkan." }) {
   return (
     <Modal open={open} onClose={onClose} title="" size="sm">
       <div style={{ textAlign: "center", padding: "8px 0" }}>
@@ -86,8 +86,8 @@ export function ConfirmModal({ open, onClose, onConfirm, title = "Hapus data ini
         <div style={{ fontSize: 16, fontWeight: 800, marginBottom: 8 }} dangerouslySetInnerHTML={{ __html: title }} />
         <div style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }}>{desc}</div>
         <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 20 }}>
-          <Button variant="ghost" onClick={onClose}>Batal</Button>
-          <Button variant="danger" onClick={() => { onConfirm(); onClose(); }}>Ya, Hapus</Button>
+          <Button variant="ghost" onClick={onClose} disabled={isDeleting}>Batal</Button>
+          <Button variant="danger" onClick={onConfirm} disabled={isDeleting}>{isDeleting ? "Menghapus..." : "Ya, Hapus"}</Button>
         </div>
       </div>
     </Modal>

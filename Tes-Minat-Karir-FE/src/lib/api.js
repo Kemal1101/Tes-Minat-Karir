@@ -150,5 +150,23 @@ export const api = {
     });
     if (!res.ok) throw new Error("Failed to calculate result");
     return res.json();
+  },
+  
+  // History Methods
+  saveTestResult: async (data) => {
+    const res = await fetch(`${API_URL}/v1/history`, {
+      method: "POST",
+      headers: getHeaders(),
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error("Failed to save test result");
+    return res.json();
+  },
+  getUserHistory: async () => {
+    const res = await fetch(`${API_URL}/v1/history`, {
+      headers: getHeaders()
+    });
+    if (!res.ok) throw new Error("Failed to fetch user history");
+    return res.json();
   }
 };

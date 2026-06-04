@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { QUESTIONS as INITIAL } from "../../data/mockData";
 import { useToast } from "../../hooks/useToast";
 import { useAdminPage } from "../../hooks/useAdminPage";
@@ -40,7 +41,22 @@ const emptyForm = { text: "", type: "R", cf: "0.5", keywords: "" };
 export default function Questions() {
   const toast  = useToast();
   const { setActions } = useAdminPage();
-  const [data,       setData]       = useState([]);
+  const queryClient = useQueryClient();
+
+  const { data = [], isLoading } = useQuery({
+    queryKey: ['questions'],
+    queryFn: async () => {
+      const result = await api.getQuestions();
+      return result.map(q => ({
+        id: q.id,
+        text: q.text,
+        type: q.category,
+        cf: q.cf_pakar,
+        keywords: q.keywords || ""
+      }));
+    }
+  });
+
   const [search,     setSearch]     = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [page,       setPage]       = useState(1);
@@ -50,6 +66,8 @@ export default function Questions() {
   const [editing,    setEditing]    = useState(null);
   const [delTarget,  setDelTarget]  = useState(null);
   const [form,       setForm]       = useState(emptyForm);
+  const [isSaving,   setIsSaving]   = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
 
     // 🔗 Dynamic Topbar
@@ -58,55 +76,12 @@ export default function Questions() {
 
     subtitle: "Kelola semua pertanyaan untuk tes",
 
-    actions: [
-      {
-        label: "Refresh",
-        icon: "refresh",
-        variant: "secondary",
-
-        onClick: () => {
-          toast("Data diperbarui", "info");
-        },
-      },
-
-      {
-        label: "Tambah Pertanyaan",
-        icon: "add",
-        variant: "primary",
-
-        onClick: openCreate,
-      },
-    ],
+    actions: [],
   };
 
   useEffect(() => {
     setActions(topbar);
-
-    return () => {
-      setActions(null);
-    };
   }, []);
-
-  useEffect(() => {
-    loadQuestions();
-  }, []);
-
-  const loadQuestions = async () => {
-    try {
-      const result = await api.getQuestions();
-      const mapped = result.map(q => ({
-        id: q.id,
-        text: q.text,
-        type: q.category,
-        cf: q.cf_pakar,
-        keywords: q.keywords || ""
-      }));
-      setData(mapped);
-    } catch (err) {
-      toast("Gagal memuat soal", "danger");
-      console.error(err);
-    }
-  };
 
   // 🔍 Filter
   const filtered = data.filter(q => {
@@ -123,6 +98,7 @@ export default function Questions() {
 
   async function handleSave() {
     if (!form.text.trim()) { toast("Teks pertanyaan wajib diisi", "danger"); return; }
+    setIsSaving(true);
     try {
       const payload = {
         text: form.text,
@@ -137,23 +113,28 @@ export default function Questions() {
         await api.createQuestion(payload);
         toast("Pertanyaan berhasil ditambahkan!", "success");
       }
-      loadQuestions();
+      queryClient.invalidateQueries({ queryKey: ['questions'] });
       setFormOpen(false);
     } catch (err) {
       toast("Gagal menyimpan pertanyaan", "danger");
       console.error(err);
+    } finally {
+      setIsSaving(false);
     }
   }
 
   async function handleDelete() {
+    setIsDeleting(true);
     try {
       await api.deleteQuestion(delTarget.id);
       toast("Pertanyaan dihapus", "danger");
-      loadQuestions();
+      queryClient.invalidateQueries({ queryKey: ['questions'] });
       setDeleteOpen(false);
     } catch (err) {
       toast("Gagal menghapus pertanyaan", "danger");
       console.error(err);
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -251,6 +232,12 @@ export default function Questions() {
 
         <div className="flex gap-3 items-center">
 
+          {/* BUTTON */}
+          <button onClick={openCreate} className="inline-flex items-center gap-2 h-9 px-4 rounded-xl text-sm font-medium bg-amber-700 hover:bg-amber-800 text-white transition-all">
+            <Plus size={16} />
+            Tambah
+          </button>
+
           {/* FILTER */}
           <select
             value={typeFilter}
@@ -293,8 +280,21 @@ export default function Questions() {
           </tr>
         </thead>
 
-        <tbody>
-          {paginated.map((q, i) => {
+          {isLoading ? (
+            <tbody>
+              {[...Array(5)].map((_, i) => (
+                <tr key={i} className="border-t animate-pulse bg-gray-50/50">
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-8"></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-3/4"></div></td>
+                  <td className="p-4"><div className="h-6 w-16 bg-gray-200 rounded-full"></div></td>
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-8"></div></td>
+                  <td className="p-4"><div className="h-8 bg-gray-200 rounded w-24"></div></td>
+                </tr>
+              ))}
+            </tbody>
+          ) : (
+            <tbody>
+              {paginated.map((q, i) => {
             const s = RIASEC_STYLE[q.type] || {};
             return (
               <tr key={q.id} className="border-t hover:bg-gray-50">
@@ -330,8 +330,9 @@ export default function Questions() {
               </tr>
             );
           })}
-        </tbody>
-      </table>
+            </tbody>
+          )}
+        </table>
 
       {/* FOOTER */}
       <div className="flex justify-between items-center p-4">
@@ -388,9 +389,10 @@ export default function Questions() {
 
         <button
           onClick={handleSave}
-          className="w-full bg-black text-white py-2 rounded-lg text-sm"
+          disabled={isSaving}
+          className="w-full bg-black text-white py-2 rounded-lg text-sm disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
-          Simpan
+          {isSaving ? "Memproses..." : "Simpan"}
         </button>
 
       </div>
@@ -401,6 +403,7 @@ export default function Questions() {
       open={deleteOpen}
       onClose={() => setDeleteOpen(false)}
       onConfirm={handleDelete}
+      isDeleting={isDeleting}
       title="Hapus pertanyaan?"
       desc="Data tidak bisa dikembalikan."
     />
