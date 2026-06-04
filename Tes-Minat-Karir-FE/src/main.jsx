@@ -10,7 +10,7 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     {/* Membungkus aplikasi dengan ReactLenis dan mengaktifkan mode root */}
-    <ReactLenis root>
+    <ReactLenis root options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>

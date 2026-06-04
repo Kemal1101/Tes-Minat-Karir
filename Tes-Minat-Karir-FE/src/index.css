@@ -1,39 +1,66 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-
 @font-face {
   font-family: "Host Grotesk";
-  src: url("./assets/fonts/Host_Grotesk/HostGrotesk-VariableFont_wght.ttf")
-    format("truetype");
-  font-weight: 300 800;
+  src: url("./assets/fonts/Host_Grotesk/HostGrotesk-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Host Grotesk";
+  src: url("./assets/fonts/Host_Grotesk/HostGrotesk-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Host Grotesk";
+  src: url("./assets/fonts/Host_Grotesk/HostGrotesk-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Host Grotesk";
+  src: url("./assets/fonts/Host_Grotesk/HostGrotesk-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Host Grotesk";
+  src: url("./assets/fonts/Host_Grotesk/HostGrotesk-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Host Grotesk";
+  src: url("./assets/fonts/Host_Grotesk/HostGrotesk-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
   font-style: normal;
 }
 @font-face {
   font-family: "IBM Plex Mono";
-  src: url("./assets/fonts/IBM_Plex_Mono/IBMPlexMono-Regular.ttf")
-    format("truetype");
-  font-weight: 400;
+  src: url("./assets/fonts/IBM_Plex_Mono/IBMPlexMono-SemiBold.ttf") format("truetype");
+  font-weight: 600;
   font-style: normal;
 }
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html, body {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+  html,
+  body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-  html::-webkit-scrollbar, body::-webkit-scrollbar {
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
     display: none;
   }
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-family: "Host Grotesk", sans-serif;
   }
-  .theme {
-    --font-heading: var(--font-sans);
-    --font-sans: "Inter Variable", sans-serif;
-  }
+
   :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
@@ -68,6 +95,7 @@
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
   }
+
   .dark {
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
@@ -104,16 +132,12 @@
 }
 
 @layer utilities {
-  .glass-card {
-    @apply bg-white/40 backdrop-blur-[12px] border border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.05)];
-  }
-  
   /* Hide scrollbar utility */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
   .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

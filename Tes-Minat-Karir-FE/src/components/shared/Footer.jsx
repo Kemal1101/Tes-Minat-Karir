@@ -49,7 +49,7 @@ export default function Footer() {
     <footer id="footer" className="border-t border-gray-200 pt-16 pb-8 px-6 md:px-12 mt-8 md:mt-12 bg-appBg">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 mb-12 md:mb-16 footer-item">
         <div className="md:col-span-5">
-          <h3 className="text-3xl font-extrabold tracking-tight mb-4 text-black">
+          <h3 className="text-3xl font-bold tracking-tight mb-4 text-black">
             RIASEC.
           </h3>
           <p className="text-gray-500 max-w-md font-medium leading-relaxed">
@@ -58,7 +58,7 @@ export default function Footer() {
           </p>
         </div>
         <div className="md:col-span-3 md:col-start-7">
-          <h4 className="font-bold mb-4 text-black">Tautan Cepat</h4>
+          <h4 className="font-semibold mb-4 text-black">Tautan Cepat</h4>
           <ul className="space-y-3 text-gray-500 font-medium">
             <li>
               <a href="#about" onClick={(e) => handleNavClick(e, "#about")} className="hover:text-appAccent transition-colors">
@@ -78,7 +78,7 @@ export default function Footer() {
           </ul>
         </div>
         <div className="md:col-span-3">
-          <h4 className="font-bold mb-4 text-black">Bantuan</h4>
+          <h4 className="font-semibold mb-4 text-black">Bantuan</h4>
           <ul className="space-y-3 text-gray-500 font-medium">
             <li>
               <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-gray-900 transition-colors">
@@ -91,8 +91,8 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-appAccent font-semibold transition-colors">
-                Login Admin &rarr;
+              <a href="/loginadmin" onClick={(e) => { e.preventDefault(); navigate('/loginadmin'); }} className="hover:text-appAccent transition-colors">
+                Login Admin
               </a>
             </li>
           </ul>
