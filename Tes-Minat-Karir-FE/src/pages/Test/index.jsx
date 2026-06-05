@@ -146,15 +146,17 @@ export default function Test({ onFinish }) {
       sessionStorage.removeItem('test_currentIndex');
       sessionStorage.removeItem('test_answers');
 
-      navigate('/result', {
-        state: {
-          apiResult: data,
-        },
-      });
+      // Tambahkan delay buatan agar terlihat sistem sedang "berpikir" mencocokkan data
+      setTimeout(() => {
+        navigate('/result', {
+          state: {
+            apiResult: data,
+          },
+        });
+      }, 2500); // 2.5 detik
 
     } catch (err) {
       console.error('Error calculating result:', err);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -164,7 +166,7 @@ export default function Test({ onFinish }) {
       <div className="min-h-screen flex flex-col bg-bg-light">
         <div className="flex-1 flex flex-col items-center justify-center px-4">
           <div className="w-12 h-12 border-4 border-appAccent border-t-transparent rounded-full animate-spin mb-4" />
-          <h2 className="text-xl font-poppins font-bold text-appAccent text-center">Memuat pertanyaan...</h2>
+          <h2 className="text-xl font-poppins font-bold text-appAccent text-center">Memuat Pertanyaan..</h2>
         </div>
       </div>
     );
@@ -183,18 +185,20 @@ export default function Test({ onFinish }) {
   /* ── LOADING: calculating result ── */
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col bg-bg-light">
-        <div className="flex-1 flex flex-col items-center justify-center px-4">
-          <div className="relative w-24 h-24 mb-8">
-            <div className="absolute inset-0 bg-gradient-to-r from-appAccent to-saffron rounded-full animate-pulse" />
-            <div className="absolute inset-1 bg-bg-light rounded-full" />
-            <div
-              className="absolute inset-0 rounded-full animate-spin"
-              style={{ background: 'conic-gradient(from 0deg, #854836, #F5B553, #854836)', opacity: 0.7 }}
-            />
+      <div className="min-h-screen flex flex-col bg-bg-light justify-center items-center px-4">
+        <div className="bg-white/80 backdrop-blur-xl p-10 rounded-[2rem] shadow-lg-custom flex flex-col items-center max-w-sm w-full animate-fade-in border border-white/60">
+          <div className="relative mb-8 flex items-center justify-center">
+            {/* Inner pulsing sparkle (tanpa background lingkaran) */}
+            <div className="animate-pulse flex items-center justify-center drop-shadow-lg">
+              <span className="text-5xl">✨</span>
+            </div>
           </div>
-          <h2 className="text-2xl font-poppins font-bold text-appAccent text-center">Menganalisis hasil...</h2>
-          <p className="text-gray-500 mt-2 font-inter">Harap tunggu sebentar</p>
+          <h2 className="text-2xl font-sans font-black text-appAccent text-center mb-2 animate-pulse">
+            Menganalisis Profil...
+          </h2>
+          <p className="text-gray-500 font-sans text-center text-sm">
+            Mencocokkan kepribadian Anda dengan ratusan profesi terbaik.
+          </p>
         </div>
       </div>
     );
@@ -360,7 +364,7 @@ export default function Test({ onFinish }) {
             </button>
             <button
               onClick={isLast ? handleFinish : handleNext}
-              disabled={!answers[currentIndex]}
+              disabled={!answers[currentIndex] || isLocked}
               className={`flex-1 py-3 px-6 rounded-xl font-poppins font-bold text-white transition-all duration-300 hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed ${
                 isLast
                   ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:shadow-lg'

@@ -1,7 +1,7 @@
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="reveal-section min-h-screen flex flex-col justify-center py-28 md:py-36 px-4 md:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section id="how-it-works" className="reveal-section min-h-[100dvh] flex flex-col justify-center items-center py-12 px-4 md:px-8">
+      <div className="w-full max-w-7xl mx-auto">
         <div className="text-center mb-12 md:mb-16 reveal-item">
           <h2 className="text-3xl md:text-5xl font-semibold tracking-tight mb-4 text-black">
             Bagaimana Sistem Bekerja

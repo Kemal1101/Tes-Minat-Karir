@@ -32,7 +32,7 @@ export default function SocialProofSubscribe() {
 
   return (
     <>
-      <section id="social-proof" className="relative py-24 md:py-32 px-4 md:px-8 flex flex-col items-center justify-center text-center">
+      <section id="social-proof" className="relative min-h-[100dvh] flex flex-col items-center justify-center text-center py-12 px-4 md:px-8">
         <h2 ref={counterRef} className="text-7xl md:text-8xl lg:text-[10rem] font-semibold font-mono tracking-tighter text-black mb-4 drop-shadow-sm">
           0
         </h2>
@@ -41,7 +41,7 @@ export default function SocialProofSubscribe() {
         </p>
       </section>
 
-      <section className="min-h-screen flex flex-col justify-center py-24 md:py-32 px-4 md:px-8">
+      <section className="min-h-[100dvh] flex flex-col items-center justify-center py-12 px-4 md:px-8">
         <div className="relative max-w-4xl w-full mx-auto bg-white/80 border border-white/50 rounded-[3rem] p-12 md:p-24 text-center shadow-[0_20px_60px_rgba(0,0,0,0.05)] overflow-hidden">
           <h2 className="relative z-10 text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-6 text-black">
             Siap Menemukan Arah Karir?
