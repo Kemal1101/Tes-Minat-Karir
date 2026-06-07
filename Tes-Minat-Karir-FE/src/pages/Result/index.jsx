@@ -54,27 +54,6 @@ export default function Result() {
       </div>
     );
   }
-  const radarData = {
-    labels: sorted.map(([code]) => riasecData[code]?.name ?? code),
-    datasets: [{
-      data: sorted.map(([, score]) => score),
-      backgroundColor: 'rgba(133,72,54,0.2)',
-      borderColor: '#854836',
-      borderWidth: 2,
-      pointBackgroundColor: (context) => {
-        const index = context.dataIndex;
-        if (index === 0) return '#FACC15'; // bg-yellow-400
-        if (index === 1) return '#D1D5DB'; // bg-gray-300
-        if (index === 2) return '#D97706'; // bg-amber-600
-        return '#854836'; // bg-accent
-      },
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: '#854836',
-      pointRadius: 4,
-      pointHoverRadius: 6,
-    }]
-  };
 
   const scores = apiResult.detail_persentase || {};
   
