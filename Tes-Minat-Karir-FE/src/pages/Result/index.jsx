@@ -1,5 +1,6 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { api } from "../../lib/api";
 import { Radar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -29,10 +30,18 @@ const riasecData = {
   C: { name: "Conventional", description: "Tipe yang terorganisir dan teliti. Menyukai keteraturan, pengolahan data, akurasi, dan sistem terstruktur." }
 };
 
+const buildHistoryResultJson = (result) => ({
+  scores: result?.detail_persentase || result?.scores || {},
+  recommendations: result?.rekomendasi_profesi || result?.recommendations || [],
+  ranking_method: result?.metode_perankingan || result?.ranking_method || "SAW",
+});
+
 export default function Result() {
   const location = useLocation();
   const navigate = useNavigate();
   const [showAllCareers, setShowAllCareers] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const hasSavedRef = useRef(false);
   const apiResult = location.state?.apiResult;
 
   if (!apiResult) {
@@ -54,14 +63,49 @@ export default function Result() {
       </div>
     );
   }
-  const scores = apiResult.detail_persentase || {};
+  const scores = apiResult.detail_persentase || apiResult.scores || {};
   
   // Gunakan useMemo agar kalkulasi dan data grafik tidak dirender ulang secara paksa setiap kali "Lihat Semua" diklik (mengatasi lag)
   const sorted = useMemo(() => Object.entries(scores).sort((a, b) => b[1] - a[1]), [scores]);
   const hollandCode = useMemo(() => sorted.slice(0, 3).map(([code]) => code).join(''), [sorted]);
   
-  const recommendations = apiResult.rekomendasi_profesi || [];
+  const recommendations = apiResult.rekomendasi_profesi || apiResult.recommendations || [];
   const visibleCareers = showAllCareers ? recommendations : recommendations.slice(0, 5);
+  const rankingMethod = apiResult.metode_perankingan || apiResult.ranking_method || "SAW";
+
+  // Save result to server once when arriving from Test page (dedupe using sessionStorage)
+  useEffect(() => {
+    if (!apiResult || hasSavedRef.current) return;
+
+    try {
+      const key = 'last_saved_result';
+      const hollandCodeToSave = apiResult.kode_holland || apiResult.holland_code || hollandCode;
+      const resultJsonToSave = buildHistoryResultJson(apiResult);
+      const payloadStr = JSON.stringify({ hollandCodeToSave, result_json: resultJsonToSave });
+      const prev = sessionStorage.getItem(key);
+      if (prev === payloadStr) return; // already saved in this session
+
+      if (!hollandCodeToSave) {
+        console.error('Tidak ada holland_code/kode_holland untuk disimpan ke history.');
+        return;
+      }
+
+      hasSavedRef.current = true;
+      setIsSaving(true);
+      api.saveTestResult({
+        holland_code: hollandCodeToSave,
+        result_json: resultJsonToSave,
+      }).then(() => {
+        sessionStorage.setItem(key, payloadStr);
+      }).catch((err) => {
+        console.error('Gagal menyimpan hasil tes:', err);
+        hasSavedRef.current = false;
+      }).finally(() => setIsSaving(false));
+    } catch (err) {
+      console.error('Error saat menyimpan hasil:', err);
+      hasSavedRef.current = false;
+    }
+  }, [apiResult, hollandCode]);
 
   const radarData = useMemo(() => ({
     labels: sorted.map(([code]) => riasecData[code]?.name || code),
@@ -114,12 +158,20 @@ export default function Result() {
               Tes diselesaikan pada {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
             </p>
           </div>
-          <button 
-            onClick={() => navigate('/test')}
-            className="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-xl font-bold transition-all hover:scale-105 shadow-sm"
-          >
-            Ulangi Tes
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-lg font-medium transition-all hover:scale-105 shadow-sm"
+            >
+              Kembali ke Beranda
+            </button>
+            <button 
+              onClick={() => navigate('/test')}
+              className="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-xl font-bold transition-all hover:scale-105 shadow-sm"
+            >
+              {isSaving ? 'Menyimpan...' : 'Ulangi Tes'}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -219,7 +271,7 @@ export default function Result() {
                 <span className="text-3xl drop-shadow-sm">💼</span> Rekomendasi Profesi
               </h3>
               <div className="text-sm text-gray-500 bg-gray-50 border border-gray-100 px-4 py-2 rounded-xl font-medium">
-                Metode {apiResult.metode_perankingan || 'SAW'}
+                Metode {rankingMethod}
               </div>
             </div>
 

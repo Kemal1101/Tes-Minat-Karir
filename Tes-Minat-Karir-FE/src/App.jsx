@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
+import "./App.css";
 
 import { ToastProvider } from "./hooks/useToast";
 

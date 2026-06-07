@@ -30,32 +30,51 @@ const riasecData = {
   C: { name: "Konvensional", description: "Tipe yang terorganisir dan teliti. Menyukai keteraturan, pengolahan data, akurasi, dan bekerja dalam sistem yang terstruktur jelas." }
 };
 
-const extractScoresFromResultJson = (resultJson) => {
+const normalizeResultJson = (resultJson) => {
   if (!resultJson || typeof resultJson !== 'object' || Array.isArray(resultJson)) {
-    return {};
+    return {
+      scores: {},
+      recommendations: [],
+      ranking_method: 'SAW',
+    };
   }
 
-  if (resultJson.scores && typeof resultJson.scores === 'object' && !Array.isArray(resultJson.scores)) {
-    return resultJson.scores;
-  }
-
-  return resultJson;
+  return {
+    scores: resultJson.scores && typeof resultJson.scores === 'object' && !Array.isArray(resultJson.scores)
+      ? resultJson.scores
+      : resultJson.detail_persentase && typeof resultJson.detail_persentase === 'object' && !Array.isArray(resultJson.detail_persentase)
+        ? resultJson.detail_persentase
+        : {},
+    recommendations: Array.isArray(resultJson.recommendations)
+      ? resultJson.recommendations
+      : Array.isArray(resultJson.rekomendasi_profesi)
+        ? resultJson.rekomendasi_profesi
+        : [],
+    ranking_method: resultJson.ranking_method || resultJson.metode_perankingan || 'SAW',
+  };
 };
 
-const extractRecommendationsFromResultJson = (resultJson) => {
-  if (!resultJson || typeof resultJson !== 'object' || Array.isArray(resultJson)) {
-    return [];
+const getHollandCodeFromScores = (scores) => {
+  if (!scores || typeof scores !== 'object' || Array.isArray(scores)) {
+    return '';
   }
 
-  if (Array.isArray(resultJson.recommendations)) {
-    return resultJson.recommendations;
-  }
+  return Object.entries(scores)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([code]) => code)
+    .join('');
+};
 
-  if (Array.isArray(resultJson.rekomendasi_profesi)) {
-    return resultJson.rekomendasi_profesi;
-  }
+const normalizeHistoryItem = (item) => {
+  const normalizedResultJson = normalizeResultJson(item?.result_json);
+  const hollandCode = item?.holland_code || getHollandCodeFromScores(normalizedResultJson.scores);
 
-  return [];
+  return {
+    ...item,
+    holland_code: hollandCode,
+    result_json: normalizedResultJson,
+  };
 };
 
 const getRecommendationDetail = (career) => {
@@ -88,8 +107,8 @@ function ResultDetailModal({ isOpen, onClose, result }) {
 
   if (!isOpen || !result) return null;
 
-  const scores = extractScoresFromResultJson(result.result_json);
-  const recommendations = extractRecommendationsFromResultJson(result.result_json);
+  const scores = result.result_json?.scores || {};
+  const recommendations = result.result_json?.recommendations || [];
   const rankingMethod = result?.result_json?.ranking_method || 'SAW';
   const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
   const hollandCode = sorted.slice(0, 3).map(([code]) => code).join('');
@@ -357,7 +376,7 @@ export default function DashboardPage() {
     const fetchHistory = async () => {
       try {
         const data = await api.getUserHistory();
-        setHistory(data || []);
+        setHistory((data || []).map(normalizeHistoryItem));
       } catch (err) {
         console.error("Gagal mengambil riwayat:", err);
       } finally {
@@ -469,7 +488,7 @@ export default function DashboardPage() {
             <div className="space-y-4">
               {history.map((item) => {
                 const date = new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-                const itemScores = extractScoresFromResultJson(item.result_json);
+                const itemScores = item.result_json?.scores || {};
                 // Get top 2 scores
                 const sortedScores = Object.entries(itemScores).sort((a,b) => b[1] - a[1]);
                 const top1 = sortedScores[0];
@@ -487,7 +506,7 @@ export default function DashboardPage() {
                           <span className="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded-full tracking-wider">SELESAI</span>
                         </div>
                         <h3 className="font-poppins font-bold text-lg text-text-primary">
-                          Tipe Dominan: <span className="text-accent">{riasecData[item.holland_code[0]]?.name || item.holland_code}</span>
+                          Tipe Dominan: <span className="text-accent">{riasecData[item.holland_code?.[0]]?.name || item.holland_code || 'Tidak tersedia'}</span>
                         </h3>
                       </div>
                     </div>
