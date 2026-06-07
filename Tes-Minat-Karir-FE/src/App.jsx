@@ -11,7 +11,7 @@ import ResultPage from "./pages/Result";
 import DashboardPage from "./pages/Dashboard";
 
 // Admin
-import AdminLayout from "./pages/admin/AdminLayout";
+import AdminLayout from "./layouts/AdminLayout";
 import DaftarPengguna from "./pages/admin/DaftarPengguna";
 import TestHistory from "./pages/admin/TestHistory";
 import Questions from "./pages/admin/Questions";

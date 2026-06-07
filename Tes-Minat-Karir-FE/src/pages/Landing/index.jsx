@@ -2,10 +2,10 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import HeroSection from "../components/HeroSection";
-import AboutSection from "../components/AboutSection";
-import HowItWorksSection from "../components/HowItWorksSection";
-import CTASection from "../components/CTASection";
+import Hero from "../../components/landing-page/Hero";
+import About from "../../components/landing-page/About";
+import HowItWorks from "../../components/landing-page/HowItWorks";
+import SocialProofSubscribe from "../../components/landing-page/SocialProofSubscribe";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,25 +18,7 @@ export default function LandingPage() {
       const tl = gsap.timeline();
       tl.fromTo(".hero-title", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power4.out", delay: 0.2 })
         .fromTo(".hero-desc", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, "-=0.6")
-        .fromTo(".cta-group", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.8");
 
-      // 2. STAGGER REVEAL (How It Works)
-      gsap.utils.toArray(".reveal-section").forEach((section) => {
-        gsap.fromTo(section.querySelectorAll(".reveal-item"), 
-          { y: 50, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: section,
-              start: "top 80%",
-            },
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power3.out",
-          }
-        );
-      });
 
       // 3. BENTO GRID ANIMATION (About Section)
       gsap.fromTo(".bento-card", 
@@ -60,10 +42,10 @@ export default function LandingPage() {
 
   return (
     <div ref={container} className="text-black font-sans selection:bg-appBlob selection:text-black">
-      <HeroSection />
-      <AboutSection />
-      <HowItWorksSection />
-      <CTASection />
+      <Hero />
+      <About />
+      <HowItWorks />
+      <SocialProofSubscribe />
     </div>
   );
 }
