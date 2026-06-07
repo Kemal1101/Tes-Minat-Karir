@@ -155,17 +155,19 @@ export default function Test({ onFinish }) {
     return (
       <div className="min-h-screen flex flex-col bg-bg-light">
         <Navbar />
-        <div className="flex-1 flex flex-col items-center justify-center px-4">
-          <div className="relative w-24 h-24 mb-8">
-            <div className="absolute inset-0 bg-gradient-to-r from-accent to-saffron rounded-full animate-pulse" />
-            <div className="absolute inset-1 bg-bg-light rounded-full" />
-            <div
-              className="absolute inset-0 rounded-full animate-spin"
-              style={{ background: 'conic-gradient(from 0deg, #854836, #F5B553, #854836)', opacity: 0.7 }}
-            />
+        <div className="flex-1 flex items-center justify-center px-4 py-8 md:py-12">
+          <div className="w-full max-w-2xl bg-white rounded-3xl shadow-lg-custom p-8 md:p-10 flex flex-col items-center justify-center min-h-[400px] animate-fade-in">
+            <div className="relative w-24 h-24 mb-8">
+              <div className="absolute inset-0 bg-gradient-to-r from-accent to-saffron rounded-full animate-pulse" />
+              <div className="absolute inset-1 bg-white rounded-full" />
+              <div
+                className="absolute inset-0 rounded-full animate-spin"
+                style={{ background: 'conic-gradient(from 0deg, #854836, #F5B553, #854836)', opacity: 0.7 }}
+              />
+            </div>
+            <h2 className="text-2xl font-poppins font-bold text-accent text-center">Menganalisis hasil...</h2>
+            <p className="text-gray-500 mt-2 font-inter">Harap tunggu sebentar</p>
           </div>
-          <h2 className="text-2xl font-poppins font-bold text-accent text-center">Menganalisis hasil...</h2>
-          <p className="text-gray-500 mt-2 font-inter">Harap tunggu sebentar</p>
         </div>
       </div>
     );
