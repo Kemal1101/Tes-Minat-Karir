@@ -10,7 +10,6 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
   const [activeTab, setActiveTab] = useState("login"); // "login" | "register"
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
@@ -109,47 +108,20 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
       localStorage.setItem("token", response.access_token);
       
       setError("");
-      setShowSuccessPopup(true);
       setRegisterData({ nama_lengkap: "", username: "", password: "" });
       
-      // Auto close success popup and redirect after 2 seconds
-      setTimeout(() => {
-        setShowSuccessPopup(false);
-        handleClose();
-        if (onSuccess) {
-          onSuccess(response);
-        } else {
-          navigate("/dashboard");
-        }
-      }, 2000);
+      handleClose();
+      if (onSuccess) {
+        onSuccess(response);
+      } else {
+        navigate("/dashboard");
+      }
     } catch (err) {
       setError(err.message || "Registrasi gagal. Silakan coba lagi.");
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (showSuccessPopup) {
-      gsap.fromTo(
-        ".success-popup-overlay",
-        { opacity: 0 },
-        { opacity: 1, duration: 0.3, ease: "power2.out" }
-      );
-      gsap.fromTo(
-        ".success-popup-content",
-        { y: 30, opacity: 0, scale: 0.9 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 0.4,
-          ease: "back.out(1.2)",
-          delay: 0.1,
-        }
-      );
-    }
-  }, [showSuccessPopup]);
 
   const modalContent = (
     <div className="auth-modal-overlay fixed inset-0 z-[9999] flex items-center justify-center bg-gray-900/20 backdrop-blur-md p-4 sm:p-6 opacity-0 will-change-opacity transform-gpu">
@@ -364,61 +336,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
     </div>
   );
 
-  const successPopupContent = showSuccessPopup && (
-    <div className="success-popup-overlay fixed inset-0 z-[10000] flex items-center justify-center backdrop-blur-md opacity-0">
-      <div className="success-popup-content relative w-full max-w-sm mx-4 bg-white rounded-[2.5rem] p-8 sm:p-10 shadow-[0_32px_64px_rgba(0,0,0,0.2)] text-center opacity-0 will-change-transform">
-        {/* Success Icon */}
-        <div className="mb-6 flex justify-center">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center animate-pulse">
-            <svg
-              className="w-10 h-10 text-green-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </div>
-        </div>
-
-        {/* Title */}
-        <h3 className="text-2xl font-extrabold text-black mb-2 tracking-tight">
-          Berhasil Mendaftar!
-        </h3>
-
-        {/* Message */}
-        <p className="text-sm text-gray-600 mb-8 leading-relaxed">
-          Silahkan login menggunakan akun Anda untuk melanjutkan perjalanan eksplorasi karir.
-        </p>
-
-        {/* Action Button */}
-        <button
-          onClick={() => {
-            setShowSuccessPopup(false);
-            setActiveTab("login");
-          }}
-          className="w-full bg-appAccent text-white py-3.5 rounded-full text-sm font-semibold transition-all hover:shadow-[0_4px_12px_rgba(133,72,54,0.25)] hover:-translate-y-0.5"
-        >
-          Lanjut ke Login
-        </button>
-
-        {/* Auto-close indicator */}
-        <p className="text-xs text-gray-400 mt-6">
-          Jendela ini akan tertutup otomatis dalam beberapa detik
-        </p>
-      </div>
-    </div>
-  );
-
   return (
     <>
       {isOpen && createPortal(modalContent, document.body)}
-      {successPopupContent && createPortal(successPopupContent, document.body)}
     </>
   );
 }

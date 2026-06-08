@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "../../lib/api";
 import { Radar } from "react-chartjs-2";
+import AuthModal from "../../components/shared/AuthModal";
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -41,6 +42,7 @@ export default function Result() {
   const navigate = useNavigate();
   const [showAllCareers, setShowAllCareers] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const hasSavedRef = useRef(false);
   const apiResult = location.state?.apiResult;
 
@@ -73,39 +75,55 @@ export default function Result() {
   const visibleCareers = showAllCareers ? recommendations : recommendations.slice(0, 5);
   const rankingMethod = apiResult.metode_perankingan || apiResult.ranking_method || "SAW";
 
-  // Save result to server once when arriving from Test page (dedupe using sessionStorage)
-  useEffect(() => {
+  const saveResultToBackend = async () => {
     if (!apiResult || hasSavedRef.current) return;
-
     try {
       const key = 'last_saved_result';
       const hollandCodeToSave = apiResult.kode_holland || apiResult.holland_code || hollandCode;
       const resultJsonToSave = buildHistoryResultJson(apiResult);
       const payloadStr = JSON.stringify({ hollandCodeToSave, result_json: resultJsonToSave });
       const prev = sessionStorage.getItem(key);
-      if (prev === payloadStr) return; // already saved in this session
-
-      if (!hollandCodeToSave) {
-        console.error('Tidak ada holland_code/kode_holland untuk disimpan ke history.');
-        return;
+      if (prev === payloadStr) {
+        hasSavedRef.current = true;
+        return; // already saved
       }
+
+      if (!hollandCodeToSave) return;
 
       hasSavedRef.current = true;
       setIsSaving(true);
-      api.saveTestResult({
+      await api.saveTestResult({
         holland_code: hollandCodeToSave,
         result_json: resultJsonToSave,
-      }).then(() => {
-        sessionStorage.setItem(key, payloadStr);
-      }).catch((err) => {
-        console.error('Gagal menyimpan hasil tes:', err);
-        hasSavedRef.current = false;
-      }).finally(() => setIsSaving(false));
+      });
+      sessionStorage.setItem(key, payloadStr);
     } catch (err) {
-      console.error('Error saat menyimpan hasil:', err);
+      console.error('Gagal menyimpan hasil tes:', err);
       hasSavedRef.current = false;
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  useEffect(() => {
+    // Only auto-save if user is logged in
+    if (localStorage.getItem("token")) {
+      saveResultToBackend();
     }
   }, [apiResult, hollandCode]);
+
+  const handleSaveTest = () => {
+    if (!localStorage.getItem("token")) {
+      setIsAuthModalOpen(true);
+    } else {
+      saveResultToBackend();
+    }
+  };
+
+  const handleAuthSuccess = async () => {
+    setIsAuthModalOpen(false);
+    await saveResultToBackend();
+  };
 
   const radarData = useMemo(() => ({
     labels: sorted.map(([code]) => riasecData[code]?.name || code),
@@ -158,19 +176,35 @@ export default function Result() {
               Tes diselesaikan pada {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-3">
             <button
-              onClick={() => navigate('/dashboard')}
+              onClick={() => navigate('/')}
               className="px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-lg font-medium transition-all hover:scale-105 shadow-sm"
             >
-              Kembali ke Beranda
+              Ke Landing Page
             </button>
+            {localStorage.getItem("token") && (
+              <button
+                onClick={() => navigate('/dashboard')}
+                className="px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-lg font-medium transition-all hover:scale-105 shadow-sm"
+              >
+                Ke Dashboard
+              </button>
+            )}
             <button 
               onClick={() => navigate('/test')}
               className="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-xl font-bold transition-all hover:scale-105 shadow-sm"
             >
-              {isSaving ? 'Menyimpan...' : 'Ulangi Tes'}
+              Ulangi Tes
             </button>
+            {!localStorage.getItem("token") && !hasSavedRef.current && (
+              <button 
+                onClick={handleSaveTest}
+                className="px-6 py-3 bg-white text-appAccent rounded-xl font-bold transition-all hover:scale-105 shadow-sm"
+              >
+                {isSaving ? 'Menyimpan...' : 'Simpan Tes'}
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -328,6 +362,11 @@ export default function Result() {
         )}
 
       </div>
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onSuccess={handleAuthSuccess}
+      />
     </div>
   );
 }

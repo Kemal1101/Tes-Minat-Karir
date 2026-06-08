@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../lib/api';
 import { Radar } from 'react-chartjs-2';
+import { X } from 'lucide-react';
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -112,7 +113,7 @@ function ResultDetailModal({ isOpen, onClose, result }) {
   const rankingMethod = result?.result_json?.ranking_method || 'SAW';
   const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
   const hollandCode = sorted.slice(0, 3).map(([code]) => code).join('');
-  
+
   const radarData = {
     labels: sorted.map(([code]) => riasecData[code] ? riasecData[code].name : code),
     datasets: [
@@ -133,9 +134,9 @@ function ResultDetailModal({ isOpen, onClose, result }) {
 
   const radarOptions = {
     scales: {
-      r: { 
-        min: 0, 
-        max: 100, 
+      r: {
+        min: 0,
+        max: 100,
         ticks: { stepSize: 20, display: false },
         grid: { color: 'rgba(0, 0, 0, 0.05)' },
         angleLines: { color: 'rgba(0, 0, 0, 0.05)' },
@@ -154,28 +155,27 @@ function ResultDetailModal({ isOpen, onClose, result }) {
       <div className="absolute inset-0" onClick={onClose}></div>
 
       <div className="relative w-full max-w-3xl max-h-[calc(100dvh-1.5rem)] sm:max-h-[90vh] overflow-y-auto overflow-x-hidden custom-scrollbar animate-slide-up touch-pan-y bg-white rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl" data-lenis-prevent data-lenis-prevent-wheel data-lenis-prevent-touch>
-        
+
         {/* Header - Sticky */}
         <div className="bg-gradient-to-r from-[#592d22] to-[#854836] p-5 sm:p-8 text-white relative min-w-0">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/3 blur-2xl pointer-events-none"></div>
-          <button 
-            onClick={onClose} 
-            className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
-          >
-            ✕
+
+          <button onClick={onClose} className="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors">
+            <X size={20} className="text-white" />
           </button>
+
           <div className="pr-12 min-w-0">
             <h2 className="text-2xl sm:text-3xl font-poppins font-black mb-1">Hasil Eksplorasi Karir</h2>
             <p className="text-white/80 font-inter text-sm flex items-center gap-2">
               <span className="inline-block w-2 h-2 rounded-full bg-green-400"></span>
-              Selesai pada {new Date(result.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute:'2-digit' })}
+              Selesai pada {new Date(result.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
             </p>
           </div>
         </div>
-        
+
         {/* Body - Scrollable */}
         <div className="p-4 sm:p-8 bg-[#fcfbf9] min-w-0 overflow-x-hidden">
-          
+
           {/* Top Section: Holland Code & Chart */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-10 min-w-0">
             {/* Left: Holland Code */}
@@ -190,7 +190,7 @@ function ResultDetailModal({ isOpen, onClose, result }) {
                 Kombinasi 3 tipe dominan ini mencerminkan preferensi utama Anda dalam berinteraksi, memecahkan masalah, dan bekerja dalam lingkungan.
               </p>
             </div>
-            
+
             {/* Right: Radar Chart */}
             <div className="bg-white p-4 sm:p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center justify-center min-h-[240px] min-w-0">
               <div className="w-full h-full max-w-[220px] sm:max-w-[250px] max-h-[220px] sm:max-h-[250px]">
@@ -198,7 +198,7 @@ function ResultDetailModal({ isOpen, onClose, result }) {
               </div>
             </div>
           </div>
-          
+
           {/* Dominant Types (Top 3) */}
           <div className="mb-8">
             <h3 className="text-xl font-poppins font-bold text-text-primary mb-4 flex items-center gap-2">
@@ -219,15 +219,15 @@ function ResultDetailModal({ isOpen, onClose, result }) {
                         </h4>
                         <span className="font-inter font-bold text-accent">{Math.round(score)}%</span>
                       </div>
-                      
+
                       {/* Progress Bar */}
                       <div className="w-full bg-gray-100 rounded-full h-2.5 mb-3 overflow-hidden">
-                        <div 
+                        <div
                           className={`h-2.5 rounded-full transition-all duration-1000 ease-out ${index === 0 ? 'bg-saffron' : 'bg-accent'}`}
                           style={{ width: `${score}%` }}
                         ></div>
                       </div>
-                      
+
                       <p className="text-sm font-inter text-gray-600 leading-relaxed">
                         {riasecData[code]?.description}
                       </p>
@@ -275,13 +275,13 @@ function ResultDetailModal({ isOpen, onClose, result }) {
                 </span>
               </div>
 
-              <div className="space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {recommendations.map((career, index) => {
                   const detail = getRecommendationDetail(career);
 
                   return (
-                    <div key={`${detail.jobName}-${index}`} className="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-3">
-                      <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full font-poppins font-bold text-white text-xs ${index === 0 ? 'bg-yellow-400' : index === 1 ? 'bg-gray-400' : index === 2 ? 'bg-amber-700' : 'bg-accent'}`}>
+                    <div key={`${detail.jobName}-${index}`} className="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-3 shadow-sm">
+                      <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-lg font-poppins font-bold text-white text-xs ${index === 0 ? 'bg-gradient-to-br from-yellow-300 to-yellow-500' : index === 1 ? 'bg-gradient-to-br from-gray-300 to-gray-400' : index === 2 ? 'bg-gradient-to-br from-amber-600 to-amber-700' : 'bg-gradient-to-br from-accent/80 to-accent'}`}>
                         #{index + 1}
                       </div>
                       <div className="min-w-0 flex-1">
@@ -309,10 +309,10 @@ function ResultDetailModal({ isOpen, onClose, result }) {
           )}
 
         </div>
-        
+
         {/* Footer - Sticky */}
-        <div className="bg-white border-t border-gray-100 p-5 sm:p-6 flex justify-end">
-          <button 
+        <div className="bg-white border-t border-gray-100 p-5 sm:p-6 flex flex-col-reverse sm:flex-row justify-end gap-3">
+          <button
             onClick={onClose}
             className="px-8 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-poppins font-bold transition-colors w-full sm:w-auto"
           >
@@ -321,9 +321,10 @@ function ResultDetailModal({ isOpen, onClose, result }) {
         </div>
 
       </div>
-      
+
       {/* CSS untuk custom scrollbar khusus modal ini */}
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .custom-scrollbar {
           scrollbar-width: thin;
           overscroll-behavior-y: contain;
@@ -354,6 +355,11 @@ export default function DashboardPage() {
   const [username, setUsername] = useState("");
   const [selectedResult, setSelectedResult] = useState(null);
 
+  // States for dropdown and pagination
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 5;
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -364,11 +370,11 @@ export default function DashboardPage() {
     try {
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const payload = JSON.parse(decodeURIComponent(window.atob(base64).split('').map(function(c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      const payload = JSON.parse(decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join('')));
-      
-      setUsername(payload.sub || "User");
+
+      setUsername(payload.sub ? payload.sub.split(" ")[0] : "User");
     } catch (e) {
       console.error("Token invalid", e);
     }
@@ -376,7 +382,10 @@ export default function DashboardPage() {
     const fetchHistory = async () => {
       try {
         const data = await api.getUserHistory();
-        setHistory((data || []).map(normalizeHistoryItem));
+        const sortedHistory = (data || [])
+          .map(normalizeHistoryItem)
+          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        setHistory(sortedHistory);
       } catch (err) {
         console.error("Gagal mengambil riwayat:", err);
       } finally {
@@ -406,19 +415,30 @@ export default function DashboardPage() {
             <span className="cursor-pointer hover:text-accent" onClick={() => navigate("/test")}>Mulai Tes</span>
           </div>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-full bg-accent text-white flex items-center justify-center font-poppins font-bold">
+        <div className="flex items-center gap-4 relative">
+          <div
+            onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+            className="w-10 h-10 rounded-full bg-accent text-white flex items-center justify-center font-poppins font-bold cursor-pointer hover:shadow-md transition-shadow"
+          >
             {username.charAt(0).toUpperCase()}
           </div>
-          <button 
-            onClick={() => {
-              localStorage.removeItem("token");
-              navigate("/");
-            }}
-            className="text-sm font-inter text-gray-500 hover:text-red-500"
-          >
-            Logout
-          </button>
+
+          {isProfileMenuOpen && (
+            <div className="absolute top-14 right-0 bg-white border border-gray-100 rounded-xl shadow-lg py-2 w-48 z-50 animate-fade-in">
+              <div className="px-4 py-2 border-b border-gray-50 mb-1">
+                <p className="text-sm font-poppins font-bold text-gray-800">{username}</p>
+              </div>
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/");
+                }}
+                className="w-full text-left px-4 py-2 text-sm font-inter text-red-500 hover:bg-red-50 transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </nav>
 
@@ -448,7 +468,7 @@ export default function DashboardPage() {
                 <p className="font-inter text-white/80 mb-8 max-w-md">
                   Hanya butuh waktu sekitar 15 menit untuk memetakan kepribadian Anda ke dalam 6 dimensi Holland yang akurat.
                 </p>
-                <button 
+                <button
                   onClick={() => navigate("/test")}
                   className="bg-white text-accent font-poppins font-bold py-3 px-8 rounded-full hover:shadow-lg hover:scale-105 transition-all flex items-center gap-2"
                 >
@@ -478,22 +498,87 @@ export default function DashboardPage() {
         ) : (
           /* State Ada Riwayat */
           <div>
+            {/* Widget Ringkasan Hasil Terakhir */}
+            <div className="mb-12">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                <h2 className="text-2xl font-poppins font-bold text-text-primary">Hasil Tes Terakhir</h2>
+                <button
+                  onClick={() => navigate("/test")}
+                  className="bg-accent hover:bg-accent-dark text-white px-6 py-2.5 rounded-full font-poppins font-bold transition-colors shadow-sm flex items-center gap-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  Mulai Tes Baru
+                </button>
+              </div>
+              
+              {(() => {
+                const latestResult = history[0];
+                const sortedScores = Object.entries(latestResult?.result_json?.scores || {}).sort((a, b) => b[1] - a[1]);
+                const top3 = sortedScores.slice(0, 3);
+                const codeString = top3.map(s => s[0]).join('');
+                
+                return (
+                  <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-sm relative overflow-hidden flex flex-col md:flex-row gap-8 items-center">
+                    <div className="absolute right-0 top-0 w-64 h-64 bg-saffron/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+                    
+                    <div className="flex-shrink-0 text-center md:text-left z-10">
+                      <div className="text-sm font-inter font-bold text-gray-400 tracking-widest uppercase mb-2">Tipe Dominan Anda</div>
+                      <div className="text-5xl font-poppins font-black text-accent tracking-tight flex gap-1 mb-2 justify-center md:justify-start">
+                        {codeString.split('').map((letter, i) => (
+                          <span key={i} className="inline-block px-1.5">{letter}</span>
+                        ))}
+                      </div>
+                      <div className="text-sm font-inter text-gray-500 mt-2 bg-gray-50 px-3 py-1.5 rounded-lg inline-block">
+                        Diselesaikan pada {new Date(latestResult.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      </div>
+                    </div>
+
+                    <div className="flex-1 w-full z-10">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        {top3.map(([code, score], idx) => (
+                          <div key={code} className="bg-gray-50 rounded-2xl p-4 border border-gray-100 relative overflow-hidden">
+                            <div className={`absolute top-0 left-0 w-1 h-full ${idx === 0 ? 'bg-saffron' : 'bg-accent/40'}`}></div>
+                            <div className="flex justify-between items-center mb-2">
+                              <span className="font-poppins font-bold text-gray-800">{riasecData[code]?.name}</span>
+                              <span className="text-sm font-bold text-accent">{Math.round(score)}%</span>
+                            </div>
+                            <div className="w-full bg-gray-200 rounded-full h-1.5">
+                              <div className={`h-1.5 rounded-full ${idx === 0 ? 'bg-saffron' : 'bg-accent'}`} style={{ width: `${score}%` }}></div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="flex-shrink-0 z-10 w-full md:w-auto text-center">
+                      <button
+                        onClick={() => setSelectedResult(latestResult)}
+                        className="w-full md:w-auto bg-white border-2 border-accent text-accent px-6 py-2.5 rounded-xl font-poppins font-bold hover:bg-accent/5 transition-colors"
+                      >
+                        Lihat Detail Penuh
+                      </button>
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-poppins font-bold text-text-primary">Riwayat Asesmen</h2>
               <div className="bg-saffron/20 text-accent px-4 py-2 rounded-full font-inter text-sm font-semibold flex items-center gap-2">
-                ⏱ {history.length} Sesi Tes Tersimpan
+                ⏱ {history.length} Sesi Tersimpan
               </div>
             </div>
 
             <div className="space-y-4">
-              {history.map((item) => {
+              {history.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE).map((item) => {
                 const date = new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
                 const itemScores = item.result_json?.scores || {};
                 // Get top 2 scores
-                const sortedScores = Object.entries(itemScores).sort((a,b) => b[1] - a[1]);
+                const sortedScores = Object.entries(itemScores).sort((a, b) => b[1] - a[1]);
                 const top1 = sortedScores[0];
                 const top2 = sortedScores[1];
-                
+
                 return (
                   <div key={item.id} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6 hover:border-accent/30 transition-colors">
                     <div className="flex items-center gap-4">
@@ -523,7 +608,7 @@ export default function DashboardPage() {
                           <span className="text-xs font-inter text-gray-400">Data skor tidak tersedia</span>
                         )}
                       </div>
-                      <button 
+                      <button
                         onClick={() => setSelectedResult(item)}
                         className="bg-gradient-to-r from-accent to-accent-dark text-white px-6 py-2.5 rounded-xl font-inter font-semibold text-sm hover:shadow-md transition-all whitespace-nowrap"
                       >
@@ -534,23 +619,59 @@ export default function DashboardPage() {
                 );
               })}
             </div>
-            
-            <div className="mt-12 text-center">
-              <button 
-                onClick={() => navigate("/test")}
-                className="bg-white border-2 border-accent text-accent px-8 py-3 rounded-full font-poppins font-bold hover:bg-accent/5 transition-colors"
-              >
-                + Lakukan Tes Baru
-              </button>
+
+            {history.length > ITEMS_PER_PAGE && (
+              <div className="flex justify-center items-center gap-4 mt-8">
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-inter font-medium disabled:opacity-50 hover:bg-gray-50 transition-colors"
+                >
+                  Sebelumnya
+                </button>
+                <span className="text-sm font-inter font-medium text-gray-600">
+                  Halaman {currentPage} dari {Math.ceil(history.length / ITEMS_PER_PAGE)}
+                </span>
+                <button
+                  onClick={() => setCurrentPage(p => Math.min(Math.ceil(history.length / ITEMS_PER_PAGE), p + 1))}
+                  disabled={currentPage === Math.ceil(history.length / ITEMS_PER_PAGE)}
+                  className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-inter font-medium disabled:opacity-50 hover:bg-gray-50 transition-colors"
+                >
+                  Selanjutnya
+                </button>
+              </div>
+            )}
+
+            <div className="mt-16">
+              <h2 className="text-2xl font-poppins font-bold text-text-primary mb-6">Pusat Edukasi RIASEC</h2>
+              <div className="space-y-4">
+                {Object.entries(riasecData).map(([code, data]) => (
+                  <details key={code} className="group bg-white border border-gray-200 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                    <summary className="flex items-center justify-between p-5 font-poppins font-semibold text-text-primary cursor-pointer hover:bg-gray-50 rounded-2xl outline-none">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center font-bold text-lg">{code}</div>
+                        <span className="text-lg">{data.name}</span>
+                      </div>
+                      <span className="transition duration-300 group-open:rotate-180 text-gray-400">
+                        <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                      </span>
+                    </summary>
+                    <div className="p-5 pt-0 text-gray-600 font-inter leading-relaxed">
+                      {data.description}
+                    </div>
+                  </details>
+                ))}
+              </div>
             </div>
+
           </div>
         )}
       </main>
 
-      <ResultDetailModal 
-        isOpen={!!selectedResult} 
-        onClose={() => setSelectedResult(null)} 
-        result={selectedResult} 
+      <ResultDetailModal
+        isOpen={!!selectedResult}
+        onClose={() => setSelectedResult(null)}
+        result={selectedResult}
       />
     </div>
   );

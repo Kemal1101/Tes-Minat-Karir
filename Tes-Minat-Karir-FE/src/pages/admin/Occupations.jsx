@@ -44,7 +44,6 @@ const emptyForm = {
   onet: "",
   holland: "I",
   sector: "Teknologi Informasi",
-  saw: "0.80",
   desc: "",
 };
 
@@ -63,7 +62,6 @@ export default function Occupations() {
         onet: o.code || "",
         holland: o.interest_code || "I",
         sector: o.job_zone || "Teknologi Informasi",
-        saw: 0.80,
         desc: ""
       }));
     }
@@ -124,7 +122,6 @@ export default function Occupations() {
       onet: o.onet,
       holland: o.holland,
       sector: o.sector,
-      saw: o.saw.toString(),
       desc: o.desc || "",
     });
     setFormOpen(true);
@@ -292,7 +289,6 @@ export default function Occupations() {
                 <th className="p-4 text-left">O*NET</th>
                 <th className="p-4 text-left">Tipe</th>
                 <th className="p-4 text-left">Sektor</th>
-                <th className="p-4 text-left">SAW</th>
                 <th className="p-4 text-left">Aksi</th>
               </tr>
             </thead>
@@ -305,7 +301,6 @@ export default function Occupations() {
                   <td className="p-4"><div className="h-4 bg-gray-200 rounded w-16"></div></td>
                   <td className="p-4"><div className="h-6 w-6 bg-gray-200 rounded-full"></div></td>
                   <td className="p-4"><div className="h-4 bg-gray-200 rounded w-1/2"></div></td>
-                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-8"></div></td>
                   <td className="p-4"><div className="h-8 bg-gray-200 rounded w-24"></div></td>
                 </tr>
               ))}
@@ -335,8 +330,6 @@ export default function Occupations() {
                 </td>
 
                 <td className="p-4 text-gray-500 max-w-[150px] truncate" title={o.sector}>{o.sector}</td>
-
-                <td className="p-4 font-bold">{(o.saw || 0).toFixed(2)}</td>
 
                 <td className="p-4">
                   <div className="flex gap-2">
@@ -393,16 +386,6 @@ export default function Occupations() {
               <option key={s}>{s}</option>
             ))}
           </Select>
-        </FormGroup>
-
-        <FormGroup label="SAW">
-          <Input
-            type="number"
-            value={form.saw}
-            onChange={e => set("saw")(e.target.value)}
-            disabled
-            title="SAW constant in backend"
-          />
         </FormGroup>
 
         <FormGroup label="Deskripsi">

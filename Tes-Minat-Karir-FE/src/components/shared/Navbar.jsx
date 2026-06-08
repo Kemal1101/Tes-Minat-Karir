@@ -83,7 +83,13 @@ export default function Navbar() {
         </a>
         {/* Profile Placeholder */}
         <div
-          onClick={() => setIsAuthModalOpen(true)}
+          onClick={() => {
+            if (localStorage.getItem("token")) {
+              navigate("/dashboard");
+            } else {
+              setIsAuthModalOpen(true);
+            }
+          }}
           className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/50 backdrop-blur-sm border-2 border-white/60 shadow-sm overflow-hidden flex items-center justify-center cursor-pointer hover:scale-105 transition-transform ml-2"
         >
           <svg
