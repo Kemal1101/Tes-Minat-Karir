@@ -114,7 +114,9 @@ def is_valid_interest_code(code: str) -> bool:
     return all(c in valid_chars for c in code)
 
 def likert_to_cf(nilai: int) -> float:
-    konversi = {5: 1.0, 4: 0.8, 3: 0.4, 2: 0.2, 1: 0.0}
+    # REVISI AUDIT MYCIN: Skala dengan Negative Evidence
+    # Mencegah bias "snowball" pada jawaban netral/negatif
+    konversi = {5: 1.0, 4: 0.5, 3: 0.0, 2: -0.5, 1: -1.0}
     return konversi.get(nilai, 0.0)
 
 def calculate_cf_and_holland(jawaban: List[int]) -> Tuple[Dict[str, float], str]:
@@ -140,7 +142,16 @@ def calculate_cf_and_holland(jawaban: List[int]) -> Tuple[Dict[str, float], str]
             continue
         cf_old = list_cf[0]
         for cf_new in list_cf[1:]:
-            cf_old = cf_old + cf_new * (1 - cf_old)
+            # Rumus Standar MYCIN dengan dukungan Evidence Negatif
+            if cf_old >= 0 and cf_new >= 0:
+                cf_old = cf_old + cf_new * (1 - cf_old)
+            elif cf_old < 0 and cf_new < 0:
+                cf_old = cf_old + cf_new * (1 + cf_old)
+            else:
+                # Mencegah division by zero jika cf_old dan cf_new saling meniadakan absolut
+                pembagi = 1 - min(abs(cf_old), abs(cf_new))
+                cf_old = (cf_old + cf_new) / pembagi if pembagi != 0 else 0.0
+                
         cf_final[kat] = round(cf_old * 100, 2)
 
     sorted_cf = sorted(cf_final.items(), key=lambda x: x[1], reverse=True)
@@ -227,12 +238,11 @@ def get_recommendations(kode_holland: str, target_job_zone: int) -> Tuple[List[D
     return rekomendasi, jobs_with_errors
 
 def calculate_saw(jawaban: List[int], cf_final: Dict[str, float], rekomendasi: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    # PERBAIKAN AUDIT POIN 7: Justifikasi Akademik Pembobotan
-    # W1 (Kesesuaian Holland) diberi bobot dominan (60%) karena merupakan core assessment.
-    # W2 (Kesesuaian Keyword/Title) diberi bobot minor (40%) karena hanya bersifat ekstraktif/heuristik.
-    # Pembobotan ini menggunakan metode Heuristic Judgment (pakar). 
-    W1 = 0.60
-    W2 = 0.40
+    # REVISI AUDIT 2: Penyesuaian Bobot SAW agar lebih rasional
+    # W1 (Kesesuaian Holland - Psikometri Inti) dominan (85%).
+    # W2 (Kesesuaian Keyword/Title - Heuristik Tambahan) diturunkan bobotnya menjadi (15%) agar tidak bias.
+    W1 = 0.85
+    W2 = 0.15
     questions = cache.questions
 
     keyword_scores = {}
@@ -262,36 +272,40 @@ def calculate_saw(jawaban: List[int], cf_final: Dict[str, float], rekomendasi: L
 
         c2_score = 0.0
         job_title = str(job.get('Occupation', '')).lower()
+        matched_keywords = 0
         for kata, poin in keyword_scores.items():
             pattern = keyword_patterns[kata]
             if pattern.search(job_title):
                 c2_score += float(poin)
+                matched_keywords += 1
                 
-        matriks_keputusan.append({
-            "job": job,
-            "C1": c1_score,
-            "C2": c2_score
-        })
+        # REVISI AUDIT 3: Mencegah Double Counting pada C2
+        # Rata-ratakan skor keyword jika ada lebih dari 1 match, agar kata majemuk tidak over-powered
+        if matched_keywords > 0:
+            c2_score = c2_score / matched_keywords
+                
+        # REVISI AUDIT 1: Penyebut C1 Dinamis berdasarkan panjang kode profesi
+        # Mencegah penalti pada profesi yang kodenya < 3 huruf
+        max_possible_c1 = sum(100.0 * position_weights[i] for i in range(len(top_letters)))
+        penyebut_c1 = max_possible_c1 if max_possible_c1 > 0 else 100.0
+        
+        # REVISI AUDIT 3: Penyebut C2 disesuaikan dengan skala Likert maksimum (5.0)
+        penyebut_c2 = 5.0  
 
-    # BUG FIX: Normalisasi SAW menggunakan theoretical maximum (absolute score)
-    penyebut_c1 = 225.0 # Max: 100*1 + 100*0.75 + 100*0.5
-    penyebut_c2 = 15.0  # Max yang disetujui (Capping)
-
-    hasil_akhir_saw = []
-    for item in matriks_keputusan:
-        r1 = min(item["C1"] / penyebut_c1, 1.0)
-        r2 = min(item["C2"] / penyebut_c2, 1.0)
+        r1 = min(c1_score / penyebut_c1, 1.0)
+        r1 = max(0.0, r1) # Cegah minus jika CF Holland user negatif
+        r2 = min(c2_score / penyebut_c2, 1.0)
         
         vi = (r1 * W1) + (r2 * W2)
         skor_saw_persen = round(vi * 100, 2)
 
-        job_data = dict(item["job"])
+        job_data = dict(job)
         job_data["Skor_SAW"] = f"{skor_saw_persen}%"
 
-        hasil_akhir_saw.append({
+        matriks_keputusan.append({
             "data": job_data,
             "skor": skor_saw_persen
         })
 
-    hasil_akhir_saw.sort(key=lambda x: x["skor"], reverse=True)
-    return [item["data"] for item in hasil_akhir_saw[:10]]
+    matriks_keputusan.sort(key=lambda x: x["skor"], reverse=True)
+    return [item["data"] for item in matriks_keputusan[:10]]
