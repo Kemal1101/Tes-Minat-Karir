@@ -12,12 +12,18 @@ export default function Navbar() {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
-      gsap.from(".nav-bar", {
-        y: -50,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-      });
+      gsap.fromTo(".nav-bar",
+        {
+          y: -50,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+        }
+      );
     });
     return () => ctx.revert();
   }, []);

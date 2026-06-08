@@ -13,14 +13,20 @@ export default function Footer() {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
-      gsap.from(".footer-item", {
-        scrollTrigger: { trigger: "#footer", start: "top 90%" },
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out",
-      });
+      gsap.fromTo(".footer-item",
+        {
+          y: 30,
+          opacity: 0,
+        },
+        {
+          scrollTrigger: { trigger: "#footer", start: "top 90%" },
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+        }
+      );
     });
     return () => ctx.revert();
   }, []);

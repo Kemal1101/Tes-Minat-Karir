@@ -1,12 +1,12 @@
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="reveal-section min-h-[100dvh] flex flex-col justify-center items-center py-12 px-4 md:px-8">
+    <section id="how-it-works" className="reveal-section flex flex-col justify-center items-center py-20 md:py-32 px-4 md:px-8">
       <div className="w-full max-w-7xl mx-auto">
         <div className="text-center mb-12 md:mb-16 reveal-item">
           <h2 className="text-3xl md:text-5xl font-semibold tracking-tight mb-4 text-black">
             Bagaimana Sistem Bekerja
           </h2>
-          <p className="text-base md:text-lg text-gray-600 font-medium">
+          <p className="text-base md:text-lg text-gray-800 font-medium">
             Tiga langkah mudah menuju karir impian Anda.
           </p>
         </div>
@@ -39,7 +39,7 @@ export default function HowItWorks() {
               <h3 className="text-xl md:text-2xl font-semibold mb-3 text-black">
                 {item.title}
               </h3>
-              <p className="text-sm md:text-base text-gray-600 leading-relaxed font-medium">
+              <p className="text-sm md:text-base text-gray-800 leading-relaxed font-medium">
                 {item.desc}
               </p>
             </div>
