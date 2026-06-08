@@ -23,12 +23,12 @@ ChartJS.register(
 );
 
 const riasecData = {
-  R: { name: "Realistic", description: "Tipe praktis yang menyukai aktivitas fisik, bekerja dengan mesin, alat, atau di luar ruangan. Suka membangun sesuatu yang nyata." },
-  I: { name: "Investigative", description: "Pemikir analitis yang suka memecahkan masalah kompleks, observasi, dan mempelajari konsep abstrak atau saintifik." },
-  A: { name: "Artistic", description: "Jiwa kreatif yang menyukai kebebasan berekspresi. Suka lingkungan yang tidak terstruktur untuk seni, musik, atau tulisan." },
-  S: { name: "Social", description: "Pribadi yang senang membantu, mengajar, dan membimbing orang lain. Punya empati tinggi dan komunikator yang baik." },
+  R: { name: "Realistik", description: "Tipe praktis yang menyukai aktivitas fisik, bekerja dengan mesin, alat, atau di luar ruangan. Suka membangun sesuatu yang nyata." },
+  I: { name: "Investigatif", description: "Pemikir analitis yang suka memecahkan masalah kompleks, observasi, dan mempelajari konsep abstrak atau saintifik." },
+  A: { name: "Artistik", description: "Jiwa kreatif yang menyukai kebebasan berekspresi. Suka lingkungan yang tidak terstruktur untuk seni, musik, atau tulisan." },
+  S: { name: "Sosial", description: "Pribadi yang senang membantu, mengajar, dan membimbing orang lain. Punya empati tinggi dan komunikator yang baik." },
   E: { name: "Enterprising", description: "Pribadi yang ambisius dan persuasif. Suka memimpin, mengambil risiko, dan mengelola bisnis/proyek." },
-  C: { name: "Conventional", description: "Tipe yang terorganisir dan teliti. Menyukai keteraturan, pengolahan data, akurasi, dan sistem terstruktur." }
+  C: { name: "Konvensional", description: "Tipe yang terorganisir dan teliti. Menyukai keteraturan, pengolahan data, akurasi, dan sistem terstruktur." }
 };
 
 const buildHistoryResultJson = (result) => ({
@@ -125,23 +125,26 @@ export default function Result() {
     await saveResultToBackend();
   };
 
-  const radarData = useMemo(() => ({
-    labels: sorted.map(([code]) => riasecData[code]?.name || code),
-    datasets: [
-      {
-        data: sorted.map(([, score]) => score),
-        backgroundColor: 'rgba(133,72,54,0.25)',
-        borderColor: '#854836',
-        borderWidth: 2.5,
-        pointBackgroundColor: '#F5B553',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: '#854836',
-        pointRadius: 4,
-        pointHoverRadius: 6,
-      }
-    ]
-  }), [sorted]);
+  const radarData = useMemo(() => {
+    const riasecOrder = ['R', 'I', 'A', 'S', 'E', 'C'];
+    return {
+      labels: riasecOrder.map((code) => riasecData[code]?.name || code),
+      datasets: [
+        {
+          data: riasecOrder.map((code) => Math.max(0, scores[code] || 0)),
+          backgroundColor: 'rgba(133,72,54,0.25)',
+          borderColor: '#854836',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#F5B553',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: '#854836',
+          pointRadius: 4,
+          pointHoverRadius: 6,
+        }
+      ]
+    };
+  }, [scores]);
 
   const radarOptions = useMemo(() => ({
     scales: {
@@ -258,7 +261,7 @@ export default function Result() {
                     <div className="w-full bg-gray-200 rounded-full h-3 mb-3 overflow-hidden shadow-inner flex">
                       <div 
                         className="h-full rounded-full transition-all duration-1000 ease-out bg-[#854836]"
-                        style={{ width: `${parseFloat(score)}%` }}
+                        style={{ width: `${Math.max(0, parseFloat(score))}%` }}
                       ></div>
                     </div>
                     
@@ -290,7 +293,7 @@ export default function Result() {
                   <span className="text-sm font-bold text-gray-400">{Math.round(score)}%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden flex">
-                  <div className="bg-gray-400 h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${parseFloat(score)}%` }}></div>
+                  <div className="bg-gray-400 h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${Math.max(0, parseFloat(score))}%` }}></div>
                 </div>
               </div>
             ))}
