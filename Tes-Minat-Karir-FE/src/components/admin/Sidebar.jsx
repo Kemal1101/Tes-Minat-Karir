@@ -108,10 +108,6 @@ export default function Sidebar() {
           <div style={leftContent}>👥 Daftar Pengguna</div>
         </NavLink>
 
-        <NavLink to="/admin/history" style={menuItem}>
-          <div style={leftContent}>📄 Test History</div>
-        </NavLink>
-
         <NavLink to="/admin/questions" style={menuItem}>
           <div style={leftContent}>❓ Pertanyaan</div>
         </NavLink>

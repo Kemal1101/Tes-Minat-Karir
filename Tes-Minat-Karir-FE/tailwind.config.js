@@ -8,8 +8,6 @@ export default {
       fontFamily: {
         sans: ['"Host Grotesk"', "sans-serif"],
         mono: ['"IBM Plex Mono"', "monospace"],
-        poppins: ['Poppins', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
       },
       colors: {
         border: "var(--border)",
@@ -45,7 +43,7 @@ export default {
           DEFAULT: "var(--card)",
           foreground: "var(--card-foreground)",
         },
-        appBg: "#F7F7F7",
+        appBg: "#F8F8F8",
         appAccent: "#854836",
         appBlob: "#F5B553",
         "bg-light": "var(--bg-light)",

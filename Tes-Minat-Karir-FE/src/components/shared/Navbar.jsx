@@ -12,12 +12,18 @@ export default function Navbar() {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
-      gsap.from(".nav-bar", {
-        y: -50,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-      });
+      gsap.fromTo(".nav-bar",
+        {
+          y: -50,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+        }
+      );
     });
     return () => ctx.revert();
   }, []);
@@ -25,13 +31,13 @@ export default function Navbar() {
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
 
-    // Jika tidak berada di halaman utama, navigasi ke beranda lalu scroll (dikelola oleh rute)
+    // Jika tidak berada di halaman utama, navigasi ke beranda lalu scroll
     if (location.pathname !== "/") {
       navigate("/");
       setTimeout(() => {
         const element = document.querySelector(targetId);
         if (element) element.scrollIntoView({ behavior: "smooth" });
-      }, 100); // Waktu jeda agar halaman ter-render
+      }, 100); 
       return;
     }
 
@@ -46,14 +52,14 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="nav-bar fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-4xl z-50 bg-white/70 backdrop-blur-xl border border-white/50 shadow-sm rounded-full flex justify-between items-center px-4 md:px-8 py-2.5 md:py-4 transition-all duration-300">
+    <nav className="nav-bar fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-4xl z-50 bg-white/40 backdrop-blur-xl border border-white/50 shadow-sm rounded-full flex justify-between items-center px-4 md:px-8 py-2.5 md:py-4 transition-all duration-300">
       <Link
         to="/"
-        className="font-extrabold text-lg md:text-2xl tracking-tight text-black hover:opacity-80 transition-opacity ml-1"
+        className="font-bold text-lg md:text-2xl tracking-tight text-black hover:opacity-80 transition-opacity ml-1"
       >
         RIASEC.
       </Link>
-      <div className="flex items-center gap-4 md:gap-8 font-semibold text-[11px] md:text-sm text-gray-800">
+      <div className="flex items-center gap-4 md:gap-8 font-medium text-[11px] md:text-sm text-gray-800">
         <a
           href="#hero"
           onClick={(e) => handleNavClick(e, "#hero")}
@@ -77,11 +83,17 @@ export default function Navbar() {
         </a>
         {/* Profile Placeholder */}
         <div
-          onClick={() => setIsAuthModalOpen(true)}
-          className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-gray-200 border-2 border-white shadow-sm overflow-hidden flex items-center justify-center cursor-pointer hover:scale-105 transition-transform ml-2"
+          onClick={() => {
+            if (localStorage.getItem("token")) {
+              navigate("/dashboard");
+            } else {
+              setIsAuthModalOpen(true);
+            }
+          }}
+          className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/50 backdrop-blur-sm border-2 border-white/60 shadow-sm overflow-hidden flex items-center justify-center cursor-pointer hover:scale-105 transition-transform ml-2"
         >
           <svg
-            className="w-5 h-5 text-gray-400"
+            className="w-5 h-5 text-gray-600"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
