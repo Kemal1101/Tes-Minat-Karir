@@ -46,6 +46,7 @@ export default function DaftarPengguna() {
   });
 
   const [search, setSearch] = useState("");
+  const [roleFilter, setRoleFilter] = useState("all"); // 'all' | 'admin' | 'user'
   const [page, setPage] = useState(1);
 
   const [formOpen, setFormOpen] = useState(false);
@@ -77,11 +78,22 @@ export default function DaftarPengguna() {
    }, []);
 
   // 🔍 Filter
-  const filtered = users.filter(u =>
-    `${u.nama_lengkap} ${u.username}`
+  const filtered = users.filter(u => {
+    const matchesSearch = `${u.nama_lengkap} ${u.username}`
       .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+      .includes(search.toLowerCase());
+    const matchesRole = roleFilter === "all" || u.role === roleFilter;
+    return matchesSearch && matchesRole;
+  });
+
+  const handleRoleFilterToggle = () => {
+    setRoleFilter(prev => {
+      if (prev === "all") return "admin";
+      if (prev === "admin") return "user";
+      return "all";
+    });
+    setPage(1);
+  };
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paginated  = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
@@ -220,7 +232,7 @@ export default function DaftarPengguna() {
       {/* STATS */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <Card title="TOTAL PENGGUNA" value={users.length} badge="↑ 4 bulan ini" green />
-        <Card title="AKTIF" value={users.filter(u => u.status === "active").length} badge="79%" green />
+        <Card title="AKTIF" value={users.filter(u => u.status === "active").length} />
         <Card title="ADMIN" value={users.filter(u => u.role === "admin").length} badge="dari total" blue />
         <Card title="NONAKTIF" value={users.filter(u => u.status !== "active").length} badge="perlu tindakan" red />
       </div>
@@ -253,9 +265,16 @@ export default function DaftarPengguna() {
           <thead className="text-xs text-gray-400 uppercase">
             <tr>
               <th className="p-4 text-left">Pengguna</th>
-              <th className="p-4 text-left">Peran</th>
-              <th className="p-4 text-left">Status</th>
-              <th className="p-4 text-left">Aksi</th>
+              <th 
+                className="p-4 text-left cursor-pointer hover:bg-gray-100 select-none transition-colors duration-200 w-[180px]"
+                onClick={handleRoleFilterToggle}
+              >
+                Peran <span className="text-xs text-gray-400 font-normal">
+                  ({roleFilter === "all" ? "Semua" : roleFilter === "admin" ? "Admin" : "User"})
+                </span>
+              </th>
+              <th className="p-4 text-left w-[120px]">Status</th>
+              <th className="p-4 text-left w-[220px]">Aksi</th>
             </tr>
           </thead>
 

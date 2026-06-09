@@ -33,7 +33,7 @@ export default function LoginPage() {
       toast("Login berhasil", "success");
       
       if (payload.role === "admin") {
-        navigate("/admin");
+        navigate("/admin/users");
       } else {
         navigate("/");
       }
