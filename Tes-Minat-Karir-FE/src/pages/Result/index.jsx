@@ -43,8 +43,13 @@ export default function Result() {
   const [showAllCareers, setShowAllCareers] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [expandedJobIndex, setExpandedJobIndex] = useState(null);
   const hasSavedRef = useRef(false);
   const apiResult = location.state?.apiResult;
+
+  const toggleJobDescription = (index) => {
+    setExpandedJobIndex(expandedJobIndex === index ? null : index);
+  };
 
   if (!apiResult) {
     return (
@@ -321,32 +326,47 @@ export default function Result() {
                   : career;
                 const score = typeof career === 'object' ? (career.Skor_SAW || career.skor) : null;
                 const code = typeof career === 'object' ? (career['Interest Code'] || career.interest_code) : null;
+                const description = typeof career === 'object' ? career.description : null;
 
                 return (
                   <div 
                     key={index} 
-                    className="bg-white hover:bg-bg-light p-5 rounded-2xl border border-gray-100 flex items-start gap-4 transition-all hover:shadow-md hover:border-appAccent/30 group animate-fade-in"
+                    onClick={() => toggleJobDescription(index)}
+                    className="bg-white hover:bg-bg-light p-5 rounded-2xl border border-gray-100 flex flex-col items-start transition-all hover:shadow-md hover:border-appAccent/30 group animate-fade-in cursor-pointer"
                     style={{ animationDelay: `${(index % 5) * 0.1}s` }}
                   >
-                    <div className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl font-bold text-white text-sm shadow-sm ${index === 0 ? 'bg-gradient-to-br from-yellow-300 to-yellow-500' : index === 1 ? 'bg-gradient-to-br from-gray-300 to-gray-400' : index === 2 ? 'bg-gradient-to-br from-amber-600 to-amber-700' : 'bg-gradient-to-br from-appAccent/80 to-appAccent'}`}>
-                      #{index + 1}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h4 className="font-bold text-text-primary mb-1.5 leading-snug group-hover:text-appAccent transition-colors">{jobName}</h4>
-                      {(code || score) && (
-                        <div className="flex flex-wrap gap-2">
-                          {code && (
-                            <span className="text-xs font-semibold bg-appAccent/10 text-appAccent px-2.5 py-1 rounded-lg">
-                              Kode: {code}
-                            </span>
-                          )}
-                          {score && (
-                            <span className="text-xs font-semibold bg-saffron/20 text-appAccent px-2.5 py-1 rounded-lg">
-                              Skor: {score}
-                            </span>
-                          )}
+                    <div className="flex items-start gap-4 w-full">
+                      <div className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl font-bold text-white text-sm shadow-sm ${index === 0 ? 'bg-gradient-to-br from-yellow-300 to-yellow-500' : index === 1 ? 'bg-gradient-to-br from-gray-300 to-gray-400' : index === 2 ? 'bg-gradient-to-br from-amber-600 to-amber-700' : 'bg-gradient-to-br from-appAccent/80 to-appAccent'}`}>
+                        #{index + 1}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex justify-between items-start">
+                          <h4 className="font-bold text-text-primary mb-1.5 leading-snug group-hover:text-appAccent transition-colors">{jobName}</h4>
+                          <span className="text-gray-400 text-xs ml-2 mt-1 transition-transform duration-300" style={{ transform: expandedJobIndex === index ? 'rotate(180deg)' : 'rotate(0deg)' }}>▼</span>
                         </div>
-                      )}
+                        {(code || score) && (
+                          <div className="flex flex-wrap gap-2">
+                            {code && (
+                              <span className="text-xs font-semibold bg-appAccent/10 text-appAccent px-2.5 py-1 rounded-lg">
+                                Kode: {code}
+                              </span>
+                            )}
+                            {score && (
+                              <span className="text-xs font-semibold bg-saffron/20 text-appAccent px-2.5 py-1 rounded-lg">
+                                Skor: {score}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    {/* Expandable description */}
+                    <div 
+                      className={`w-full overflow-hidden transition-all duration-300 ease-in-out ${expandedJobIndex === index ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}
+                    >
+                      <div className="p-3 bg-gray-50/80 rounded-xl border border-gray-100 text-sm text-gray-600 leading-relaxed shadow-inner">
+                        {description ? description : "Deskripsi tidak tersedia untuk profesi ini."}
+                      </div>
                     </div>
                   </div>
                 );

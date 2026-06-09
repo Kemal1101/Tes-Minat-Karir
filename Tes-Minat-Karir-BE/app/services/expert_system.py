@@ -72,6 +72,7 @@ class DataCache:
                     "Job Zone": job.job_zone,
                     "Code": job.code,
                     "Occupation": job.occupation,
+                    "description": job.description,
                 }
                 
                 if not clean_code:

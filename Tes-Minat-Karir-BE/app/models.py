@@ -39,6 +39,7 @@ class OccupationRiasec(AuditMixin, Base):
     job_zone = Column("Job Zone", String, nullable=True)
     code = Column("Code", String, nullable=True)
     occupation = Column("Occupation", String, nullable=True)
+    description = Column("description", String, nullable=True)
 
 
 class TokenBlacklist(AuditMixin, Base):

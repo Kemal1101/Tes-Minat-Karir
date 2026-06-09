@@ -83,20 +83,31 @@ const getRecommendationDetail = (career) => {
     return {
       jobName: career.Occupation || career.nama_pekerjaan || career.job_title || 'Pekerjaan tidak tersedia',
       interestCode: career['Interest Code'] || career.interest_code || '',
-      score: career.Skor_SAW || career.skor || ''
+      score: career.Skor_SAW || career.skor || '',
+      description: career.description || null
     };
   }
 
   return {
     jobName: String(career),
     interestCode: '',
-    score: ''
+    score: '',
+    description: null
   };
 };
 
 function ResultDetailModal({ isOpen, onClose, result }) {
+  const [expandedJobIndex, setExpandedJobIndex] = useState(null);
+
+  const toggleJobDescription = (index) => {
+    setExpandedJobIndex(expandedJobIndex === index ? null : index);
+  };
+
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      setExpandedJobIndex(null);
+      return;
+    }
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -280,26 +291,41 @@ function ResultDetailModal({ isOpen, onClose, result }) {
                   const detail = getRecommendationDetail(career);
 
                   return (
-                    <div key={`${detail.jobName}-${index}`} className="bg-white p-4 rounded-2xl border border-gray-100 flex items-start gap-3 shadow-sm">
-                      <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-lg font-poppins font-bold text-white text-xs ${index === 0 ? 'bg-gradient-to-br from-yellow-300 to-yellow-500' : index === 1 ? 'bg-gradient-to-br from-gray-300 to-gray-400' : index === 2 ? 'bg-gradient-to-br from-amber-600 to-amber-700' : 'bg-gradient-to-br from-accent/80 to-accent'}`}>
-                        #{index + 1}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h4 className="font-poppins font-bold text-text-primary truncate">{detail.jobName}</h4>
-                        {(detail.interestCode || detail.score) && (
-                          <div className="flex flex-wrap gap-2 mt-1">
-                            {detail.interestCode && (
-                              <span className="text-[11px] font-inter font-semibold bg-accent/10 text-accent px-2 py-0.5 rounded-md">
-                                Kode: {detail.interestCode}
-                              </span>
-                            )}
-                            {detail.score && (
-                              <span className="text-[11px] font-inter font-semibold bg-saffron/20 text-accent px-2 py-0.5 rounded-md">
-                                Skor: {detail.score}
-                              </span>
-                            )}
+                    <div 
+                      key={`${detail.jobName}-${index}`} 
+                      onClick={() => toggleJobDescription(index)}
+                      className="bg-white p-4 rounded-2xl border border-gray-100 flex flex-col items-start shadow-sm cursor-pointer hover:border-accent/30 transition-colors group"
+                    >
+                      <div className="flex items-start gap-3 w-full">
+                        <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-lg font-poppins font-bold text-white text-xs ${index === 0 ? 'bg-gradient-to-br from-yellow-300 to-yellow-500' : index === 1 ? 'bg-gradient-to-br from-gray-300 to-gray-400' : index === 2 ? 'bg-gradient-to-br from-amber-600 to-amber-700' : 'bg-gradient-to-br from-accent/80 to-accent'}`}>
+                          #{index + 1}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex justify-between items-start">
+                            <h4 className="font-poppins font-bold text-text-primary mb-1 leading-snug group-hover:text-accent transition-colors">{detail.jobName}</h4>
+                            <span className="text-gray-400 text-xs ml-2 mt-0.5 transition-transform duration-300" style={{ transform: expandedJobIndex === index ? 'rotate(180deg)' : 'rotate(0deg)' }}>▼</span>
                           </div>
-                        )}
+                          {(detail.interestCode || detail.score) && (
+                            <div className="flex flex-wrap gap-2 mt-1">
+                              {detail.interestCode && (
+                                <span className="text-[11px] font-inter font-semibold bg-accent/10 text-accent px-2 py-0.5 rounded-md">
+                                  Kode: {detail.interestCode}
+                                </span>
+                              )}
+                              {detail.score && (
+                                <span className="text-[11px] font-inter font-semibold bg-saffron/20 text-accent px-2 py-0.5 rounded-md">
+                                  Skor: {detail.score}
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {/* Expandable description */}
+                      <div className={`w-full overflow-hidden transition-all duration-300 ease-in-out ${expandedJobIndex === index ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0 mt-0'}`}>
+                        <div className="p-3 bg-gray-50/80 rounded-xl border border-gray-100 text-xs text-gray-600 leading-relaxed shadow-inner">
+                          {detail.description ? detail.description : "Deskripsi tidak tersedia untuk profesi ini."}
+                        </div>
                       </div>
                     </div>
                   );
