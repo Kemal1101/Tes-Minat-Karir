@@ -133,6 +133,10 @@ export default function Test() {
   };
 
   const handlePrevious = () => {
+    if (currentIndex === 0) {
+      setIsStarted(false);
+      return;
+    }
     setIsLocked(true);
     transition(() => {
       setCurrentIndex((i) => i - 1);
@@ -390,7 +394,7 @@ export default function Test() {
           <div className="flex gap-4 animate-fade-in">
             <button
               onClick={handlePrevious}
-              disabled={currentIndex === 0}
+              disabled={isLocked}
               className="flex-1 py-3 px-6 bg-white text-appAccent border-2 border-appAccent rounded-xl font-poppins font-bold hover:shadow-md disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105"
             >
               ← Sebelumnya

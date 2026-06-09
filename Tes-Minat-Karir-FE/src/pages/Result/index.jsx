@@ -180,12 +180,14 @@ export default function Result() {
             </p>
           </div>
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-3">
-            <button
-              onClick={() => navigate('/')}
-              className="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-xl font-bold transition-all hover:scale-105 shadow-sm"
-            >
-              Ke Landing Page
-            </button>
+            {!localStorage.getItem("token") && (
+              <button
+                onClick={() => navigate('/')}
+                className="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-xl font-bold transition-all hover:scale-105 shadow-sm"
+              >
+                Ke Landing Page
+              </button>
+            )}
             {localStorage.getItem("token") && (
               <button
                 onClick={() => navigate('/dashboard')}
