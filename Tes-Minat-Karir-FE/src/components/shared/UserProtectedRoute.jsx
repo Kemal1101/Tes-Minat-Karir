@@ -15,7 +15,7 @@ function parseJwt(token) {
   }
 }
 
-export default function ProtectedRoute() {
+export default function UserProtectedRoute() {
   const token = localStorage.getItem("token");
   const toast = useToast();
   
@@ -28,23 +28,18 @@ export default function ProtectedRoute() {
   let shouldClearToken = false;
   
   if (!token) {
-    redirect = "/loginadmin";
+    redirect = "/";
+    toastMsg = "Anda harus login untuk mengakses halaman ini";
+    toastType = "warning";
   } else if (!payload) {
-    redirect = "/loginadmin";
+    redirect = "/";
     shouldClearToken = true;
-  } else if (payload.role !== "admin") {
-    if (payload.role === "user") {
-      redirect = "/dashboard";
-      toastMsg = "Akses ditolak: Anda tidak memiliki akses ke halaman admin";
-      toastType = "danger";
-    } else {
-      redirect = "/loginadmin";
-      toastMsg = "Akses ditolak: Anda bukan admin";
-      toastType = "danger";
-      shouldClearToken = true;
-    }
+  } else if (payload.role === "admin") {
+    redirect = "/admin";
+    toastMsg = "Akses ditolak: Admin tidak dapat mengakses dashboard user";
+    toastType = "danger";
   } else if (payload.exp && payload.exp < currentTime) {
-    redirect = "/loginadmin";
+    redirect = "/";
     toastMsg = "Sesi berakhir, silakan login kembali";
     toastType = "warning";
     shouldClearToken = true;

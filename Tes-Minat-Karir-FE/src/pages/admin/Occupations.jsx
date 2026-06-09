@@ -24,17 +24,11 @@ const RIASEC_STYLE = {
   C: { bg: "#EEEDFE", color: "#534AB7" },
 };
 
-const SECTORS = [
-  "Teknologi Informasi",
-  "Kesehatan",
-  "Pendidikan",
-  "Keuangan",
-  "Seni & Desain",
-  "Teknik",
-  "Manajemen SDM",
-  "Hukum",
-  "Pertanian",
-  "Pariwisata",
+const JOB_ZONES = [
+  "1-2",
+  "3",
+  "4",
+  "5",
 ];
 
 const PAGE_SIZE = 8;
@@ -43,7 +37,7 @@ const emptyForm = {
   name: "",
   onet: "",
   holland: "I",
-  sector: "Teknologi Informasi",
+  job_zone: "1-2",
   desc: "",
 };
 
@@ -61,8 +55,8 @@ export default function Occupations() {
         name: o.occupation || "",
         onet: o.code || "",
         holland: o.interest_code || "I",
-        sector: o.job_zone || "Teknologi Informasi",
-        desc: ""
+          job_zone: o.job_zone || "1-2",
+          desc: o.description || ""
       }));
     }
   });
@@ -98,7 +92,7 @@ export default function Occupations() {
 
     // 🔍 Filter
   const filtered = data.filter(o =>
-    `${o.name} ${o.onet} ${o.sector}`
+    `${o.name} ${o.onet} ${o.job_zone} ${o.desc}`
       .toLowerCase()
       .includes(search.toLowerCase())
   );
@@ -107,7 +101,7 @@ export default function Occupations() {
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const totalRec = "12.4k";
-  const sectors = [...new Set(data.map(o => o.sector))].length;
+  const jobZones = [...new Set(data.map(o => o.job_zone))].length;
 
   function openCreate() {
     setEditing(null);
@@ -121,7 +115,7 @@ export default function Occupations() {
       name: o.name,
       onet: o.onet,
       holland: o.holland,
-      sector: o.sector,
+      job_zone: o.job_zone,
       desc: o.desc || "",
     });
     setFormOpen(true);
@@ -144,7 +138,8 @@ export default function Occupations() {
         occupation: form.name,
         code: form.onet,
         interest_code: form.holland,
-        job_zone: form.sector
+          job_zone: form.job_zone,
+          description: form.desc
       };
 
       if (editing) {
@@ -242,8 +237,8 @@ export default function Occupations() {
         </div>
 
         <div className="bg-white p-6 rounded-2xl border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all">
-          <div className="text-xs text-gray-400 mb-1">SEKTOR</div>
-          <div className="text-4xl font-bold">{sectors}</div>
+          <div className="text-xs text-gray-400 mb-1">JOB ZONE</div>
+          <div className="text-4xl font-bold">{jobZones}</div>
           <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
             aktif
           </span>
@@ -288,7 +283,8 @@ export default function Occupations() {
                 <th className="p-4 text-left">Nama</th>
                 <th className="p-4 text-left">O*NET</th>
                 <th className="p-4 text-left">Tipe</th>
-                <th className="p-4 text-left">Sektor</th>
+                <th className="p-4 text-left">Job Zone</th>
+                <th className="p-4 text-left">Deskripsi</th>
                 <th className="p-4 text-left">Aksi</th>
               </tr>
             </thead>
@@ -318,18 +314,25 @@ export default function Occupations() {
                 </td>
 
                 <td className="p-4">
-                  <span
-                    className="w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold"
-                    style={{
-                      background: RIASEC_STYLE[o.holland]?.bg,
-                      color: RIASEC_STYLE[o.holland]?.color,
-                    }}
-                  >
-                    {o.holland}
-                  </span>
+                  <div className="flex gap-1">
+                    {(o.holland || "").split('').map((letter, i) => (
+                      <span
+                        key={i}
+                        className="w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold"
+                        style={{
+                          background: RIASEC_STYLE[letter]?.bg || "#eee",
+                          color: RIASEC_STYLE[letter]?.color || "#333",
+                        }}
+                      >
+                        {letter}
+                      </span>
+                    ))}
+                  </div>
                 </td>
 
-                <td className="p-4 text-gray-500 max-w-[150px] truncate" title={o.sector}>{o.sector}</td>
+                <td className="p-4 text-gray-500 max-w-[150px] truncate" title={o.job_zone}>{o.job_zone}</td>
+
+                <td className="p-4 text-gray-500 max-w-[250px] truncate" title={o.desc}>{o.desc}</td>
 
                 <td className="p-4">
                   <div className="flex gap-2">
@@ -373,16 +376,19 @@ export default function Occupations() {
         </FormGroup>
 
         <FormGroup label="Tipe">
-          <Select value={form.holland} onChange={set("holland")}>
-            {Object.keys(RIASEC_STYLE).map(t => (
-              <option key={t}>{t}</option>
-            ))}
-          </Select>
+          <Input 
+            value={form.holland} 
+            onChange={e => {
+              const val = e.target.value.toUpperCase().replace(/[^RIASEC]/g, '').slice(0, 3);
+              set("holland")(val);
+            }}
+            placeholder="Maks 3 huruf (R, I, A, S, E, C)"
+          />
         </FormGroup>
 
-        <FormGroup label="Sektor">
-          <Select value={form.sector} onChange={set("sector")}>
-            {SECTORS.map(s => (
+        <FormGroup label="Job Zone">
+          <Select value={form.job_zone} onChange={set("job_zone")}>
+            {JOB_ZONES.map(s => (
               <option key={s}>{s}</option>
             ))}
           </Select>

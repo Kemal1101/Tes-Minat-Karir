@@ -21,6 +21,7 @@ import Occupations from "./pages/admin/Occupations";
 // Auth
 import LoginPage from "./pages/Login";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
+import UserProtectedRoute from "./components/shared/UserProtectedRoute";
 
 export default function App() {
   return (
@@ -35,7 +36,10 @@ export default function App() {
           
           <Route path="/test" element={<TestPage />} />
           <Route path="/result" element={<ResultPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
+          
+          <Route element={<UserProtectedRoute />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+          </Route>
 
           <Route path="/loginadmin" element={<LoginPage />} />
 

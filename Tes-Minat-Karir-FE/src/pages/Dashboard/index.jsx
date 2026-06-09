@@ -125,11 +125,12 @@ function ResultDetailModal({ isOpen, onClose, result }) {
   const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
   const hollandCode = sorted.slice(0, 3).map(([code]) => code).join('');
 
+  const riasecOrder = ['R', 'I', 'A', 'S', 'E', 'C'];
   const radarData = {
-    labels: sorted.map(([code]) => riasecData[code] ? riasecData[code].name : code),
+    labels: riasecOrder.map((code) => riasecData[code] ? riasecData[code].name : code),
     datasets: [
       {
-        data: sorted.map(([, score]) => score),
+        data: riasecOrder.map((code) => Math.max(0, scores[code] || 0)),
         backgroundColor: 'rgba(133,72,54,0.25)',
         borderColor: '#854836',
         borderWidth: 2.5,

@@ -5,6 +5,19 @@ import { api } from "../../lib/api";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 
+function parseJwt(token) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return null;
+  }
+}
+
 export default function AuthModal({ isOpen, onClose, onSuccess }) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("login"); // "login" | "register"
@@ -79,6 +92,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
 
     try {
       const response = await api.login(loginData.username, loginData.password);
+      
+      const payload = parseJwt(response.access_token);
+      if (payload && payload.role === "admin") {
+        throw new Error("Akun admin tidak dapat login dari sini. Silakan login dari halaman admin.");
+      }
+
       localStorage.setItem("token", response.access_token);
       handleClose();
       setLoginData({ username: "", password: "" });

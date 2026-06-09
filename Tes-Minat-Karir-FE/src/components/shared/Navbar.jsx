@@ -3,12 +3,27 @@ import { useLenis } from "lenis/react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import AuthModal from "./AuthModal";
+import { useToast } from "../../hooks/useToast";
+
+function parseJwt(token) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return null;
+  }
+}
 
 export default function Navbar() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const lenis = useLenis();
   const location = useLocation();
   const navigate = useNavigate();
+  const toast = useToast();
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -84,8 +99,16 @@ export default function Navbar() {
         {/* Profile Placeholder */}
         <div
           onClick={() => {
-            if (localStorage.getItem("token")) {
-              navigate("/dashboard");
+            const token = localStorage.getItem("token");
+            if (token) {
+              const payload = parseJwt(token);
+              if (payload && payload.role === "admin") {
+                toast("Akun admin tidak dapat mengakses halaman user. Sesi admin diakhiri.", "warning");
+                localStorage.removeItem("token");
+                setIsAuthModalOpen(true);
+              } else {
+                navigate("/dashboard");
+              }
             } else {
               setIsAuthModalOpen(true);
             }

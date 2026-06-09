@@ -55,6 +55,7 @@ class OccupationBase(BaseModel):
     job_zone: Optional[str] = None
     code: Optional[str] = None
     occupation: Optional[str] = None
+    description: Optional[str] = None
 
 class OccupationCreate(OccupationBase):
     pass
@@ -64,6 +65,7 @@ class OccupationUpdate(BaseModel):
     job_zone: Optional[str] = None
     code: Optional[str] = None
     occupation: Optional[str] = None
+    description: Optional[str] = None
 
 class OccupationResponse(OccupationBase):
     id: int
