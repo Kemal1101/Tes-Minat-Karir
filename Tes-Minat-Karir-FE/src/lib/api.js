@@ -8,6 +8,16 @@ const getHeaders = () => {
   };
 };
 
+const fetchAuth = async (url, options) => {
+  const res = await fetch(url, options);
+  if (res.status === 401) {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+    throw new Error("Unauthorized");
+  }
+  return res;
+};
+
 export const api = {
   login: async (username, password) => {
     const formData = new URLSearchParams();
@@ -45,7 +55,7 @@ export const api = {
   },
 
   logout: async () => {
-    const res = await fetch(`${API_URL}/v1/logout`, {
+    const res = await fetchAuth(`${API_URL}/v1/logout`, {
       method: "POST",
       headers: getHeaders()
     });
@@ -54,26 +64,26 @@ export const api = {
   },
 
   getUsers: async () => {
-    const res = await fetch(`${API_URL}/v1/users/all`, { headers: getHeaders() });
+    const res = await fetchAuth(`${API_URL}/v1/users/all`, { headers: getHeaders() });
     if (!res.ok) throw new Error("Failed to fetch users");
     return res.json();
   },
   createUser: async (data) => {
-    const res = await fetch(`${API_URL}/v1/users/`, {
+    const res = await fetchAuth(`${API_URL}/v1/users/`, {
       method: "POST", headers: getHeaders(), body: JSON.stringify(data)
     });
     if (!res.ok) throw new Error("Failed to create user");
     return res.json();
   },
   updateUser: async (id, data) => {
-    const res = await fetch(`${API_URL}/v1/users/${id}`, {
+    const res = await fetchAuth(`${API_URL}/v1/users/${id}`, {
       method: "PUT", headers: getHeaders(), body: JSON.stringify(data)
     });
     if (!res.ok) throw new Error("Failed to update user");
     return res.json();
   },
   deleteUser: async (id) => {
-    const res = await fetch(`${API_URL}/v1/users/${id}`, {
+    const res = await fetchAuth(`${API_URL}/v1/users/${id}`, {
       method: "DELETE", headers: getHeaders()
     });
     if (!res.ok) throw new Error("Failed to delete user");
@@ -81,26 +91,26 @@ export const api = {
   },
 
   getQuestions: async () => {
-    const res = await fetch(`${API_URL}/v1/questions/all`, { headers: getHeaders() });
+    const res = await fetchAuth(`${API_URL}/v1/questions/all`, { headers: getHeaders() });
     if (!res.ok) throw new Error("Failed to fetch questions");
     return res.json();
   },
   createQuestion: async (data) => {
-    const res = await fetch(`${API_URL}/v1/questions/`, {
+    const res = await fetchAuth(`${API_URL}/v1/questions/`, {
       method: "POST", headers: getHeaders(), body: JSON.stringify(data)
     });
     if (!res.ok) throw new Error("Failed to create question");
     return res.json();
   },
   updateQuestion: async (id, data) => {
-    const res = await fetch(`${API_URL}/v1/questions/${id}`, {
+    const res = await fetchAuth(`${API_URL}/v1/questions/${id}`, {
       method: "PUT", headers: getHeaders(), body: JSON.stringify(data)
     });
     if (!res.ok) throw new Error("Failed to update question");
     return res.json();
   },
   deleteQuestion: async (id) => {
-    const res = await fetch(`${API_URL}/v1/questions/${id}`, {
+    const res = await fetchAuth(`${API_URL}/v1/questions/${id}`, {
       method: "DELETE", headers: getHeaders()
     });
     if (!res.ok) throw new Error("Failed to delete question");
@@ -108,26 +118,26 @@ export const api = {
   },
 
   getOccupations: async () => {
-    const res = await fetch(`${API_URL}/v1/occupations/all`, { headers: getHeaders() });
+    const res = await fetchAuth(`${API_URL}/v1/occupations/all`, { headers: getHeaders() });
     if (!res.ok) throw new Error("Failed to fetch occupations");
     return res.json();
   },
   createOccupation: async (data) => {
-    const res = await fetch(`${API_URL}/v1/occupations/`, {
+    const res = await fetchAuth(`${API_URL}/v1/occupations/`, {
       method: "POST", headers: getHeaders(), body: JSON.stringify(data)
     });
     if (!res.ok) throw new Error("Failed to create occupation");
     return res.json();
   },
   updateOccupation: async (id, data) => {
-    const res = await fetch(`${API_URL}/v1/occupations/${id}`, {
+    const res = await fetchAuth(`${API_URL}/v1/occupations/${id}`, {
       method: "PUT", headers: getHeaders(), body: JSON.stringify(data)
     });
     if (!res.ok) throw new Error("Failed to update occupation");
     return res.json();
   },
   deleteOccupation: async (id) => {
-    const res = await fetch(`${API_URL}/v1/occupations/${id}`, {
+    const res = await fetchAuth(`${API_URL}/v1/occupations/${id}`, {
       method: "DELETE", headers: getHeaders()
     });
     if (!res.ok) throw new Error("Failed to delete occupation");
@@ -154,7 +164,7 @@ export const api = {
   
   // History Methods
   saveTestResult: async (data) => {
-    const res = await fetch(`${API_URL}/v1/history`, {
+    const res = await fetchAuth(`${API_URL}/v1/history`, {
       method: "POST",
       headers: getHeaders(),
       body: JSON.stringify(data)
@@ -163,7 +173,7 @@ export const api = {
     return res.json();
   },
   getUserHistory: async () => {
-    const res = await fetch(`${API_URL}/v1/history`, {
+    const res = await fetchAuth(`${API_URL}/v1/history`, {
       headers: getHeaders()
     });
     if (!res.ok) throw new Error("Failed to fetch user history");
