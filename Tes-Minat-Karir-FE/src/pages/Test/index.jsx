@@ -1,18 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
+import gsap from "gsap";
 
 import { api } from "../../lib/api";
 
 
-const riasecData = {
-  R: { name: "Realistic",     description: "Tipe praktis, suka bekerja dengan mesin, alat, atau aktivitas luar ruangan." },
-  I: { name: "Investigative", description: "Tipe analitis, suka memecahkan masalah, meneliti, dan ilmu pengetahuan." },
-  A: { name: "Artistic",      description: "Tipe kreatif, imajinatif, dan suka mengekspresikan diri melalui seni dan desain." },
-  S: { name: "Social",        description: "Tipe sosial, suka membantu, mengajar, dan berinteraksi dengan orang lain." },
-  E: { name: "Enterprising",  description: "Tipe ambisius, suka memimpin, berbisnis, dan memengaruhi orang lain." },
-  C: { name: "Conventional",  description: "Tipe teratur, teliti, dan suka bekerja dengan data, angka, atau prosedur yang jelas." }
-};
+// Removed unused riasecData array
 
 const options = [
   { v: 1, l: 'Sangat Tidak Suka' },
@@ -31,7 +25,7 @@ const getOptionColor = (value, selected) => {
 
 // Navbar dihapus karena pengguna tidak menginginkannya di halaman Tes
 
-export default function Test({ onFinish }) {
+export default function Test() {
   const navigate = useNavigate();
   const { data: apiQuestions = [], isLoading: isFetchingQuestions } = useQuery({
     queryKey: ['publicQuestions'],
@@ -60,6 +54,27 @@ export default function Test({ onFinish }) {
   const [showValidation, setShowValidation] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
+  
+  const loadingContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (isLoading && loadingContainerRef.current) {
+      const ctx = gsap.context(() => {
+        // Text animation: subtle slide up and fade
+        gsap.fromTo(".loading-text", 
+          { y: 20, opacity: 0 }, 
+          { y: 0, opacity: 1, duration: 1, ease: "back.out(1.7)" }
+        );
+        
+        // Subtext animation: delayed fade
+        gsap.fromTo(".loading-subtext", 
+          { opacity: 0 }, 
+          { opacity: 1, duration: 1.2, delay: 0.5, ease: "power2.out" }
+        );
+      }, loadingContainerRef);
+      return () => ctx.revert();
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     if (apiQuestions.length > 0 && answers.length === 0) {
@@ -174,9 +189,27 @@ export default function Test({ onFinish }) {
 
   if (apiQuestions.length === 0) {
     return (
-      <div className="min-h-screen flex flex-col bg-bg-light">
-        <div className="flex-1 flex items-center justify-center px-4">
-          <h2 className="text-xl font-poppins text-red-500">Gagal memuat pertanyaan.</h2>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-bg-light px-4">
+        <div className="bg-white/80 backdrop-blur-xl border border-white/50 p-8 md:p-10 rounded-[2.5rem] shadow-md text-center max-w-md w-full animate-fade-in">
+          <div className="w-20 h-20 bg-red-50 text-red-500 rounded-3xl flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border border-red-100">
+            📡
+          </div>
+          <h2 className="text-2xl md:text-3xl font-sans font-bold text-gray-800 mb-3 tracking-tight">Koneksi Terputus</h2>
+          <p className="text-gray-500 font-sans mb-8 leading-relaxed text-sm md:text-base">
+            Gagal memuat pertanyaan dari server. Pastikan koneksi internet Anda stabil atau coba beberapa saat lagi.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="w-full py-4 bg-appAccent text-white rounded-2xl font-sans font-bold hover:bg-[#6d392c] hover:shadow-lg transition-all active:scale-95"
+          >
+            Coba Muat Ulang
+          </button>
+          <button
+            onClick={() => navigate('/')}
+            className="w-full mt-3 py-4 bg-white text-gray-700 border border-gray-200 rounded-2xl font-sans font-bold hover:bg-gray-50 hover:shadow-sm transition-all active:scale-95"
+          >
+            Kembali ke Beranda
+          </button>
         </div>
       </div>
     );
@@ -185,18 +218,18 @@ export default function Test({ onFinish }) {
   /* ── LOADING: calculating result ── */
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col bg-bg-light justify-center items-center px-4">
-        <div className="bg-white/80 backdrop-blur-xl p-10 rounded-[2rem] shadow-lg-custom flex flex-col items-center max-w-sm w-full animate-fade-in border border-white/60">
+      <div className="min-h-screen flex flex-col bg-bg-light justify-center items-center px-4" ref={loadingContainerRef}>
+        <div className="bg-white/80 backdrop-blur-xl p-10 rounded-[2rem] shadow-lg-custom flex flex-col items-center max-w-sm w-full border border-white/60">
           <div className="relative mb-8 flex items-center justify-center">
             {/* Inner pulsing sparkle (tanpa background lingkaran) */}
-            <div className="animate-pulse flex items-center justify-center drop-shadow-lg">
+            <div className="loading-sparkle flex items-center justify-center drop-shadow-sm">
               <span className="text-5xl">✨</span>
             </div>
           </div>
-          <h2 className="text-2xl font-sans font-black text-appAccent text-center mb-2 animate-pulse">
-            Menganalisis Profil...
+          <h2 className="loading-text text-2xl font-sans font-black text-appAccent text-center mb-2">
+            Menganalisis Profil..
           </h2>
-          <p className="text-gray-500 font-sans text-center text-sm">
+          <p className="loading-subtext text-gray-500 font-sans text-center text-sm">
             Mencocokkan kepribadian Anda dengan ratusan profesi terbaik.
           </p>
         </div>

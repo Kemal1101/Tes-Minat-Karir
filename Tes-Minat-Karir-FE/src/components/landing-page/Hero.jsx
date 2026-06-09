@@ -1,5 +1,7 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Radar } from "react-chartjs-2";
+import gsap from "gsap";
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -12,6 +14,40 @@ import {
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip);
 
 export default function Hero() {
+  const cardRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    // Tilt angle (gentle 10 degrees max)
+    const rotateX = ((y - centerY) / centerY) * -10; 
+    const rotateY = ((x - centerX) / centerX) * 10;
+
+    gsap.to(cardRef.current, {
+      duration: 0.4,
+      rotationX: rotateX,
+      rotationY: rotateY,
+      transformPerspective: 1000,
+      ease: "power2.out",
+    });
+  };
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return;
+    gsap.to(cardRef.current, {
+      duration: 0.8,
+      rotationX: 0,
+      rotationY: 0,
+      ease: "elastic.out(1, 0.5)",
+    });
+  };
+
   const radarData = {
     labels: ["Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional"],
     datasets: [
@@ -49,10 +85,10 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="relative flex flex-col items-center justify-center px-4 md:px-6 overflow-hidden pt-32 md:pt-40 pb-20 md:pb-32">
+    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center py-20 px-4 md:px-6 overflow-hidden">
       <div className="relative z-10 w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-          <div className="flex items-center gap-2 md:gap-4 bg-white/40 backdrop-blur-xl border border-white/50 shadow-sm rounded-full p-1 md:p-1.5 pr-4 md:pr-6 cursor-pointer hover:bg-white/60 hover:-translate-y-1 transition-all duration-300 mb-8 md:mb-12">
+          <div className="flex items-center gap-2 md:gap-4 bg-white border border-gray-200 shadow-sm rounded-full p-1 md:p-1.5 pr-4 md:pr-6 cursor-pointer hover:-translate-y-1 transition-transform duration-300 mb-8 md:mb-12">
             <span className="bg-appAccent text-white rounded-full px-3 md:px-4 py-1 md:py-1.5 text-[10px] sm:text-xs font-semibold uppercase tracking-widest font-mono shadow-sm">
               NEW
             </span>
@@ -61,11 +97,11 @@ export default function Hero() {
             </span>
           </div>
 
-          <h1 className="hero-title text-[2.5rem] leading-[1.1] sm:text-5xl md:text-6xl font-semibold tracking-tight md:leading-[1.05] text-black w-full mb-6 whitespace-pre-line">
+          <h1 className="text-[2.5rem] leading-[1.1] sm:text-5xl md:text-6xl font-semibold tracking-tight md:leading-[1.05] text-black w-full mb-6 whitespace-pre-line">
             Temukan Potensi Minat Karir Terbaik Anda Secara Akurat
           </h1>
 
-          <p className="hero-desc text-sm sm:text-base md:text-lg lg:text-xl text-gray-800 font-medium max-w-2xl mb-10 md:mb-12 leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-800 font-medium max-w-2xl mb-10 md:mb-12 leading-relaxed">
             Eksplorasi Karir. Dirancang untuk Masa Depan. Kenali minat sejatimu dan bangun karir impianmu. Cepat, akurat, dan menghubungkan Anda dengan profesi global.
           </p>
 
@@ -76,11 +112,21 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Mockup Visual */}
-        <div className="flex justify-center lg:justify-end w-full">
-          <div className="bg-white/80 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] border border-white/60 shadow-[0_20px_60px_rgba(0,0,0,0.08)] flex flex-col items-center w-full max-w-sm">
-            <h3 className="text-xl font-bold text-black mb-2">Simulasi Hasil Profiling</h3>
-            <p className="text-sm text-gray-800 mb-6 font-medium text-center">Analisis RIASEC interaktif untuk Anda.</p>
+        {/* Mockup Visual - Interactive Card */}
+        <div className="lg:col-span-1 flex justify-center perspective-[1500px]">
+          <div 
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="relative w-full max-w-sm sm:max-w-md bg-white rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-10 shadow-lg border border-gray-100 flex flex-col items-center z-20 transform-style-3d cursor-default"
+            style={{ willChange: "transform" }}
+          >
+            <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-black text-center">
+              Simulasi Hasil Profiling
+            </h3>
+            <p className="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8 text-center font-medium">
+              Analisis RIASEC interaktif untuk Anda.
+            </p>
             <div className="w-full h-full min-h-[260px] max-w-[260px]">
               <Radar data={radarData} options={radarOptions} />
             </div>

@@ -182,14 +182,14 @@ export default function Result() {
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-3">
             <button
               onClick={() => navigate('/')}
-              className="px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-lg font-medium transition-all hover:scale-105 shadow-sm"
+              className="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-xl font-bold transition-all hover:scale-105 shadow-sm"
             >
               Ke Landing Page
             </button>
             {localStorage.getItem("token") && (
               <button
                 onClick={() => navigate('/dashboard')}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-lg font-medium transition-all hover:scale-105 shadow-sm"
+                className="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 rounded-xl font-bold transition-all hover:scale-105 shadow-sm"
               >
                 Ke Dashboard
               </button>
@@ -243,7 +243,7 @@ export default function Result() {
             <span className="text-3xl drop-shadow-sm">🌟</span> Tipe Dominan Utama
           </h3>
           <div className="space-y-4">
-            {sorted.slice(0, 3).map(([code, score], index) => (
+            {sorted.slice(0, 3).map(([code, score]) => (
               <div key={code} className="bg-white/90 backdrop-blur-xl p-5 md:p-6 rounded-[2rem] border border-white/60 shadow-sm hover:shadow-md hover:border-appAccent/30 transition-all group">
                 <div className="flex flex-col md:flex-row gap-5 items-start md:items-center">
                   <div className="w-16 h-16 bg-gradient-to-br from-appAccent to-[#6d392c] rounded-2xl flex items-center justify-center text-white font-black text-3xl flex-shrink-0 shadow-md">

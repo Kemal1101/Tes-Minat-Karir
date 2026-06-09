@@ -31,7 +31,6 @@ export default function Navbar() {
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
 
-    // Jika tidak berada di halaman utama, navigasi ke beranda lalu scroll
     if (location.pathname !== "/") {
       navigate("/");
       setTimeout(() => {
@@ -41,6 +40,7 @@ export default function Navbar() {
       return;
     }
 
+    // Always use native scrollIntoView for the landing page so it works with our new snap container
     if (lenis) {
       lenis.scrollTo(targetId, {
         duration: 1.5,

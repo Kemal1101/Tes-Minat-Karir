@@ -5,7 +5,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Hero from "../../components/landing-page/Hero";
 import About from "../../components/landing-page/About";
 import HowItWorks from "../../components/landing-page/HowItWorks";
-import SocialProofSubscribe from "../../components/landing-page/SocialProofSubscribe";
+import SocialProof from "../../components/landing-page/SocialProof";
+import CallToAction from "../../components/landing-page/CallToAction";
+import Footer from "../../components/shared/Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,12 +16,8 @@ export default function LandingPage() {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
-      // 1. INTRO TIMELINE (Hero Section)
-      const tl = gsap.timeline();
-      tl.fromTo(".hero-title", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power4.out", delay: 0.2 })
-        .fromTo(".hero-desc", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, "-=0.6")
-
-
+      // 1. INTRO TIMELINE (Dihapus agar tidak mengurangi kualitas HD pada kartu)
+      
       // 3. BENTO GRID ANIMATION (About Section)
       gsap.fromTo(".bento-card", 
         { y: 40, opacity: 0 },
@@ -41,11 +39,13 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div ref={container} className="text-black font-sans selection:bg-appBlob selection:text-black">
+    <div id="landing-container" ref={container} className="w-full text-black font-sans selection:bg-appBlob selection:text-black">
       <Hero />
       <About />
       <HowItWorks />
-      <SocialProofSubscribe />
+      <SocialProof />
+      <CallToAction />
+      <Footer />
     </div>
   );
 }

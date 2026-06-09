@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <section id="about" className="relative flex flex-col justify-center items-center py-20 md:py-32 px-4 md:px-8">
+    <section id="about" className="relative min-h-screen flex flex-col justify-center items-center py-20 px-4 md:px-8">
       <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
         <div className="lg:col-span-5 reveal-item lg:pr-8 mb-10 lg:mb-0 text-center lg:text-left flex flex-col justify-center">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-6 text-black">

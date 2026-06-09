@@ -1,6 +1,6 @@
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="reveal-section flex flex-col justify-center items-center py-20 md:py-32 px-4 md:px-8">
+    <section id="how-it-works" className="reveal-section min-h-screen flex flex-col justify-center items-center py-20 px-4 md:px-8">
       <div className="w-full max-w-7xl mx-auto">
         <div className="text-center mb-12 md:mb-16 reveal-item">
           <h2 className="text-3xl md:text-5xl font-semibold tracking-tight mb-4 text-black">
